@@ -6,12 +6,18 @@ import java.awt.EventQueue;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import main.models.User;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -181,6 +187,17 @@ public class Login implements ActionListener{
 	}
 	
 	public void enterPressed(ActionEvent e) {
+		// Quitar cuando se ponga el DAO, lunes.
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ScrumHibernate");
+        EntityManager entityManager = factory.createEntityManager();
+		User user;
+		int count = 1;
+		while((user = entityManager.find(User.class, count)) != null) {
+			if(txtLogin.getText().equals(user.getUserName())) {
+				System.out.println("Usuario correcto");
+			}
+		}
+		
 		if1.setVisible(false);
 		lblUser.setVisible(true);
 		lblNameUser.setVisible(true);
