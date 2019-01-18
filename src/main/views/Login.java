@@ -30,13 +30,13 @@ public class Login implements ActionListener{
 	private JLabel lblPassword;
 	private JTextField txtLogin;
 	private JTextField txtPassword;
-	private JButton btnEnviar;
+	private JButton btnSend;
 	private JMenuBar menuBar;
-	private JMenu mnProyectos;
+	private JMenu mnProjects;
 	private JMenu mnUsuarios;
-	private JLabel lblUsuario;
-	private JLabel lblNUser;
-	private JButton btnSalir;
+	private JLabel lblUser;
+	private JLabel lblNameUser;
+	private JButton btnExit;
 
 	/**
 	 * Launch the application.
@@ -67,7 +67,7 @@ public class Login implements ActionListener{
 	private void initialize() {
 		frame = new JFrame("Gestor de proyectos");
 		frame.getContentPane().setBackground(Color.WHITE);
-		frame.setBounds(100, 100, 750, 620);
+		frame.setBounds(100, 100, 750, 715);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		desktop = new JDesktopPane();
@@ -91,25 +91,28 @@ public class Login implements ActionListener{
 		txtPassword.setColumns(10);
 		txtPassword.addActionListener(this);
 
-		btnEnviar = new JButton("Enviar");
-		btnEnviar.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnEnviar.addActionListener(this);
+		btnSend = new JButton("Enviar");
+		btnSend.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnSend.addActionListener(this);
 		
-		lblUsuario = new JLabel("Usuario:");
-		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblUser = new JLabel("Usuario:");
+		lblUser.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblUser.setVisible(false);
 		
-		lblNUser = new JLabel("No User");
-		lblNUser.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNameUser = new JLabel("No User");
+		lblNameUser.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNameUser.setVisible(false);
 		
-		btnSalir = new JButton("SALIR");
-		btnSalir.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnExit = new JButton("SALIR");
+		btnExit.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnExit.setVisible(false);
 		
 		// PARTE LAYOUT(GROUP LAYOUT) DEL INTERNAL FRAME LOGIN
 		GroupLayout groupLayout = new GroupLayout(if1.getContentPane());
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
 				.createSequentialGroup()
 				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup().addGap(87).addComponent(btnEnviar,
+						.addGroup(groupLayout.createSequentialGroup().addGap(87).addComponent(btnSend,
 								GroupLayout.PREFERRED_SIZE, 310, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup().addGap(42)
 								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING).addComponent(lblLogin)
@@ -127,7 +130,7 @@ public class Login implements ActionListener{
 				.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addComponent(lblPassword).addComponent(
 						txtPassword, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 				.addPreferredGap(ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
-				.addComponent(btnEnviar, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE).addGap(64)));
+				.addComponent(btnSend, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE).addGap(64)));
 
 		if1.getContentPane().setLayout(groupLayout);
 		if1.setVisible(true);
@@ -138,11 +141,11 @@ public class Login implements ActionListener{
 					.addContainerGap()
 					.addGroup(groupLayout_1.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout_1.createSequentialGroup()
-							.addComponent(lblUsuario)
+							.addComponent(lblUser)
 							.addGap(18)
-							.addComponent(lblNUser, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblNameUser, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
-							.addComponent(btnSalir)
+							.addComponent(btnExit)
 							.addGap(8))
 						.addComponent(desktop, GroupLayout.DEFAULT_SIZE, 714, Short.MAX_VALUE))
 					.addContainerGap())
@@ -152,10 +155,10 @@ public class Login implements ActionListener{
 				.addGroup(groupLayout_1.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout_1.createParallelGroup(Alignment.TRAILING)
-						.addComponent(btnSalir)
+						.addComponent(btnExit)
 						.addGroup(groupLayout_1.createParallelGroup(Alignment.BASELINE)
-							.addComponent(lblNUser)
-							.addComponent(lblUsuario)))
+							.addComponent(lblNameUser)
+							.addComponent(lblUser)))
 					.addGap(26)
 					.addComponent(desktop, GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
 					.addContainerGap())
@@ -166,17 +169,26 @@ public class Login implements ActionListener{
 		menuBar.setBounds(0, 0, 684, 21);
 		frame.setJMenuBar(menuBar);
 
-		mnProyectos = new JMenu("Proyectos");
-		menuBar.add(mnProyectos);
+		mnProjects = new JMenu("Proyectos");
+		menuBar.add(mnProjects);
 
 		mnUsuarios = new JMenu("Usuarios");
 		menuBar.add(mnUsuarios);
+		
+		menuBar.setVisible(false);
 		frame.getContentPane().setLayout(groupLayout_1);
 		frame.setVisible(true);
 	}
 	
-	public static void enterPressed(ActionEvent e) {
-		System.out.println("Has pulsado Enter");
+	public void enterPressed(ActionEvent e) {
+		if1.setVisible(false);
+		lblUser.setVisible(true);
+		lblNameUser.setVisible(true);
+		btnExit.setVisible(true);
+		CreateUser cu1 = new CreateUser();
+		cu1.setSize(500,500);
+		cu1.setLocation(100, 5);
+		desktop.add(cu1);
 	}
 
 	@Override
