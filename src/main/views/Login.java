@@ -191,21 +191,28 @@ public class Login implements ActionListener{
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ScrumHibernate");
         EntityManager entityManager = factory.createEntityManager();
 		User user;
+		boolean find = false;
 		int count = 1;
 		while((user = entityManager.find(User.class, count)) != null) {
 			if(txtLogin.getText().equals(user.getUserName())) {
 				System.out.println("Usuario correcto");
+				find = true;
 			}
+			count++;
 		}
 		
-		if1.setVisible(false);
-		lblUser.setVisible(true);
-		lblNameUser.setVisible(true);
-		btnExit.setVisible(true);
-		CreateUser cu1 = new CreateUser();
-		cu1.setSize(500,500);
-		cu1.setLocation(100, 5);
-		desktop.add(cu1);
+		if(find) {
+			if1.setVisible(false);
+			lblUser.setVisible(true);
+			lblNameUser.setVisible(true);
+			btnExit.setVisible(true);
+			CreateUser cu1 = new CreateUser();
+			cu1.setSize(500,500);
+			cu1.setLocation(100, 5);
+			desktop.add(cu1);
+		}else {
+			System.err.println("Usuario y/o Contraseña incorrectos.");
+		}
 	}
 
 	@Override
