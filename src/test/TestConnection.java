@@ -12,7 +12,8 @@ public class TestConnection {
 	        EntityManager entityManager = factory.createEntityManager();
 	        System.out.println("ONLINE");
 		}catch(Exception e) {
-			System.err.println("No funciona la conexión");
+//			System.err.println("No funciona la conexión. Mas información del error: \n" + );
+			e.printStackTrace();
 		}
 	}
 
