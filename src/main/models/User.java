@@ -1,11 +1,8 @@
 package main.models;
 
-<<<<<<< HEAD
 import java.util.Date;
-=======
 import javax.persistence.Entity;
 import javax.persistence.Table;
->>>>>>> dd331f231323000460305c312119141dce91cd30
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
