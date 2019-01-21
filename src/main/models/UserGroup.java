@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "users_groups")
+@Table(name = "users_group")
 public class UserGroup {
 
 	
