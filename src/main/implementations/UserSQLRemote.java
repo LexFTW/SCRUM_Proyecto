@@ -27,6 +27,7 @@ public class UserSQLRemote implements IUser{
 	public String getHashingPassword(String password) {
 		MessageDigest md = null;
 		byte[] result = null;
+		
 		try {
 			result = md.digest(password.getBytes("UTF8"));
 		} catch (UnsupportedEncodingException e) {
