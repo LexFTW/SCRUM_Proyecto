@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 @Entity
 @Table(name = "sprints")
@@ -15,6 +16,7 @@ public class Sprint {
 	private Date createAt;
 	private Date updatedAt;
 	
+	@Id
 	@Column(name ="SprintID")
 	public int getSprintID() {
 		return sprintID;

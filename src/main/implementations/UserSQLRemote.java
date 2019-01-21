@@ -2,6 +2,7 @@ package main.implementations;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -28,6 +29,11 @@ public class UserSQLRemote implements IUser{
 		MessageDigest md = null;
 		byte[] result = null;
 		try {
+			try {
+				md = MessageDigest.getInstance("SHA-1");
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			}
 			result = md.digest(password.getBytes("UTF8"));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
@@ -46,6 +52,18 @@ public class UserSQLRemote implements IUser{
 		for (User user : users) {
 			System.out.println(user.toString());
 		}
+	}
+
+	@Override
+	public boolean getUserOnline(String userName, String password) {
+		String passHashed = getHashingPassword(password);
+		for (User user : users) {
+			if(user.getUserName().equals(userName) && user.getPassword().equals(passHashed)) {
+				System.out.println("[INFO] - Usuario encontrado!");
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
