@@ -56,18 +56,15 @@ public class UserSQLRemote implements IUser{
 	}
 
 	@Override
-	public boolean getUserOnline(String userName, String password) {
+	public User getUserLogin(String userName, String password) {
 		String passHashed = getHashingPassword(password);
 		for (User user : users) {
 			if(user.getUserName().equals(userName) && user.getPassword().equals(passHashed)) {
-<<<<<<< HEAD
 				System.out.println("[INFO] - Usuario encontrado!");
-=======
->>>>>>> a2e8da05f091dda9da7a8ea127a20c6d8b154f57
-				return true;
+				return user;
 			}
 		}
-		return false;
+		return null;
 	}
 
 }

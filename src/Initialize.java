@@ -9,13 +9,16 @@ import main.views.Login;
 public class Initialize {
 	
 	private static IUser iuser;
+	private static EntityManagerFactory emf;
+	private static EntityManager em;
 
 	public static void main(String[] args) {
 		try {
-			EntityManagerFactory factory = Persistence.createEntityManagerFactory("ScrumSQLRemote");
-	        EntityManager entityManager = factory.createEntityManager();
-	        System.out.println("[INFO] - Conexión Online");
+			// Connection to SQL Remote
+			emf = Persistence.createEntityManagerFactory("ScrumSQLRemote");
+	        em = emf.createEntityManager();
 	        iuser = new UserSQLRemote();
+	        System.out.println("[INFO] - Conexión Online");
 		}catch(Exception e) {
 			// Connection to SQL Local:
 			System.out.println("[INFO] - Conexión Offline");
