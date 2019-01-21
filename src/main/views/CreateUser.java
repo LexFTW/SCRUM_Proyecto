@@ -13,6 +13,7 @@ import java.awt.Color;
 
 
 public class CreateUser extends JInternalFrame{
+	// VARIABLES OF THE CREATEUSER CLASS
 	private JTextField txtName;
 	private JTextField txtLogin;
 	private JTextField txtMail;
@@ -20,6 +21,7 @@ public class CreateUser extends JInternalFrame{
 	private JTextField txtPassword;
 	
 	public CreateUser() {
+		// THIS PART BELONGS TO THE VARIABLES FEATURES
 		getContentPane().setForeground(Color.WHITE);
 		
 		JLabel lblName = new JLabel("Nombre:");
@@ -46,6 +48,7 @@ public class CreateUser extends JInternalFrame{
 		
 		txtLogin = new JTextField();
 		txtLogin.setColumns(10);
+		txtLogin.setEditable(false);
 		
 		txtMail = new JTextField();
 		txtMail.setColumns(10);
@@ -60,6 +63,8 @@ public class CreateUser extends JInternalFrame{
 		btnGeneratePassword.setFont(new Font("Tahoma", Font.BOLD, 14));
 		
 		JButton btnSave = new JButton("Guardar");
+		
+		// THIS PART BELONGS TO LAYOUT(GROUP LAYOUT)
 		btnSave.setFont(new Font("Tahoma", Font.BOLD, 14));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
@@ -119,5 +124,7 @@ public class CreateUser extends JInternalFrame{
 					.addContainerGap(154, Short.MAX_VALUE))
 		);
 		getContentPane().setLayout(groupLayout);
+		// THIS PART BELONGS TO LAYOUT(GROUP LAYOUT)
+		
 	}
 }
