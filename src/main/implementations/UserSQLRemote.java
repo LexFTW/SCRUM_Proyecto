@@ -48,4 +48,15 @@ public class UserSQLRemote implements IUser{
 		}
 	}
 
+	@Override
+	public boolean getUserOnline(String userName, String password) {
+		String passHashed = getHashingPassword(password);
+		for (User user : users) {
+			if(user.getUserName().equals(userName) && user.getPassword().equals(passHashed)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }
