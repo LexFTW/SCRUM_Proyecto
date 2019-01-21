@@ -94,7 +94,4 @@ public class User {
 				+ ", Password=" + Password + ", GroupID=" + GroupID + ", CreatedAt=" + CreatedAt + ", UpdatedAt="
 				+ UpdatedAt + "]";
 	}
-	
-	
-	
 }

@@ -15,16 +15,17 @@ public class Initialize {
 	public static void main(String[] args) {
 		try {
 			// Connection to SQL Remote
-			emf = Persistence.createEntityManagerFactory("ScrumSQLRemote");
+			emf = Persistence.createEntityManagerFactory("ScrumHibernate");
 	        em = emf.createEntityManager();
 	        iuser = new UserSQLRemote();
+	        iuser.loadUsers();
 	        System.out.println("[INFO] - Conexión Online");
 		}catch(Exception e) {
 			// Connection to SQL Local:
 			System.out.println("[INFO] - Conexión Offline");
 		}
 		
-		Login login = new Login();
+		Login login = new Login(iuser);
 	}
 
 }

@@ -8,7 +8,6 @@ public interface IUser {
 
 	// Atributtes for IUser;
 	User user = new User();
-	User userLogged = new User();;
 	ArrayList<User> users = new ArrayList<>();
 	
 	// Methods;
@@ -16,5 +15,6 @@ public interface IUser {
 	public String getHashingPassword(String password);
 	public void getAllUsers();
 	public User getUserLogin(String userName,String password);
+	public String getTitleConnection();
 	
 }

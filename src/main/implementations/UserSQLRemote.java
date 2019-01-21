@@ -13,6 +13,8 @@ import main.models.User;
 
 public class UserSQLRemote implements IUser{
 
+	private User userLogged;
+	
 	@Override
 	public void loadUsers() {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ScrumHibernate");
@@ -58,13 +60,21 @@ public class UserSQLRemote implements IUser{
 	@Override
 	public User getUserLogin(String userName, String password) {
 		String passHashed = getHashingPassword(password);
+		System.out.println("Usuario: " + userName);
+		System.out.println("Contraseña: " + passHashed);
 		for (User user : users) {
 			if(user.getUserName().equals(userName) && user.getPassword().equals(passHashed)) {
 				System.out.println("[INFO] - Usuario encontrado!");
-				return user;
+				this.userLogged = user;
+				return this.userLogged;
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public String getTitleConnection() {
+		return " (Online)";
 	}
 
 }

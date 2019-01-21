@@ -33,7 +33,8 @@ public class TestConnection {
 	        IUser iuser = new UserSQLRemote();
 	        iuser.loadUsers();
 	        iuser.getAllUsers();
-	        iuser.getUserOnline("Amengual", "Contraseña");
+	        User user = iuser.getUserLogin("Amengual", "Contraseña");
+	        System.out.println(user.toString());
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
