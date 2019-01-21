@@ -19,6 +19,7 @@ public class Project {
 	private int scrumMasterID;
 	private int productOwnerID;
 	private Date createdAt;
+	private Date updatedAt;
 	
 	@Id
 	@Column(name = "ProjectID")
@@ -49,6 +50,7 @@ public class Project {
 		this.projectDescription = projectDescription;
 	}
 	
+	@Column(name ="ScrumMasterID")
 	public int getScrumMasterID() {
 		return scrumMasterID;
 	}
@@ -57,6 +59,7 @@ public class Project {
 		this.scrumMasterID = scrumMasterID;
 	}
 	
+	@Column(name ="ProductOwnerID")
 	public int getProductOwnerID() {
 		return productOwnerID;
 	}
@@ -65,11 +68,20 @@ public class Project {
 		this.productOwnerID = productOwnerID;
 	}
 	
+	@Column(name ="CreatedAt")
 	public Date getCreatedAt() {
 		return createdAt;
 	}
 	
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
+	}
+	
+	@Column(name ="UpdatedAt")
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 }

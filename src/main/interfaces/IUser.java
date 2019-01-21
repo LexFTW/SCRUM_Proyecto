@@ -14,4 +14,6 @@ public interface IUser {
 	public void loadUsers();
 	public String getHashingPassword(String password);
 	public void getAllUsers();
+	public boolean getUserOnline(String userName,String password);
+	
 }
