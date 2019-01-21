@@ -21,7 +21,7 @@ public class Initialize {
 			System.out.println("[INFO] - Conexión Offline");
 		}
 		
-		Login login = new Login(iuser);
+		Login login = new Login();
 	}
 
 }
