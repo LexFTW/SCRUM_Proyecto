@@ -4,6 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import main.implementations.UserSQLRemote;
+import main.interfaces.IUser;
 import main.models.User;
 
 public class TestConnection {
@@ -14,22 +16,25 @@ public class TestConnection {
 	        EntityManager entityManager = factory.createEntityManager();
 	        System.out.println("ONLINE");
 	        
-	        entityManager.getTransaction().begin();
+//	        entityManager.getTransaction().begin();
+//	        
+//	        User u1 = new User();
+//	        u1.setName("AAA");
+//	        u1.setLastName("AAAAAA");
+//	        u1.setUserName("AAAAAAA");
+//	        u1.setPassword("AAA");
+//	        u1.setGroupID(1);
+//	        
+//	        entityManager.persist(u1);
+//	        entityManager.getTransaction().commit();
+//	        entityManager.close();
+//	        factory.close();
 	        
-	        User u1 = new User();
-	        u1.setName("AAA");
-	        u1.setLastName("AAAAAA");
-	        u1.setUserName("AAAAAAA");
-	        u1.setPassword("AAA");
-	        u1.setGroupID(1);
-	        
-	        entityManager.persist(u1);
-	        entityManager.getTransaction().commit();
-	        entityManager.close();
-	        factory.close();
+	        IUser iuser = new UserSQLRemote();
+	        iuser.loadUsers();
+	        iuser.getAllUsers();
 		}catch(Exception e) {
-			System.err.println("No funciona la conexión remota.. CONECTANDOSE A LA LOCAL.." );
-			
+			e.printStackTrace();
 		}
 	}
 

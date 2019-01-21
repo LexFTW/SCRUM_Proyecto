@@ -87,6 +87,13 @@ public class User {
 	public void setUpdatedAt(Date updatedAt) {
 		UpdatedAt = updatedAt;
 	}
+
+	@Override
+	public String toString() {
+		return "User [UserID=" + UserID + ", Name=" + Name + ", LastName=" + LastName + ", UserName=" + UserName
+				+ ", Password=" + Password + ", GroupID=" + GroupID + ", CreatedAt=" + CreatedAt + ", UpdatedAt="
+				+ UpdatedAt + "]";
+	}
 	
 	
 	

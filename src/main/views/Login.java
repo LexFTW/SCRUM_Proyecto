@@ -194,6 +194,7 @@ public class Login implements ActionListener{
 		boolean find = false;
 		int count = 1;
 		while((user = entityManager.find(User.class, count)) != null) {
+			System.out.println(user.toString());
 			if(txtLogin.getText().equals(user.getUserName())) {
 				System.out.println("Usuario correcto");
 				find = true;
