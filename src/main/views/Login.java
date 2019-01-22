@@ -194,4 +194,9 @@ public class Login implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		
 	}
+	
+	public static void main(String[] args) {
+		IUser user = null;
+		Login l = new Login(user);
+	}
 }
