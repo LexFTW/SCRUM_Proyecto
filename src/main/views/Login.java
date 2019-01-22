@@ -22,15 +22,18 @@ import main.models.User;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyVetoException;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JPasswordField;
 
 public class Login implements ActionListener{
 
-	// VARIABLES OF THE LOGIN CLASS
+	// Attributes of the Login.Class
 	private JFrame frame;
 	private JDesktopPane desktop;
 	private JInternalFrame if1;
@@ -43,13 +46,15 @@ public class Login implements ActionListener{
 	private JMenu mnUsuarios;
 	private JLabel lblUser;
 	private JLabel lblNameUser;
+	private JLabel lblError;
 	private JButton btnExit;
 	private JPasswordField passwordField;
-	IUser iuser;
+	private IUser iuser;
 	
 
 	/**
-	 * Create the application.
+	 * Constructor of the Class
+	 * @param Interface of the User.
 	 */
 	public Login(IUser iuser) {
 		this.iuser = iuser;
@@ -60,11 +65,48 @@ public class Login implements ActionListener{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		// Initialize JLabels:
+		lblLogin = new JLabel("Login:");
+		lblLogin.setFont(new Font("Tahoma", Font.BOLD, 14));
+
+		lblPassword = new JLabel("Password:");
+		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 14));
+		
+		lblUser = new JLabel("Usuario:");
+		lblUser.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblUser.setVisible(false);
+		
+		lblNameUser = new JLabel();
+		lblNameUser.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNameUser.setVisible(false);
+		
+		lblError = new JLabel("El Usuario y/o Contraseña son incorrectos.");
+		lblError.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblError.setForeground(Color.RED);
+		lblError.setVisible(false);
+		
+		// Initialize JTextfield and JPasswordfield:
+		txtLogin = new JTextField(10);
+		txtLogin.addActionListener(this);
+		
+		passwordField = new JPasswordField();
+		passwordField.addActionListener(this);
+		
+		// Initialize JButtons:
+		btnSend = new JButton("Enviar");
+		btnSend.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnSend.addActionListener(this);
+		
+		btnExit = new JButton("SALIR");
+		btnExit.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnExit.setVisible(false);
+		
 		// THIS PART BELONGS TO THE VARIABLES FEATURES
-		frame = new JFrame("Gestor de proyectos");
+		frame = new JFrame("Gestor de proyectos" + iuser.getTitleConnection());
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setBounds(100, 100, 750, 715);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
 		
 		desktop = new JDesktopPane();
 		desktop.setBackground(Color.WHITE);
@@ -72,37 +114,6 @@ public class Login implements ActionListener{
 		if1.setSize(500, 330);
 		if1.setLocation(76, 69);
 		desktop.add(if1);
-
-		lblLogin = new JLabel("Login:");
-		lblLogin.setFont(new Font("Tahoma", Font.BOLD, 14));
-
-		lblPassword = new JLabel("Password:");
-		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 14));
-
-		txtLogin = new JTextField();
-		txtLogin.setColumns(10);
-		txtLogin.addActionListener(this);
-		
-		passwordField = new JPasswordField();
-		passwordField.addActionListener(this);
-
-		btnSend = new JButton("Enviar");
-		btnSend.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnSend.addActionListener(this);
-		
-		lblUser = new JLabel("Usuario:");
-		lblUser.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblUser.setVisible(false);
-		
-		lblNameUser = new JLabel("No User");
-		lblNameUser.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNameUser.setVisible(false);
-		
-		btnExit = new JButton("SALIR");
-		btnExit.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnExit.setVisible(false);
-		
-		
 		
 		// THIS PART BELONGS TO LAYOUT(GROUP LAYOUT)
 		GroupLayout groupLayout = new GroupLayout(if1.getContentPane());
@@ -153,6 +164,8 @@ public class Login implements ActionListener{
 							.addGap(18)
 							.addComponent(lblNameUser, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
+							.addComponent(lblError, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
 							.addComponent(btnExit)
 							.addGap(8))
 						.addComponent(desktop, GroupLayout.DEFAULT_SIZE, 714, Short.MAX_VALUE))
@@ -167,6 +180,7 @@ public class Login implements ActionListener{
 						.addGroup(groupLayout_1.createParallelGroup(Alignment.BASELINE)
 							.addComponent(lblNameUser)
 							.addComponent(lblUser)))
+							.addComponent(lblError)
 					.addGap(26)
 					.addComponent(desktop, GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
 					.addContainerGap())
@@ -187,12 +201,36 @@ public class Login implements ActionListener{
 		menuBar.setVisible(false);
 		frame.getContentPane().setLayout(groupLayout_1);
 		frame.setVisible(true);
+		
+		Dimension desktopSize = desktop.getSize();
+		Dimension jInternalFrameSize = if1.getSize();
+		if1.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+		    (desktopSize.height- jInternalFrameSize.height)/2);
 	}
 
 	// THIS METHOD IS THE ACTIONLISTENER METHOD
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+		User user = iuser.getUserLogin(txtLogin.getText(), String.valueOf(passwordField.getPassword()));
+		if(user != null) {
+			try {
+				if1.setClosed(true);
+				lblUser.setVisible(true);
+				lblNameUser.setText(user.getUserName());
+				lblNameUser.setVisible(true);
+				btnExit.setVisible(true);
+				menuBar.setVisible(true);
+				CreateUser cu1 = new CreateUser(iuser);
+				cu1.setSize(500,500);
+				cu1.setLocation(100, 5);
+				desktop.add(cu1);
+			} catch (PropertyVetoException e1) {
+				e1.printStackTrace();
+			}
+		}else {
+			lblError.setVisible(true);
+			System.err.println("Usuario no encontrado");
+		}
 	}
 	
 	public static void main(String[] args) {
