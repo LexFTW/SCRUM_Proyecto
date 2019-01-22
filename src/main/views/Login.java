@@ -16,54 +16,48 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import main.interfaces.IUser;
 import main.models.User;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyVetoException;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import java.awt.Color;
+import java.awt.Dimension;
+
+import javax.swing.JPasswordField;
 
 public class Login implements ActionListener{
 
-	// VARIABLES DE LA CLASE LOGIN
+	// Attributes of the Login.Class
 	private JFrame frame;
 	private JDesktopPane desktop;
 	private JInternalFrame if1;
 	private JLabel lblLogin;
 	private JLabel lblPassword;
 	private JTextField txtLogin;
-	private JTextField txtPassword;
 	private JButton btnSend;
 	private JMenuBar menuBar;
 	private JMenu mnProjects;
 	private JMenu mnUsuarios;
 	private JLabel lblUser;
 	private JLabel lblNameUser;
+	private JLabel lblError;
 	private JButton btnExit;
+	private JPasswordField passwordField;
+	private IUser iuser;
+	
 
 	/**
-	 * Launch the application.
+	 * Constructor of the Class
+	 * @param Interface of the User.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Login window = new Login();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
-	public Login() {
+	public Login(IUser iuser) {
+		this.iuser = iuser;
 		initialize();
 	}
 
@@ -71,72 +65,91 @@ public class Login implements ActionListener{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame("Gestor de proyectos");
+		// Initialize JLabels:
+		lblLogin = new JLabel("Login:");
+		lblLogin.setFont(new Font("Tahoma", Font.BOLD, 14));
+
+		lblPassword = new JLabel("Password:");
+		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 14));
+		
+		lblUser = new JLabel("Usuario:");
+		lblUser.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblUser.setVisible(false);
+		
+		lblNameUser = new JLabel();
+		lblNameUser.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNameUser.setVisible(false);
+		
+		lblError = new JLabel("El Usuario y/o Contraseña son incorrectos.");
+		lblError.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblError.setForeground(Color.RED);
+		lblError.setVisible(false);
+		
+		// Initialize JTextfield and JPasswordfield:
+		txtLogin = new JTextField(10);
+		txtLogin.addActionListener(this);
+		
+		passwordField = new JPasswordField();
+		passwordField.addActionListener(this);
+		
+		// Initialize JButtons:
+		btnSend = new JButton("Enviar");
+		btnSend.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnSend.addActionListener(this);
+		
+		btnExit = new JButton("SALIR");
+		btnExit.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnExit.setVisible(false);
+		
+		// THIS PART BELONGS TO THE VARIABLES FEATURES
+		frame = new JFrame("Gestor de proyectos" + iuser.getTitleConnection());
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setBounds(100, 100, 750, 715);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		frame.setLocationRelativeTo(null);
+		
 		desktop = new JDesktopPane();
 		desktop.setBackground(Color.WHITE);
 		if1 = new JInternalFrame("Login", true, true, true, true);
 		if1.setSize(500, 330);
 		if1.setLocation(76, 69);
 		desktop.add(if1);
-
-		lblLogin = new JLabel("Login:");
-		lblLogin.setFont(new Font("Tahoma", Font.BOLD, 14));
-
-		lblPassword = new JLabel("Password:");
-		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 14));
-
-		txtLogin = new JTextField();
-		txtLogin.setColumns(10);
-		txtLogin.addActionListener(this);
-
-		txtPassword = new JTextField();
-		txtPassword.setColumns(10);
-		txtPassword.addActionListener(this);
-
-		btnSend = new JButton("Enviar");
-		btnSend.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnSend.addActionListener(this);
 		
-		lblUser = new JLabel("Usuario:");
-		lblUser.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblUser.setVisible(false);
-		
-		lblNameUser = new JLabel("No User");
-		lblNameUser.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNameUser.setVisible(false);
-		
-		btnExit = new JButton("SALIR");
-		btnExit.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnExit.setVisible(false);
-		
-		// PARTE LAYOUT(GROUP LAYOUT) DEL INTERNAL FRAME LOGIN
+		// THIS PART BELONGS TO LAYOUT(GROUP LAYOUT)
 		GroupLayout groupLayout = new GroupLayout(if1.getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
-				.createSequentialGroup()
-				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup().addGap(87).addComponent(btnSend,
-								GroupLayout.PREFERRED_SIZE, 310, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup().addGap(42)
-								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING).addComponent(lblLogin)
-										.addComponent(lblPassword))
-								.addGap(86)
-								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-										.addComponent(txtLogin)
-										.addComponent(txtPassword, GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE))))
-				.addContainerGap(121, Short.MAX_VALUE)));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
-				.createSequentialGroup().addGap(63)
-				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(lblLogin).addComponent(
-						txtLogin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addGap(49)
-				.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addComponent(lblPassword).addComponent(
-						txtPassword, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addPreferredGap(ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
-				.addComponent(btnSend, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE).addGap(64)));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(87)
+							.addComponent(btnSend, GroupLayout.PREFERRED_SIZE, 310, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(42)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblLogin)
+								.addComponent(lblPassword))
+							.addGap(86)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(txtLogin, GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
+								.addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE))))
+					.addGap(87))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(63)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblLogin)
+						.addComponent(txtLogin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(52)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblPassword)
+						.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+					.addComponent(btnSend, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+					.addGap(64))
+		);
 
 		if1.getContentPane().setLayout(groupLayout);
 		if1.setVisible(true);
@@ -150,6 +163,8 @@ public class Login implements ActionListener{
 							.addComponent(lblUser)
 							.addGap(18)
 							.addComponent(lblNameUser, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(lblError, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
 							.addComponent(btnExit)
 							.addGap(8))
@@ -165,12 +180,14 @@ public class Login implements ActionListener{
 						.addGroup(groupLayout_1.createParallelGroup(Alignment.BASELINE)
 							.addComponent(lblNameUser)
 							.addComponent(lblUser)))
+							.addComponent(lblError)
 					.addGap(26)
 					.addComponent(desktop, GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
 					.addContainerGap())
 		);
-		// PARTE LAYOUT(GROUP LAYOUT) DEL INTERNAL FRAME LOGIN
+		// THIS PART BELONGS TO LAYOUT(GROUP LAYOUT)
 
+		// THIS PART BELONGS TO THE MENU, ON JFRAME
 		menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 684, 21);
 		frame.setJMenuBar(menuBar);
@@ -184,43 +201,35 @@ public class Login implements ActionListener{
 		menuBar.setVisible(false);
 		frame.getContentPane().setLayout(groupLayout_1);
 		frame.setVisible(true);
-	}
-	
-	public void enterPressed(ActionEvent e) {
-		// Quitar cuando se ponga el DAO, lunes.
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ScrumHibernate");
-        EntityManager entityManager = factory.createEntityManager();
-		User user;
-		boolean find = false;
-		int count = 1;
-		while((user = entityManager.find(User.class, count)) != null) {
-			System.out.println(user.toString());
-			if(txtLogin.getText().equals(user.getUserName())) {
-				System.out.println("Usuario correcto");
-				find = true;
-			}
-			count++;
-		}
 		
-		if(find) {
-			if1.setVisible(false);
-			lblUser.setVisible(true);
-			lblNameUser.setVisible(true);
-			btnExit.setVisible(true);
-			CreateUser cu1 = new CreateUser();
-			cu1.setSize(500,500);
-			cu1.setLocation(100, 5);
-			desktop.add(cu1);
-		}else {
-			System.err.println("Usuario y/o Contraseña incorrectos.");
-		}
+		Dimension desktopSize = desktop.getSize();
+		Dimension jInternalFrameSize = if1.getSize();
+		if1.setLocation((desktopSize.width - jInternalFrameSize.width)/2,
+		    (desktopSize.height- jInternalFrameSize.height)/2);
 	}
 
+	// THIS METHOD IS THE ACTIONLISTENER METHOD
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		enterPressed(e);
-		
+		User user = iuser.getUserLogin(txtLogin.getText(), String.valueOf(passwordField.getPassword()));
+		if(user != null) {
+			try {
+				if1.setClosed(true);
+				lblUser.setVisible(true);
+				lblNameUser.setText(user.getUserName());
+				lblNameUser.setVisible(true);
+				btnExit.setVisible(true);
+				menuBar.setVisible(true);
+				CreateUser cu1 = new CreateUser(iuser);
+				cu1.setSize(500,500);
+				cu1.setLocation(100, 5);
+				desktop.add(cu1);
+			} catch (PropertyVetoException e1) {
+				e1.printStackTrace();
+			}
+		}else {
+			lblError.setVisible(true);
+			System.err.println("Usuario no encontrado");
+		}
 	}
-	
-	
 }

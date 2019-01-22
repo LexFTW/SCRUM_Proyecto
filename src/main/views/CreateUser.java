@@ -5,21 +5,34 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.event.ComponentAdapter;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
+
+import main.interfaces.IUser;
+import main.models.User;
+
 import javax.swing.JButton;
 import java.awt.Color;
 
 
 public class CreateUser extends JInternalFrame{
+	// VARIABLES OF THE CREATEUSER CLASS
 	private JTextField txtName;
 	private JTextField txtLogin;
 	private JTextField txtMail;
 	private JTextField txtRepeatPassword;
 	private JTextField txtPassword;
 	
-	public CreateUser() {
+	public CreateUser(IUser iuser) {
+		this.setResizable(true);
+		this.setMaximizable(true);
+		this.setClosable(true);
+		this.setIconifiable(true);
+		this.setTitle("Create User");
+		// THIS PART BELONGS TO THE VARIABLES FEATURES
 		getContentPane().setForeground(Color.WHITE);
 		
 		JLabel lblName = new JLabel("Nombre:");
@@ -41,11 +54,12 @@ public class CreateUser extends JInternalFrame{
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Seleccione un perfil de usuario", "Master Owner", "Scrum Master", "Developer", "Administrator"}));
 		comboBox.setFont(new Font("Tahoma", Font.BOLD, 11));
 		setVisible(true);
-		txtName = new JTextField();
+		txtName = new JTextField(30);
 		txtName.setColumns(10);
 		
 		txtLogin = new JTextField();
 		txtLogin.setColumns(10);
+		txtLogin.setEditable(false);
 		
 		txtMail = new JTextField();
 		txtMail.setColumns(10);
@@ -60,6 +74,8 @@ public class CreateUser extends JInternalFrame{
 		btnGeneratePassword.setFont(new Font("Tahoma", Font.BOLD, 14));
 		
 		JButton btnSave = new JButton("Guardar");
+		
+		// THIS PART BELONGS TO LAYOUT(GROUP LAYOUT)
 		btnSave.setFont(new Font("Tahoma", Font.BOLD, 14));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
@@ -119,5 +135,7 @@ public class CreateUser extends JInternalFrame{
 					.addContainerGap(154, Short.MAX_VALUE))
 		);
 		getContentPane().setLayout(groupLayout);
+		// THIS PART BELONGS TO LAYOUT(GROUP LAYOUT)
+		
 	}
 }
