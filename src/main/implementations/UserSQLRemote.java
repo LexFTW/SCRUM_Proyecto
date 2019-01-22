@@ -63,7 +63,8 @@ public class UserSQLRemote implements IUser{
 		System.out.println("Usuario: " + userName);
 		System.out.println("Contraseña: " + passHashed);
 		for (User user : users) {
-			if(user.getUserName().equals(userName) && user.getPassword().equals(passHashed)) {
+			System.out.println(user.toString());
+			if(user.getUserNickname().equals(userName) && user.getUserPassword().equals(passHashed)) {
 				System.out.println("[INFO] - Usuario encontrado!");
 				this.userLogged = user;
 				return this.userLogged;
@@ -75,6 +76,12 @@ public class UserSQLRemote implements IUser{
 	@Override
 	public String getTitleConnection() {
 		return " (Online)";
+	}
+
+	@Override
+	public User getUserLogged() {
+		System.out.println(userLogged.toString());
+		return this.userLogged;
 	}
 
 }

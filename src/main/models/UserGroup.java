@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -19,6 +21,7 @@ public class UserGroup {
 	
 	@Id
 	@Column(name="GroupID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int getGroupID() {
 		return groupID;
 	}
@@ -32,7 +35,7 @@ public class UserGroup {
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}
-	@Column(name="CreatedAt")
+	@Column(name="CreatedAt", insertable=false, updatable=false)
 	public Date getCreatedAt() {
 		return createdAt;
 	}
@@ -40,7 +43,7 @@ public class UserGroup {
 		createdAt = createdAt;
 	}
 	
-	@Column(name="UpdatedAt")
+	@Column(name="UpdatedAt", insertable=false, updatable=false)
 	public Date getUpdateAt() {
 		return updateAt;
 	}

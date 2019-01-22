@@ -16,5 +16,5 @@ public interface IUser {
 	public void getAllUsers();
 	public User getUserLogin(String userName,String password);
 	public String getTitleConnection();
-	
+	public User getUserLogged();
 }
