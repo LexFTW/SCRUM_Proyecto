@@ -66,8 +66,12 @@ public class UserSQLRemote implements IUser{
 			System.out.println(user.toString());
 			if(user.getUserNickname().equals(userName) && user.getUserPassword().equals(passHashed)) {
 				System.out.println("[INFO] - Usuario encontrado!");
+<<<<<<< HEAD
+				return true;
+=======
 				this.userLogged = user;
 				return this.userLogged;
+>>>>>>> 4b5f39bacf7858816d7de2201431488547e20630
 			}
 		}
 		return null;

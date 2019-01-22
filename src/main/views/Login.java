@@ -232,4 +232,9 @@ public class Login implements ActionListener{
 			System.err.println("Usuario no encontrado");
 		}
 	}
+	
+	public static void main(String[] args) {
+		IUser user = null;
+		Login l = new Login(user);
+	}
 }
