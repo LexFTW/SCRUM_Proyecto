@@ -18,6 +18,16 @@
 </p>
 
 <p>
+  Al iniciar el programa, y que se ejecute correctamente, se ha de inicializar desde la clase Initialitze.class, dentro de <b><i>src/</i></b>
+</p>
+
+<p>
+  <b>IMPORTANTE</b> para que funcione correctamente la conexión a la BD Remota, comprueba dentro del archivo <i>persistence.xml</i>, dentro de <b></i>main/resources/META-INF</i></b> que en la línea 8, o en la etiqueta < property name="javax.persistence.jdbc.url" value="..." >, la información sea correcta.
+</p>
+
+<hr />
+
+<p>
   Además dispones de los siguientes usuarios para poder utilizar en esta versión, aquí una lista de los usuarios:
   <ul>
     <li><b>Usuario:</b> Amengual</li>
