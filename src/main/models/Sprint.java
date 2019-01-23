@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 @Entity
@@ -18,6 +20,7 @@ public class Sprint {
 	
 	@Id
 	@Column(name ="SprintID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int getSprintID() {
 		return sprintID;
 	}
@@ -39,7 +42,7 @@ public class Sprint {
 		this.projectID = projectID;
 	}
 	
-	@Column(name ="CreatedAt")
+	@Column(name ="CreatedAt", insertable=false, updatable=false)
 	public Date getCreateAt() {
 		return createAt;
 	}
@@ -47,7 +50,7 @@ public class Sprint {
 		this.createAt = createAt;
 	}
 	
-	@Column(name = "UpdatedAt")
+	@Column(name = "UpdatedAt", insertable=false, updatable=false)
 	public Date getUpdatedAt() {
 		return updatedAt;
 	}

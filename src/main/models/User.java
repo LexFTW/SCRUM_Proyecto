@@ -3,7 +3,8 @@ package main.models;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,11 +16,11 @@ import javax.persistence.Table;
 public class User {
 
 	private int UserID;
-	private String Name;
-	private String LastName;
 	private String UserName;
-	private String Password;
-	private int GroupID;
+	private String UserLastname;
+	private String UserNickname;
+	private String UserPassword;
+	private int PermissionID;
 	private Date CreatedAt;
 	private Date UpdatedAt;
 	
@@ -36,43 +37,44 @@ public class User {
 	public void setUserID(int userID) {
 		UserID = userID;
 	}
-	@Column(name ="Name")
-	public String getName() {
-		return Name;
-	}
-	public void setName(String name) {
-		Name = name;
-	}
-	@Column(name ="LastName")
-	public String getLastName() {
-		return LastName;
-	}
-	public void setLastName(String lastName) {
-		LastName = lastName;
-	}
 	@Column(name ="UserName")
 	public String getUserName() {
 		return UserName;
 	}
-	public void setUserName(String userName) {
-		UserName = userName;
+	public void setUserName(String name) {
+		UserName = name;
 	}
-	@Column(name ="Password")
-	public String getPassword() {
-		return Password;
+	@Column(name ="UserLastname")
+	public String getUserLastname() {
+		return UserLastname;
 	}
-	public void setPassword(String password) {
-		Password = password;
+	public void setUserLastname(String userLastname) {
+		UserLastname = userLastname;
 	}
-	@Column(name ="GroupID")
-	public int getGroupID() {
-		return GroupID;
+	@Column(name ="UserNickname")
+	public String getUserNickname() {
+		return UserNickname;
 	}
-	public void setGroupID(int groupID) {
-		GroupID = groupID;
+	public void setUserNickname(String userNickname) {
+		UserNickname = userNickname;
+	}
+	@Column(name ="UserPassword")
+	public String getUserPassword() {
+		return UserPassword;
+	}
+	public void setUserPassword(String userPassword) {
+		UserPassword = userPassword;
+	}
+	@Column(name ="PermissionID")
+	public int getPermissionID() {
+		return PermissionID;
+	}
+	public void setPermissionID(int permissionID) {
+		this.PermissionID = permissionID;
 	}
 	
-	@Column(name ="CreatedAt")
+	@Column(name ="CreatedAt", insertable=false, updatable=false)
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getCreatedAt() {
 		return CreatedAt;
 	}
@@ -80,7 +82,8 @@ public class User {
 		CreatedAt = createdAt;
 	}
 	
-	@Column(name ="UpdatedAt")
+	@Column(name ="UpdatedAt", insertable=false, updatable=false)
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getUpdatedAt() {
 		return UpdatedAt;
 	}
@@ -90,8 +93,8 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [UserID=" + UserID + ", Name=" + Name + ", LastName=" + LastName + ", UserName=" + UserName
-				+ ", Password=" + Password + ", GroupID=" + GroupID + ", CreatedAt=" + CreatedAt + ", UpdatedAt="
-				+ UpdatedAt + "]";
+		return "User [UserID=" + UserID + ", UserName=" + UserName + ", UserLastname=" + UserLastname
+				+ ", UserNickname=" + UserNickname + ", UserPassword=" + UserPassword + ", PermissionID=" + PermissionID
+				+ ", CreatedAt=" + CreatedAt + ", UpdatedAt=" + UpdatedAt + "]";
 	}
 }

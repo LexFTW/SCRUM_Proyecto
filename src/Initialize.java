@@ -21,10 +21,11 @@ public class Initialize {
 	        iuser.loadUsers();
 	        System.out.println("[INFO] - Conexión Online");
 		}catch(Exception e) {
-			// Connection to SQL Local:
+			// If fail the Remote Connection, I've got the Local Connection:
 			System.out.println("[INFO] - Conexión Offline");
 		}
 		
+		// Generate object login:
 		Login login = new Login(iuser);
 	}
 

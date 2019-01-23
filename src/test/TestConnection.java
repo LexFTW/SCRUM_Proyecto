@@ -19,11 +19,11 @@ public class TestConnection {
 //	        entityManager.getTransaction().begin();
 //	        
 //	        User u1 = new User();
-//	        u1.setName("AAA");
-//	        u1.setLastName("AAAAAA");
-//	        u1.setUserName("AAAAAAA");
-//	        u1.setPassword("AAA");
-//	        u1.setGroupID(1);
+//	        u1.setUserName("AAA");
+//	        u1.setUserLastname("AAAAAA");
+//	        u1.setUserNickname("AAAAAAA");
+//	        u1.setUserPassword("AAA");
+//	        u1.setPermissionID(1);
 //	        
 //	        entityManager.persist(u1);
 //	        entityManager.getTransaction().commit();
@@ -33,8 +33,10 @@ public class TestConnection {
 	        IUser iuser = new UserSQLRemote();
 	        iuser.loadUsers();
 	        iuser.getAllUsers();
-	        User user = iuser.getUserLogin("Amengual", "Contraseña");
+	        iuser.getUserLogin("Amengual", "Contraseña");
+	        User user = iuser.getUserLogged();
 	        System.out.println(user.toString());
+	        System.out.println(iuser.getUserLoggedPermission());
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

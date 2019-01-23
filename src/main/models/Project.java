@@ -68,7 +68,7 @@ public class Project {
 		this.productOwnerID = productOwnerID;
 	}
 	
-	@Column(name ="CreatedAt")
+	@Column(name ="CreatedAt", insertable=false, updatable=false)
 	public Date getCreatedAt() {
 		return createdAt;
 	}
@@ -77,7 +77,7 @@ public class Project {
 		this.createdAt = createdAt;
 	}
 	
-	@Column(name ="UpdatedAt")
+	@Column(name ="UpdatedAt", insertable=false, updatable=false)
 	public Date getUpdatedAt() {
 		return updatedAt;
 	}

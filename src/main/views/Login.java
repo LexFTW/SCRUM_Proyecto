@@ -216,7 +216,7 @@ public class Login implements ActionListener{
 			try {
 				if1.setClosed(true);
 				lblUser.setVisible(true);
-				lblNameUser.setText(user.getUserName());
+				lblNameUser.setText(user.getUserNickname() + " (" + iuser.getUserLoggedPermission() + ")");
 				lblNameUser.setVisible(true);
 				btnExit.setVisible(true);
 				menuBar.setVisible(true);
