@@ -17,11 +17,9 @@ public class UserSQLRemote implements IUser{
 	private User userLogged;
 	
 	/*
-	 * This method load the users from the Remote Database to ArrayList<User>
-	 * @see main.interfaces.IUser#loadUsers()
+	 * This constructor load the users from the Remote Database to ArrayList<User>
 	 */
-	@Override
-	public void loadUsers() {
+	public UserSQLRemote() {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ScrumHibernate");
         EntityManager entityManager = factory.createEntityManager();
 		int primaryKey = 1;
@@ -39,46 +37,6 @@ public class UserSQLRemote implements IUser{
 		}
 	}
 
-	/*
-	 * This method is responsible for doing 'hashing' on the password entered in the login.
-	 * @param The password introduce into the JPasswordField from Login.
-	 * @return "The password hashed".
-	 * @see main.interfaces.IUser#getHashingPassword(java.lang.String)
-	 */
-	@Override
-	public String getHashingPassword(String password) {
-		MessageDigest md = null;
-		byte[] result = null;
-		
-		try {
-			try {
-				md = MessageDigest.getInstance("SHA-1");
-			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
-			}
-			result = md.digest(password.getBytes("UTF8"));
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < result.length; i++) {
-            sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));
-        }
-        
-        return sb.toString();
-	}
-
-	/*
-	 * Print all users of the ArrayList<User>
-	 * @see main.interfaces.IUser#getAllUsers()
-	 */
-	@Override
-	public void getAllUsers() {
-		for (User user : users) {
-			System.out.println(user.toString());
-		}
-	}
 
 	/*
 	 * Search within the ArrayList for the user specified in the login screen.
