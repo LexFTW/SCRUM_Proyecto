@@ -216,7 +216,7 @@ public class Login implements ActionListener{
 			try {
 				if1.setClosed(true);
 				lblUser.setVisible(true);
-				lblNameUser.setText(user.getUserNickname());
+				lblNameUser.setText(user.getUserNickname() + " (" + iuser.getUserLoggedPermission() + ")");
 				lblNameUser.setVisible(true);
 				btnExit.setVisible(true);
 				menuBar.setVisible(true);
@@ -231,10 +231,5 @@ public class Login implements ActionListener{
 			lblError.setVisible(true);
 			System.err.println("Usuario no encontrado");
 		}
-	}
-	
-	public static void main(String[] args) {
-		IUser user = null;
-		Login l = new Login(user);
 	}
 }

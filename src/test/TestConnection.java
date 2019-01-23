@@ -16,19 +16,19 @@ public class TestConnection {
 	        EntityManager entityManager = factory.createEntityManager();
 	        System.out.println("ONLINE");
 	        
-	        entityManager.getTransaction().begin();
-	        
-	        User u1 = new User();
-	        u1.setUserName("AAA");
-	        u1.setUserLastname("AAAAAA");
-	        u1.setUserNickname("AAAAAAA");
-	        u1.setUserPassword("AAA");
-	        u1.setPermissionID(1);
-	        
-	        entityManager.persist(u1);
-	        entityManager.getTransaction().commit();
-	        entityManager.close();
-	        factory.close();
+//	        entityManager.getTransaction().begin();
+//	        
+//	        User u1 = new User();
+//	        u1.setUserName("AAA");
+//	        u1.setUserLastname("AAAAAA");
+//	        u1.setUserNickname("AAAAAAA");
+//	        u1.setUserPassword("AAA");
+//	        u1.setPermissionID(1);
+//	        
+//	        entityManager.persist(u1);
+//	        entityManager.getTransaction().commit();
+//	        entityManager.close();
+//	        factory.close();
 	        
 	        IUser iuser = new UserSQLRemote();
 	        iuser.loadUsers();
@@ -36,6 +36,7 @@ public class TestConnection {
 	        iuser.getUserLogin("Amengual", "Contraseña");
 	        User user = iuser.getUserLogged();
 	        System.out.println(user.toString());
+	        System.out.println(iuser.getUserLoggedPermission());
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
