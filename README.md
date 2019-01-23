@@ -12,7 +12,7 @@
   <li>Ha de tener un JInternalFrame para inscribir usuarios al programa. (4 horas)</li>  
 </ol>
 
-<h3>Indicaciones para utilizar la versión 0.1</h3>
+<h3>Indicaciones para utilizar la versión 1.0</h3>
 <p>
   Para poder tratar la información, en este caso de usuarios, primero debes de importar en tu BD MySQL el archivo que se encuentra dentro de <b><i>main/resources/bd_scrum_arr.sql</i></b> para hacer un volcado de información.
 </p>
@@ -48,6 +48,20 @@
   </ul>
   <i>Sí quieres añadir otro usuario, es importante que a la hora de añadir la contraseña lo hagas utilizando SHA1, ya que todas las contraseñas están encriptadas y el programa hace hashing de la contraseña que indicas dentro del JPasswordField</i>
 </p>
+
+<h2>Sprint 2</h2>
+<ol>
+  <li>Generar contraseña automaticamente de 6 caracteres. (1h)</li>
+  <li>Generar Login automaticamente mediante nombre y primer apellido. (2h)</li>
+  <li>Validar contraseña, en caso de error, mostrar un JLabel con un texto rojo. (1h)</li>
+  <li>Validar formato del correo electronico. (1h)</li>
+  <li>(13,15,16) Ventana para generar un proyecto. (3h)</li>
+  <li>Replicar inserts en la BD embebida. (4h)</li>
+  <li>Botón para cerrar sesión. (1h)</li>
+  <li>Que la aplicación funcione a través de la BD embebida. (2h)</li>
+  <li>Hacer JMenuBar y gestionar los permisos de acceso. (1h)</li>
+  <li>Generar archivo log. (2h)</li>
+</ol>
 
 <h2>Participantes</h2>
 <ul>
