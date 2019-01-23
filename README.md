@@ -12,7 +12,7 @@
   <li>Ha de tener un JInternalFrame para inscribir usuarios al programa. (4 horas)</li>  
 </ol>
 
-<h3>Indicaciones para utilizar la versión 0.1</h3>
+<h3>Indicaciones para utilizar la versión 1.0</h3>
 <p>
   Para poder tratar la información, en este caso de usuarios, primero debes de importar en tu BD MySQL el archivo que se encuentra dentro de <b><i>main/resources/bd_scrum_arr.sql</i></b> para hacer un volcado de información.
 </p>
