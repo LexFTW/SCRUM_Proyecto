@@ -31,7 +31,6 @@ public class TestConnection {
 //	        factory.close();
 	        
 	        IUser iuser = new UserSQLRemote();
-	        iuser.loadUsers();
 	        iuser.getAllUsers();
 	        iuser.getUserLogin("Amengual", "Contraseña");
 	        User user = iuser.getUserLogged();

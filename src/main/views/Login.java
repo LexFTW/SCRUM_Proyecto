@@ -73,11 +73,11 @@ public class Login implements ActionListener{
 		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 14));
 		
 		lblUser = new JLabel("Usuario:");
-		lblUser.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblUser.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblUser.setVisible(false);
 		
 		lblNameUser = new JLabel();
-		lblNameUser.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNameUser.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblNameUser.setVisible(false);
 		
 		lblError = new JLabel("El Usuario y/o Contraseña son incorrectos.");
