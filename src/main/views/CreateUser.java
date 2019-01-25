@@ -180,23 +180,23 @@ public class CreateUser extends JInternalFrame implements ActionListener{
 	}
 	
 	private void insertUser(boolean generateLogin, boolean validatePassword, boolean validateMail) {
-		if(!validateMail) {
-			JOptionPane.showMessageDialog(null, "Email incorrecto", "Email incorrecto", JOptionPane.ERROR_MESSAGE);
-        	txtMail.setText("");
-        	
-        	if(!validatePassword) {
-        		lblWarning.setText("Contraseñas no coincidentes");
-    			lblWarning.setVisible(true);
-    			
+		if(validateMail) {
+			System.out.println("Mailo gueno");
+        		System.out.println("Contraseña guena");
     			User user = new User();
-    			user.setUserName("");
-    			user.setUserLastname("");
-    			user.setUserNickname("");
-    			user.setUserPassword(iuser.getHashingPassword(""));
-    			user.setPermissionID();
+    			user.setUserName(txtName.getText().split(" ")[0]);
+    			user.setUserLastname(txtName.getText().split(" ")[1] + txtName.getText().split(" ")[2]);
+    			user.setUserNickname(txtLogin.getText());
+    			user.setUserPassword(iuser.getHashingPassword(txtPassword.getPassword().toString()));
+    			user.setUserEmail(txtMail.getText());
+    			user.setPermissionID(1);
+    			
+    			System.out.println(user.toString());
     			
     			iuser.insertUser(user);
-        	}
+		}else {
+			JOptionPane.showMessageDialog(null, "Email incorrecto", "Email incorrecto", JOptionPane.ERROR_MESSAGE);
+        	txtMail.setText("");
 		}
 	}
 
@@ -218,7 +218,6 @@ public class CreateUser extends JInternalFrame implements ActionListener{
 		int aux = 0;
 		
 		for (User user : iuser.getAllUsers()) {
-			System.out.println(user.getUserNickname());
 			if(user.getUserNickname().contains(login)) {
 				aux++;
 			}

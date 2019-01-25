@@ -18,6 +18,7 @@ public class User {
 	private int UserID;
 	private String UserName;
 	private String UserLastname;
+	private String UserEmail;
 	private String UserNickname;
 	private String UserPassword;
 	private int PermissionID;
@@ -65,6 +66,16 @@ public class User {
 	public void setUserPassword(String userPassword) {
 		UserPassword = userPassword;
 	}
+	
+	@Column(name = "UserEmail")
+	public String getUserEmail() {
+		return UserEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		UserEmail = userEmail;
+	}
+
 	@Column(name ="PermissionID")
 	public int getPermissionID() {
 		return PermissionID;
