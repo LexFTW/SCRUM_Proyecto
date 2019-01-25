@@ -15,7 +15,7 @@ public interface IUser {
     final String ALPHA = "abcdefghijklmnopqrstuvwxyz";
     final String NUMERIC = "0123456789";
     final String SPECIAL_CHARS = "!@#$%^&*_=+-/";
-	
+    
 	// Atributtes for IUser;
 	User user = new User();
 	ArrayList<User> users = new ArrayList<>();
