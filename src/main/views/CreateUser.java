@@ -4,10 +4,15 @@ import javax.swing.JInternalFrame;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
+
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 
 import javax.swing.JComboBox;
+import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 
@@ -18,15 +23,18 @@ import javax.swing.JButton;
 import java.awt.Color;
 
 
-public class CreateUser extends JInternalFrame{
+public class CreateUser extends JInternalFrame implements ActionListener{
 	// VARIABLES OF THE CREATEUSER CLASS
 	private JTextField txtName;
 	private JTextField txtLogin;
 	private JTextField txtMail;
-	private JTextField txtRepeatPassword;
-	private JTextField txtPassword;
+	private JPasswordField txtRepeatPassword;
+	private JPasswordField txtPassword;
+	private JButton btnGeneratePassword;
+	private IUser iuser;
 	
 	public CreateUser(IUser iuser) {
+		this.iuser = iuser;
 		this.setResizable(true);
 		this.setMaximizable(true);
 		this.setClosable(true);
@@ -64,14 +72,15 @@ public class CreateUser extends JInternalFrame{
 		txtMail = new JTextField();
 		txtMail.setColumns(10);
 		
-		txtRepeatPassword = new JTextField();
+		txtRepeatPassword = new JPasswordField();
 		txtRepeatPassword.setColumns(10);
 		
-		txtPassword = new JTextField();
+		txtPassword = new JPasswordField();
 		txtPassword.setColumns(10);
 		
-		JButton btnGeneratePassword = new JButton("Generar Password");
+		btnGeneratePassword = new JButton("Generar Password");
 		btnGeneratePassword.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnGeneratePassword.addActionListener(this);
 		
 		JButton btnSave = new JButton("Guardar");
 		
@@ -137,5 +146,17 @@ public class CreateUser extends JInternalFrame{
 		getContentPane().setLayout(groupLayout);
 		// THIS PART BELONGS TO LAYOUT(GROUP LAYOUT)
 		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() instanceof JButton) {
+			JButton btn = (JButton) e.getSource();
+			if(btn == btnGeneratePassword) {
+				String pwdGenerate = iuser.generatePassword();
+				txtPassword.setText(pwdGenerate);
+				txtRepeatPassword.setText(pwdGenerate);
+			}
+		}
 	}
 }
