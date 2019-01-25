@@ -30,14 +30,16 @@ public interface IUser {
 	/*
 	 * Print all users of the ArrayList<User>
 	 */
-	public default void getAllUsers() {
+	public default ArrayList<User> getAllUsers() {
 		if(users.size() != 0) {
 			for (User user : users) {
-				System.out.println(user.toString());
+				return this.users;
 			}
 		}else {
 			System.err.println("No se han cargado los datos de los usuarios correctamente.");
 		}
+		
+		return null;
 	}
 	
 	/*

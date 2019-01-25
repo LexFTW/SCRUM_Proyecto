@@ -42,6 +42,7 @@ public class CreateUser extends JInternalFrame implements ActionListener{
 	private JLabel lblRepeatPassword;
 	private JLabel lblMail;
 	private JComboBox comboBox;
+	private JLabel lblWarning;
 	
 	public CreateUser(IUser iuser) {
 		this.iuser = iuser;
@@ -94,6 +95,8 @@ public class CreateUser extends JInternalFrame implements ActionListener{
 		
 		btnSave = new JButton("Guardar");
 		btnSave.addActionListener(this);
+		
+		lblWarning = new JLabel();
 		
 		// THIS PART BELONGS TO LAYOUT(GROUP LAYOUT)
 		btnSave.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -169,6 +172,7 @@ public class CreateUser extends JInternalFrame implements ActionListener{
 				txtRepeatPassword.setText(pwdGenerate);
 			}else if(btn == btnSave) {
 				generateLogin();
+				validatePassword();
 				System.out.println("Comprobando Correo");
 				String email = txtMail.getText();
 				Pattern pattern = Pattern.compile("\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b");
@@ -185,8 +189,30 @@ public class CreateUser extends JInternalFrame implements ActionListener{
 	public void generateLogin() {
 		
 		String[] array = txtName.getText().split(" ");
-		System.out.println(array[0].charAt(0));
+//		System.out.println(array[0].charAt(0));
 		String login = array[0].charAt(0) + array[1];
-		txtLogin.setText(login);
+		int aux = 0;
+		
+		for (User user : iuser.getAllUsers()) {
+			System.out.println(user.getUserNickname());
+			if(user.getUserNickname().contains(login)) {
+				aux++;
+			}
+		}
+		
+		if(aux == 0) {
+			txtLogin.setText(login);
+		} else {
+			txtLogin.setText(login + aux);
+		}
+	}
+	
+	public void validatePassword() {
+		if(txtRepeatPassword !=  txtPassword) {
+			lblWarning.setText("Contraseñas no coincidentes");
+			lblWarning.setVisible(true);
+		} else {
+			lblWarning.setVisible(false);
+		}
 	}
 }
