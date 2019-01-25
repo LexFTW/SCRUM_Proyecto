@@ -173,23 +173,47 @@ public class CreateUser extends JInternalFrame implements ActionListener{
 			}else if(btn == btnSave) {
 				generateLogin();
 				validatePassword();
-				System.out.println("Comprobando Correo");
-				String email = txtMail.getText();
-				Pattern pattern = Pattern.compile("\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b");
-	            Matcher matcher = pattern.matcher(email);
-	            
-	            if(!matcher.find()) {
-	            	JOptionPane.showMessageDialog(null, "Email incorrecto", "Email incorrecto", JOptionPane.ERROR_MESSAGE);
-	            	txtMail.setText("");
-	            }
+				validateMail();
+				insertUser(generateLogin(), validatePassword(), validateMail());
 			}
 		}
 	}
 	
-	public void generateLogin() {
-		
+	private void insertUser(boolean generateLogin, boolean validatePassword, boolean validateMail) {
+		if(!validateMail) {
+			JOptionPane.showMessageDialog(null, "Email incorrecto", "Email incorrecto", JOptionPane.ERROR_MESSAGE);
+        	txtMail.setText("");
+        	
+        	if(!validatePassword) {
+        		lblWarning.setText("Contraseñas no coincidentes");
+    			lblWarning.setVisible(true);
+    			
+    			User user = new User();
+    			user.setUserName("");
+    			user.setUserLastname("");
+    			user.setUserNickname("");
+    			user.setUserPassword(iuser.getHashingPassword(""));
+    			user.setPermissionID();
+    			
+    			iuser.insertUser(user);
+        	}
+		}
+	}
+
+	private boolean validateMail() {
+		String email = txtMail.getText();
+		Pattern pattern = Pattern.compile("\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b");
+        Matcher matcher = pattern.matcher(email);
+        
+        if(!matcher.find()) {
+        	return false;
+        }else {
+        	return true;
+        }
+	}
+
+	public boolean generateLogin() {
 		String[] array = txtName.getText().split(" ");
-//		System.out.println(array[0].charAt(0));
 		String login = array[0].charAt(0) + array[1];
 		int aux = 0;
 		
@@ -205,14 +229,16 @@ public class CreateUser extends JInternalFrame implements ActionListener{
 		} else {
 			txtLogin.setText(login + aux);
 		}
+		
+		return true;
 	}
 	
-	public void validatePassword() {
+	public boolean validatePassword() {
 		if(txtRepeatPassword !=  txtPassword) {
-			lblWarning.setText("Contraseñas no coincidentes");
-			lblWarning.setVisible(true);
+			return false;
 		} else {
 			lblWarning.setVisible(false);
+			return true;
 		}
 	}
 }

@@ -15,13 +15,15 @@ import main.models.UserPermission;
 public class UserSQLRemote implements IUser{
 
 	private User userLogged;
+	private EntityManagerFactory factory;
+	private EntityManager entityManager;
 	
 	/*
 	 * This constructor load the users from the Remote Database to ArrayList<User>
 	 */
 	public UserSQLRemote() {
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ScrumHibernate");
-        EntityManager entityManager = factory.createEntityManager();
+		this.factory = Persistence.createEntityManagerFactory("ScrumHibernate");
+        this.entityManager = factory.createEntityManager();
 		int primaryKey = 1;
 		
 		while(entityManager.find(User.class, primaryKey) != null) {
@@ -98,6 +100,19 @@ public class UserSQLRemote implements IUser{
 		}
 		
 		return null;
+	}
+
+
+	/*
+	 * 
+	 * @see main.interfaces.IUser#insertUser(main.models.User)
+	 */
+	@Override
+	public void insertUser(User user) {
+		this.entityManager.getTransaction().begin();
+		this.entityManager.persist(user);
+		this.entityManager.getTransaction().commit();
+		this.entityManager.close();
 	}
 
 }

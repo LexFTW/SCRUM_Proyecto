@@ -25,4 +25,9 @@ public class UserSQLLocal implements IUser{
 		return null;
 	}
 
+	@Override
+	public void insertUser(User user) {
+		
+	}
+
 }

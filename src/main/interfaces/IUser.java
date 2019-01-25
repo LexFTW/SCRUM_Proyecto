@@ -26,6 +26,7 @@ public interface IUser {
 	public String getTitleConnection();
 	public User getUserLogged();
 	public String getUserLoggedPermission();
+	public void insertUser(User user);
 	
 	/*
 	 * Print all users of the ArrayList<User>
