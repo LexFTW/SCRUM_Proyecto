@@ -36,6 +36,12 @@ public class CreateUser extends JInternalFrame implements ActionListener{
 	private JButton btnGeneratePassword;
 	private JButton btnSave;
 	private IUser iuser;
+	private JLabel lblName;
+	private JLabel lblLogin;
+	private JLabel lblPassword;
+	private JLabel lblRepeatPassword;
+	private JLabel lblMail;
+	private JComboBox comboBox;
 	
 	public CreateUser(IUser iuser) {
 		this.iuser = iuser;
@@ -47,22 +53,22 @@ public class CreateUser extends JInternalFrame implements ActionListener{
 		// THIS PART BELONGS TO THE VARIABLES FEATURES
 		getContentPane().setForeground(Color.WHITE);
 		
-		JLabel lblName = new JLabel("Nombre:");
+		lblName = new JLabel("Nombre:");
 		lblName.setFont(new Font("Tahoma", Font.BOLD, 14));
 		
-		JLabel lblLogin = new JLabel("Login generado:");
+		lblLogin = new JLabel("Login generado:");
 		lblLogin.setFont(new Font("Tahoma", Font.BOLD, 14));
 		
-		JLabel lblPassword = new JLabel("Password:");
+		lblPassword = new JLabel("Password:");
 		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 14));
 		
-		JLabel lblRepeatPassword = new JLabel("Repite Password:");
+		lblRepeatPassword = new JLabel("Repite Password:");
 		lblRepeatPassword.setFont(new Font("Tahoma", Font.BOLD, 14));
 		
-		JLabel lblMail = new JLabel("Mail:");
+		lblMail = new JLabel("Mail:");
 		lblMail.setFont(new Font("Tahoma", Font.BOLD, 14));
 		
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Seleccione un perfil de usuario", "Master Owner", "Scrum Master", "Developer", "Administrator"}));
 		comboBox.setFont(new Font("Tahoma", Font.BOLD, 11));
 		setVisible(true);
@@ -162,6 +168,7 @@ public class CreateUser extends JInternalFrame implements ActionListener{
 				txtPassword.setText(pwdGenerate);
 				txtRepeatPassword.setText(pwdGenerate);
 			}else if(btn == btnSave) {
+				generateLogin();
 				System.out.println("Comprobando Correo");
 				String email = txtMail.getText();
 				Pattern pattern = Pattern.compile("\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b");
@@ -173,5 +180,13 @@ public class CreateUser extends JInternalFrame implements ActionListener{
 	            }
 			}
 		}
+	}
+	
+	public void generateLogin() {
+		
+		String[] array = txtName.getText().split(" ");
+		System.out.println(array[0].charAt(0));
+		String login = array[0].charAt(0) + array[1];
+		txtLogin.setText(login);
 	}
 }
