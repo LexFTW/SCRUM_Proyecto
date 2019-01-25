@@ -1,12 +1,19 @@
 package main.implementations;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
+
 
 import main.interfaces.IUser;
 import main.models.User;
@@ -17,7 +24,8 @@ public class UserSQLRemote implements IUser{
 	private User userLogged;
 	private EntityManagerFactory factory;
 	private EntityManager entityManager;
-	
+	private Connection connection;
+	private Statement statement;
 	/*
 	 * This constructor load the users from the Remote Database to ArrayList<User>
 	 */
@@ -109,10 +117,31 @@ public class UserSQLRemote implements IUser{
 	 */
 	@Override
 	public void insertUser(User user) {
+		this.users.add(user);
 		this.entityManager.getTransaction().begin();
 		this.entityManager.persist(user);
 		this.entityManager.getTransaction().commit();
 		this.entityManager.close();
+		String url =".." + File.separator + "resources" + File.separator + "bd_scrum_local_arr.sql";
+		System.out.println(url);
+		try {
+			this.connection = DriverManager.getConnection("jdbc:sqlite: " + url ,"root", "");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			this.statement = connection.createStatement();
+			String sqlQuery = "INSERT INTO users(UserName, UserLastname, UserNickname, UserPassword, UserEmail, PermissionID)" +
+			"SET (" + user.getUserName() + ", " + user.getUserLastname() + ", " + user.getUserNickname() + ", " + user.getUserPassword() +
+			", " + user.getUserEmail() + ", " + user.getPermissionID() + ");";
+			
+			statement.executeUpdate(sqlQuery);
+			statement.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
