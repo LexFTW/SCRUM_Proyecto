@@ -4,12 +4,15 @@ import javax.swing.JInternalFrame;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JComboBox;
 import javax.swing.Action;
@@ -31,6 +34,7 @@ public class CreateUser extends JInternalFrame implements ActionListener{
 	private JPasswordField txtRepeatPassword;
 	private JPasswordField txtPassword;
 	private JButton btnGeneratePassword;
+	private JButton btnSave;
 	private IUser iuser;
 	
 	public CreateUser(IUser iuser) {
@@ -82,7 +86,8 @@ public class CreateUser extends JInternalFrame implements ActionListener{
 		btnGeneratePassword.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnGeneratePassword.addActionListener(this);
 		
-		JButton btnSave = new JButton("Guardar");
+		btnSave = new JButton("Guardar");
+		btnSave.addActionListener(this);
 		
 		// THIS PART BELONGS TO LAYOUT(GROUP LAYOUT)
 		btnSave.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -156,6 +161,16 @@ public class CreateUser extends JInternalFrame implements ActionListener{
 				String pwdGenerate = iuser.generatePassword();
 				txtPassword.setText(pwdGenerate);
 				txtRepeatPassword.setText(pwdGenerate);
+			}else if(btn == btnSave) {
+				System.out.println("Comprobando Correo");
+				String email = txtMail.getText();
+				Pattern pattern = Pattern.compile("\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b");
+	            Matcher matcher = pattern.matcher(email);
+	            
+	            if(!matcher.find()) {
+	            	JOptionPane.showMessageDialog(null, "Email incorrecto", "Email incorrecto", JOptionPane.ERROR_MESSAGE);
+	            	txtMail.setText("");
+	            }
 			}
 		}
 	}
