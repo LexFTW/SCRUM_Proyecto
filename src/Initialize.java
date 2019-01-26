@@ -8,6 +8,7 @@ import main.implementations.UserSQLLocal;
 import main.implementations.UserSQLRemote;
 import main.interfaces.IUser;
 import main.views.Login;
+import main.views.Login_;
 
 public class Initialize {
 	
