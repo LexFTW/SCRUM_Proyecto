@@ -43,6 +43,15 @@ public interface IUser {
 		return null;
 	}
 	
+	public default ArrayList<UserPermission> getAllPermissions(){
+		if(userPermissions.size() != 0) {
+			return userPermissions;
+		}else {
+			System.err.println("No se han cargado los datos de los permisos correctamente.");
+		}
+		return null;
+	}
+	
 	/*
 	 * This method is responsible for doing 'hashing' on the password entered in the login.
 	 * @param The password introduce into the JPasswordField from Login.

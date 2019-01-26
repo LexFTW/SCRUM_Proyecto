@@ -60,11 +60,6 @@ public class UserSQLRemote implements IUser{
 		for (User user : users) {
 			if(user.getUserNickname().equals(userName) && user.getUserPassword().equals(passHashed)) {
 				this.userLogged = user;
-				System.out.println("[INFO] - Usuario encontrado!");
-				System.out.println("====================================");
-				System.out.println("Usuario: " + this.userLogged.getUserNickname());
-				System.out.println("Contraseña: " + this.userLogged.getUserPassword());
-				System.out.println("====================================");
 				return this.userLogged;
 			}
 		}
@@ -122,26 +117,25 @@ public class UserSQLRemote implements IUser{
 		this.entityManager.persist(user);
 		this.entityManager.getTransaction().commit();
 		this.entityManager.close();
-		String url =".." + File.separator + "resources" + File.separator + "bd_scrum_local_arr.sql";
-		System.out.println(url);
-		try {
-			this.connection = DriverManager.getConnection("jdbc:sqlite: " + url ,"root", "");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		try {
-			this.statement = connection.createStatement();
-			String sqlQuery = "INSERT INTO users(UserName, UserLastname, UserNickname, UserPassword, UserEmail, PermissionID)" +
-			"SET (" + user.getUserName() + ", " + user.getUserLastname() + ", " + user.getUserNickname() + ", " + user.getUserPassword() +
-			", " + user.getUserEmail() + ", " + user.getPermissionID() + ");";
-			
-			statement.executeUpdate(sqlQuery);
-			statement.close();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+//		String url =".." + File.separator + "resources" + File.separator + "bd_scrum_local_arr.sql";
+//		System.out.println(url);
+//		try {
+//			this.connection = DriverManager.getConnection("jdbc:sqlite: " + url ,"root", "");
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		try {
+//			this.statement = connection.createStatement();
+//			String sqlQuery = "INSERT INTO users(UserName, UserLastname, UserNickname, UserPassword, UserEmail, PermissionID)" +
+//			"SET (" + user.getUserName() + ", " + user.getUserLastname() + ", " + user.getUserNickname() + ", " + user.getUserPassword() +
+//			", " + user.getUserEmail() + ", " + user.getPermissionID() + ");";
+//			
+//			statement.executeUpdate(sqlQuery);
+//			statement.close();
+//			
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
 	}
-
 }
