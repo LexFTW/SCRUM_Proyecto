@@ -116,7 +116,7 @@ public class UserSQLRemote implements IUser{
 		this.entityManager.getTransaction().begin();
 		this.entityManager.persist(user);
 		this.entityManager.getTransaction().commit();
-		this.entityManager.close();
+//		this.entityManager.close();
 //		String url =".." + File.separator + "resources" + File.separator + "bd_scrum_local_arr.sql";
 //		System.out.println(url);
 //		try {

@@ -9,6 +9,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
@@ -22,6 +23,10 @@ public class MainFrame extends JFrame{
 	private JMenuBar menuBar;
 	private JMenu menu_projects;
 	private JMenu menu_users;
+	private JMenuItem menu_users_create;
+	private JMenuItem menu_users_modify;
+	private JMenuItem menu_projects_create;
+	private JMenuItem menu_projects_show;
 	private JLabel lbl_UserLogged;
 	private JButton btn_LogOut;
 	
@@ -30,6 +35,16 @@ public class MainFrame extends JFrame{
 		this.menuBar = new JMenuBar();
 		this.menu_projects = new JMenu("Proyectos");
 		this.menu_users = new JMenu("Usuarios");
+		
+		this.menu_projects_create = new JMenuItem("Crear Proyecto");
+		this.menu_projects_show = new JMenuItem("Mostrar Proyectos");
+		this.menu_users_create = new JMenuItem("Crear Usuario");
+		this.menu_users_modify = new JMenuItem("Modificar Usuario");
+		
+		this.menu_projects.add(this.menu_projects_create);
+		this.menu_projects.add(this.menu_projects_show);
+		this.menu_users.add(this.menu_users_create);
+		this.menu_users.add(this.menu_users_modify);
 		
 		this.menuBar.add(menu_projects);
 		this.menuBar.add(menu_users);
@@ -80,6 +95,42 @@ public class MainFrame extends JFrame{
 		return panel;
 	}
 
+	public JMenuBar getMenuBar() {
+		return menuBar;
+	}
+
+	public JMenu getMenu_projects() {
+		return menu_projects;
+	}
+
+	public JMenu getMenu_users() {
+		return menu_users;
+	}
+
+	public JMenuItem getMenu_users_create() {
+		return menu_users_create;
+	}
+
+	public JMenuItem getMenu_users_modify() {
+		return menu_users_modify;
+	}
+
+	public JMenuItem getMenu_projects_create() {
+		return menu_projects_create;
+	}
+
+	public JMenuItem getMenu_projects_show() {
+		return menu_projects_show;
+	}
+
+	public JLabel getLbl_UserLogged() {
+		return lbl_UserLogged;
+	}
+
+	public JButton getBtn_LogOut() {
+		return btn_LogOut;
+	}
+
 	public void setDesktopPane(JDesktopPane desktopPane) {
 		this.desktopPane = desktopPane;
 	}
@@ -92,16 +143,8 @@ public class MainFrame extends JFrame{
 		this.panel = panel;
 	}
 
-	public JMenuBar getMenuBar() {
-		return menuBar;
-	}
-	
-	public JMenu getMenu_projects() {
-		return menu_projects;
-	}
-
-	public JMenu getMenu_users() {
-		return menu_users;
+	public void setMenuBar(JMenuBar menuBar) {
+		this.menuBar = menuBar;
 	}
 
 	public void setMenu_projects(JMenu menu_projects) {
@@ -112,16 +155,20 @@ public class MainFrame extends JFrame{
 		this.menu_users = menu_users;
 	}
 
-	public JLabel getLbl_UserLogged() {
-		return lbl_UserLogged;
+	public void setMenu_users_create(JMenuItem menu_users_create) {
+		this.menu_users_create = menu_users_create;
 	}
 
-	public JButton getBtn_LogOut() {
-		return btn_LogOut;
+	public void setMenu_users_modify(JMenuItem menu_users_modify) {
+		this.menu_users_modify = menu_users_modify;
 	}
 
-	public void setMenuBar(JMenuBar menuBar) {
-		this.menuBar = menuBar;
+	public void setMenu_projects_create(JMenuItem menu_projects_create) {
+		this.menu_projects_create = menu_projects_create;
+	}
+
+	public void setMenu_projects_show(JMenuItem menu_projects_show) {
+		this.menu_projects_show = menu_projects_show;
 	}
 
 	public void setLbl_UserLogged(JLabel lbl_UserLogged) {

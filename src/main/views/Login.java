@@ -65,14 +65,7 @@ public class Login implements ActionListener{
 				this.lbl_ErrorLogin.setVisible(false);
 				frame.getInternalFrame().getContentPane().removeAll();
 				frame.getInternalFrame().repaint();
-				
-				if(user.getPermissionID() == 1) {
-					frame.getJMenuBar().remove(frame.getMenu_projects());
-					new CreateUser(iuser, frame);
-				}else {
-					System.out.println("[INFO] - Aún estamos trabajando en las otras ventanas:");
-				}
-				
+				new ControlPanel(iuser, frame);
 			}
 		}
 	}
