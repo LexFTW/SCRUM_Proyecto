@@ -30,9 +30,5 @@ public class Initialize {
 		
 		// Generate object login:
 		Login login = new Login(iuser);
-		
-		IUser iuser = new UserSQLLocal();
-		iuser.getAllUsers();
-		System.out.println(iuser.getHashingPassword(iuser.generatePassword()));
 	}
 }

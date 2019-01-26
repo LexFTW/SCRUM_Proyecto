@@ -20,15 +20,19 @@ public class MainFrame extends JFrame{
 	private JInternalFrame internalFrame;
 	private JPanel panel;
 	private JMenuBar menuBar;
-	private JMenu menu;
+	private JMenu menu_projects;
+	private JMenu menu_users;
 	private JLabel lbl_UserLogged;
 	private JButton btn_LogOut;
 	
 	MainFrame(){
 		// Initialize components "Menu":
 		this.menuBar = new JMenuBar();
-		this.menu = new JMenu("Proyectos");
-		this.menuBar.add(menu);
+		this.menu_projects = new JMenu("Proyectos");
+		this.menu_users = new JMenu("Usuarios");
+		
+		this.menuBar.add(menu_projects);
+		this.menuBar.add(menu_users);
 		
 		this.panel = new JPanel(new MigLayout());
 		this.panel.setBackground(Color.WHITE);
@@ -52,9 +56,9 @@ public class MainFrame extends JFrame{
 		internalFrame.setLocation((desktopSize.width - jInternalFrameSize.width)/2 - 10,
 		    (desktopSize.height- jInternalFrameSize.height)/2 - 50);
 		
-		this.panel.add(this.lbl_UserLogged, "align right, span 2");
+		this.panel.add(this.lbl_UserLogged, "align right");
 		this.panel.add(this.btn_LogOut, "wrap");
-		this.panel.add(this.desktopPane, "pushx, growx, pushy, growy, wrap");
+		this.panel.add(this.desktopPane, "pushx, growx, pushy, growy, span 2, wrap");
 		this.setJMenuBar(menuBar);
 		this.setTitle("Gestión de Proyectos SCRUM");
 		this.setSize(720, 480);
@@ -91,9 +95,21 @@ public class MainFrame extends JFrame{
 	public JMenuBar getMenuBar() {
 		return menuBar;
 	}
+	
+	public JMenu getMenu_projects() {
+		return menu_projects;
+	}
 
-	public JMenu getMenu() {
-		return menu;
+	public JMenu getMenu_users() {
+		return menu_users;
+	}
+
+	public void setMenu_projects(JMenu menu_projects) {
+		this.menu_projects = menu_projects;
+	}
+
+	public void setMenu_users(JMenu menu_users) {
+		this.menu_users = menu_users;
 	}
 
 	public JLabel getLbl_UserLogged() {
@@ -106,10 +122,6 @@ public class MainFrame extends JFrame{
 
 	public void setMenuBar(JMenuBar menuBar) {
 		this.menuBar = menuBar;
-	}
-
-	public void setMenu(JMenu menu) {
-		this.menu = menu;
 	}
 
 	public void setLbl_UserLogged(JLabel lbl_UserLogged) {

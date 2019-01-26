@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 import main.interfaces.IUser;
 import main.models.User;
 
-public class Login extends MainFrame implements ActionListener{
+public class Login implements ActionListener{
 
 	// Atributtes;
 	private JLabel lbl_UserNickname;
@@ -22,13 +22,13 @@ public class Login extends MainFrame implements ActionListener{
 	private JButton btn_ValidateLogin;
 	
 	private IUser iuser;
-	
+	private MainFrame frame;
 	public Login(IUser iuser){
-		super();
-		super.getJMenuBar().setVisible(false);
-		super.getLbl_UserLogged().setVisible(false);
-		super.getBtn_LogOut().setVisible(false);
-		super.setTitle(super.getTitle() + iuser.getTitleConnection());
+		this.frame = new MainFrame();
+		frame.getJMenuBar().setVisible(false);
+		frame.getLbl_UserLogged().setVisible(false);
+		frame.getBtn_LogOut().setVisible(false);
+		frame.setTitle(frame.getTitle() + iuser.getTitleConnection());
 		this.iuser = iuser;
 		this.lbl_UserNickname = new JLabel("Nombre de Usuario");
 		this.lbl_UserPassword = new JLabel("Contraseña");
@@ -43,12 +43,12 @@ public class Login extends MainFrame implements ActionListener{
 		this.tf_UserNickName.addActionListener(this);
 		this.btn_ValidateLogin.addActionListener(this);
 		
-		super.getInternalFrame().add(this.lbl_UserNickname, "wrap");
-		super.getInternalFrame().add(this.tf_UserNickName, "pushx, growx, wrap");
-		super.getInternalFrame().add(this.lbl_UserPassword, "wrap");
-		super.getInternalFrame().add(this.pf_UserPassword, "pushx, growx, wrap");
-		super.getInternalFrame().add(this.lbl_ErrorLogin, "wrap");
-		super.getInternalFrame().add(this.btn_ValidateLogin, "wrap, align right");
+		frame.getInternalFrame().add(this.lbl_UserNickname, "wrap");
+		frame.getInternalFrame().add(this.tf_UserNickName, "pushx, growx, wrap");
+		frame.getInternalFrame().add(this.lbl_UserPassword, "wrap");
+		frame.getInternalFrame().add(this.pf_UserPassword, "pushx, growx, wrap");
+		frame.getInternalFrame().add(this.lbl_ErrorLogin, "wrap");
+		frame.getInternalFrame().add(this.btn_ValidateLogin, "wrap, align right");
 	}
 	
 	@Override
@@ -63,9 +63,16 @@ public class Login extends MainFrame implements ActionListener{
 				this.lbl_ErrorLogin.setVisible(true);
 			}else {
 				this.lbl_ErrorLogin.setVisible(false);
-				super.getInternalFrame().removeAll();
-				super.getInternalFrame().repaint();
-				new CreateUser(iuser);
+				frame.getInternalFrame().getContentPane().removeAll();
+				frame.getInternalFrame().repaint();
+				
+				if(user.getPermissionID() == 1) {
+					frame.getJMenuBar().remove(frame.getMenu_projects());
+					new CreateUser(iuser, frame);
+				}else {
+					System.out.println("[INFO] - Aún estamos trabajando en las otras ventanas:");
+				}
+				
 			}
 		}
 	}

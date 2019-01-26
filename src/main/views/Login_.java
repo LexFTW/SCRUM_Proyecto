@@ -215,7 +215,7 @@ public class Login_ implements ActionListener {
 				lblNameUser.setVisible(true);
 				btnExit.setVisible(true);
 				menuBar.setVisible(true);
-				CreateUser cu1 = new CreateUser(iuser);
+				CreateUser_ cu1 = new CreateUser_(iuser);
 				cu1.setSize(500, 500);
 				cu1.setLocation(100, 5);
 				desktop.add(cu1);
