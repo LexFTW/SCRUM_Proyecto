@@ -116,26 +116,48 @@ public class UserSQLRemote implements IUser{
 		this.entityManager.getTransaction().begin();
 		this.entityManager.persist(user);
 		this.entityManager.getTransaction().commit();
-//		this.entityManager.close();
-//		String url =".." + File.separator + "resources" + File.separator + "bd_scrum_local_arr.sql";
-//		System.out.println(url);
-//		try {
-//			this.connection = DriverManager.getConnection("jdbc:sqlite: " + url ,"root", "");
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		try {
-//			this.statement = connection.createStatement();
-//			String sqlQuery = "INSERT INTO users(UserName, UserLastname, UserNickname, UserPassword, UserEmail, PermissionID)" +
-//			"SET (" + user.getUserName() + ", " + user.getUserLastname() + ", " + user.getUserNickname() + ", " + user.getUserPassword() +
-//			", " + user.getUserEmail() + ", " + user.getPermissionID() + ");";
-//			
-//			statement.executeUpdate(sqlQuery);
-//			statement.close();
-//			
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
+
+//		System.out.println(user.getUserPassword().getClass().getTypeName());
+		
+		try {
+			try {
+				Class.forName("org.sqlite.JDBC");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+			this.connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/bd_scrum_local_arr.db");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			this.statement = connection.createStatement();
+			
+			String sqlQuery = "CREATE TABLE IF NOT EXISTS `users` (\r\n" + 
+					"	`UserID`	int ( 11 ) NOT NULL,\r\n" + 
+					"	`UserName`	varchar ( 100 ) NOT NULL,\r\n" + 
+					"	`UserLastname`	varchar ( 175 ) NOT NULL,\r\n" + 
+					"	`UserNickname`	varchar ( 50 ) NOT NULL,\r\n" + 
+					"	`UserPassword`	varchar ( 50 ) NOT NULL,\r\n" + 
+					"	`UserEmail`	varchar ( 175 ) DEFAULT NULL,\r\n" + 
+					"	`PermissionID`	int ( 11 ) NOT NULL,\r\n" + 
+					"	`CreatedAt`	timestamp DEFAULT CURRENT_TIMESTAMP,\r\n" + 
+					"	`UpdatedAt`	timestamp DEFAULT CURRENT_TIMESTAMP\r\n" + 
+					");";
+
+			String sqlQuery3 = "INSERT INTO `users` (UserID, UserName, UserLastname, UserNickname, UserPassword, UserEmail, PermissionID)"
+					+ "VALUES(2, '" + user.getUserName() + "', '" + user.getUserLastname() + "', '" + user.getUserNickname() + "', '" +
+					user.getUserPassword() + "', '" + user.getUserEmail() + "', " + user.getPermissionID() + ");";
+			
+			String sqlQuery2 = "INSERT INTO `users` (UserID,UserName,UserLastname,UserNickname,UserPassword,UserEmail,PermissionID,CreatedAt,UpdatedAt) VALUES (1,'AA','AA','AAa','9fab2ee5ba39170d8be10ef547bade2a376f9218',NULL,1,'2019-01-27 14:27:21','2019-01-27 14:27:21')";
+			
+			statement.executeUpdate(sqlQuery);
+			statement.executeUpdate(sqlQuery3);
+			System.out.println("Insertao maquina");
+			statement.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
