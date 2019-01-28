@@ -28,13 +28,15 @@ public class ControlPanel implements ActionListener{
 		}else if(iuser.getUserLogged().getPermissionID() == 2) {
 			this.frame.getJMenuBar().remove(this.frame.getMenu_users());
 		}else if(iuser.getUserLogged().getPermissionID() == 3) {
-			
+			this.frame.getJMenuBar().remove(this.frame.getMenu_users());
+			this.frame.getMenu_projects().remove(this.frame.getMenu_projects_create());
 		}else if(iuser.getUserLogged().getPermissionID() == 4) {
 			
 		}
 
 		this.frame.getJMenuBar().setVisible(true);
 		this.frame.getMenu_users_create().addActionListener(this);
+		this.frame.getMenu_projects_create().addActionListener(this);
 		this.frame.getBtn_LogOut().addActionListener(this);
 	}
 
@@ -44,6 +46,8 @@ public class ControlPanel implements ActionListener{
 			JMenuItem mi = (JMenuItem) e.getSource();
 			if(mi == this.frame.getMenu_users_create()) {
 				new CreateUser(iuser, frame);
+			}else if(mi == this.frame.getMenu_projects_create()) {
+				new CreateProjects(iuser, frame);
 			}
 		}else if(e.getSource() instanceof JButton) {
 			JButton btn = (JButton) e.getSource();
