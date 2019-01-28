@@ -30,8 +30,8 @@ public class User {
 		super();
 	}
 
-	public User(int userID, String userName, String userLastname, String userEmail, String userNickname,
-			String userPassword, int permissionID, Date createdAt, Date updatedAt) {
+	public User(int userID, String userName, String userLastname, String userNickname,
+			String userPassword, String userEmail, int permissionID, Date createdAt, Date updatedAt) {
 		super();
 		UserID = userID;
 		UserName = userName;
@@ -43,6 +43,7 @@ public class User {
 		CreatedAt = createdAt;
 		UpdatedAt = updatedAt;
 	}
+
 
 	@Id
 	@Column(name = "UserID")

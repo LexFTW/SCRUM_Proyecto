@@ -8,6 +8,7 @@ import java.sql.Statement;
 
 import main.interfaces.IUser;
 import main.models.User;
+import main.models.UserPermission;
 
 public class UserSQLLocal implements IUser {
 	private User userLogged;
@@ -20,7 +21,7 @@ public class UserSQLLocal implements IUser {
 	}
 
 	@Override
-	public User getUserLogin(String userName, String password) {
+	public User getUserLogin(String userNickname, String password) {
 
 		try {
 			try {
@@ -32,16 +33,18 @@ public class UserSQLLocal implements IUser {
 			System.out.println("Conexion embebida conectada.");
 
 			statement = connection.createStatement();
-			String query = "select * from users where userName = '" + userName + "' and userPassword = '" + getHashingPassword(password)
+			String query = "select * from users where UserNickname = '" + userNickname + "' and UserPassword = '" + getHashingPassword(password)
 					+ "';";
 
 			resultSet = statement.executeQuery(query);
-			resultSet.next();
-			System.out.println(resultSet.getString(1));
+			while(resultSet.next()) {
+				userLogged = new User(resultSet.getInt("UserID"),resultSet.getString("UserName"),resultSet.getString("UserLastname"),resultSet.getString("UserNickname"),resultSet.getString("UserPassword"),resultSet.getString("UserEmail"),resultSet.getInt("PermissionID"),resultSet.getDate("CreatedAt"), resultSet.getDate("UpdatedAt"));
+			}
 
-//			userLogged = new User(resultSet.getInt("UserID"),resultSet.getString("UserName"),resultSet.getString("UserLastname"),resultSet.getString("UserNickname"),resultSet.getString("UserPassword"),resultSet.getString("UserEmail"),resultSet.getInt("PermissionID"),resultSet.getDate("CreatedAt"), resultSet.getDate("UpdatedAt"));
+
 
 			statement.close();
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -58,11 +61,16 @@ public class UserSQLLocal implements IUser {
 
 	@Override
 	public User getUserLogged() {
-		return null;
+		return userLogged;
 	}
 
 	@Override
 	public String getUserLoggedPermission() {
+		for (UserPermission userPermission : userPermissions) {
+			if(userLogged.getPermissionID() == userPermission.getPermissionID()){
+				return userPermission.getPermissionName();
+			}
+		}
 		return null;
 	}
 
