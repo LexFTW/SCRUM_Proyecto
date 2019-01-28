@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -24,49 +25,72 @@ public class User {
 	private int PermissionID;
 	private Date CreatedAt;
 	private Date UpdatedAt;
-	
+
 	public User() {
 		super();
 	}
-	
+
+	public User(int userID, String userName, String userLastname, String userEmail, String userNickname,
+			String userPassword, int permissionID, Date createdAt, Date updatedAt) {
+		super();
+		UserID = userID;
+		UserName = userName;
+		UserLastname = userLastname;
+		UserEmail = userEmail;
+		UserNickname = userNickname;
+		UserPassword = userPassword;
+		PermissionID = permissionID;
+		CreatedAt = createdAt;
+		UpdatedAt = updatedAt;
+	}
+
 	@Id
-	@Column(name ="UserID")
+	@Column(name = "UserID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int getUserID() {
 		return UserID;
 	}
+
 	public void setUserID(int userID) {
 		UserID = userID;
 	}
-	@Column(name ="UserName")
+
+	@Column(name = "UserName")
 	public String getUserName() {
 		return UserName;
 	}
+
 	public void setUserName(String name) {
 		UserName = name;
 	}
-	@Column(name ="UserLastname")
+
+	@Column(name = "UserLastname")
 	public String getUserLastname() {
 		return UserLastname;
 	}
+
 	public void setUserLastname(String userLastname) {
 		UserLastname = userLastname;
 	}
-	@Column(name ="UserNickname")
+
+	@Column(name = "UserNickname")
 	public String getUserNickname() {
 		return UserNickname;
 	}
+
 	public void setUserNickname(String userNickname) {
 		UserNickname = userNickname;
 	}
-	@Column(name ="UserPassword")
+
+	@Column(name = "UserPassword")
 	public String getUserPassword() {
 		return UserPassword;
 	}
+
 	public void setUserPassword(String userPassword) {
 		UserPassword = userPassword;
 	}
-	
+
 	@Column(name = "UserEmail")
 	public String getUserEmail() {
 		return UserEmail;
@@ -76,28 +100,31 @@ public class User {
 		UserEmail = userEmail;
 	}
 
-	@Column(name ="PermissionID")
+	@Column(name = "PermissionID")
 	public int getPermissionID() {
 		return PermissionID;
 	}
+
 	public void setPermissionID(int permissionID) {
 		this.PermissionID = permissionID;
 	}
-	
-	@Column(name ="CreatedAt", insertable=false, updatable=false)
+
+	@Column(name = "CreatedAt", insertable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date getCreatedAt() {
 		return CreatedAt;
 	}
+
 	public void setCreatedAt(Date createdAt) {
 		CreatedAt = createdAt;
 	}
-	
-	@Column(name ="UpdatedAt", insertable=false, updatable=false)
+
+	@Column(name = "UpdatedAt", insertable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date getUpdatedAt() {
 		return UpdatedAt;
 	}
+
 	public void setUpdatedAt(Date updatedAt) {
 		UpdatedAt = updatedAt;
 	}
