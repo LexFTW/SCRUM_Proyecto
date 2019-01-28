@@ -4,10 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import main.interfaces.IUser;
 import main.models.User;
@@ -25,23 +27,26 @@ public class UserSQLRemote implements IUser {
 	 * This constructor load the users from the Remote Database to ArrayList<User>
 	 */
 	public UserSQLRemote() {
-		this.factory = Persistence.createEntityManagerFactory("ScrumHibernate");
-		this.entityManager = factory.createEntityManager();
-		int primaryKey = 1;
-		
-		while (entityManager.find(User.class, primaryKey) != null) {
-			this.users.add(entityManager.find(User.class, primaryKey));
-			primaryKey++;
-		}
-		
-		primaryKey = 1;
-
+		 this.factory = Persistence.createEntityManagerFactory("ScrumHibernate");
+		 this.entityManager = factory.createEntityManager();
+		 int primaryKey = 1;
+		 
+		//
+		// while (entityManager.find(User.class, primaryKey) != null) {
+		// this.users.add(entityManager.find(User.class, primaryKey));
+		// primaryKey++;
+		// }
+		//
+		// primaryKey = 1;
+		//
+		 
 		while (entityManager.find(UserPermission.class, primaryKey) != null) {
 			this.userPermissions.add(entityManager.find(UserPermission.class, primaryKey));
 			primaryKey++;
 		}
-		
+
 	}
+
 	/*
 	 * Search within the ArrayList for the user specified in the login screen.
 	 * 
@@ -53,15 +58,14 @@ public class UserSQLRemote implements IUser {
 	 * @see main.interfaces.IUser#getUserLogin(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public User getUserLogin(String userName, String password) {
-		String passHashed = getHashingPassword(password);
-		for (User user : users) {
-			if (user.getUserNickname().equals(userName) && user.getUserPassword().equals(passHashed)) {
-				this.userLogged = user;
-				return this.userLogged;
-			}
-		}
-		return null;
+	public User getUserLogin(String userNickname, String password) {
+		this.factory = Persistence.createEntityManagerFactory("ScrumHibernate");
+		this.entityManager = factory.createEntityManager();
+		
+		List<User> loggedUser = entityManager.createQuery("Select u from User u where UserNickname = '" + userNickname
+				+ "' and UserPassword = '" + getHashingPassword(password) + "'").getResultList();
+		
+		return userLogged = loggedUser.get(0);
 	}
 
 	/*
@@ -95,18 +99,13 @@ public class UserSQLRemote implements IUser {
 	 */
 	@Override
 	public String getUserLoggedPermission() {
-		try {
-			for (UserPermission userPermission : userPermissions) {
-				if (userPermission.getPermissionID() == userLogged.getPermissionID()) {
-					return userPermission.getPermissionName();
-				}
-			}
-		} catch (Exception e) {
-			System.err.println(
-					"[ERROR] - No hay ningún usuario logeado, por lo tanto no se puede obtener el tipo de usuario que es.");
-		}
+		
+		this.factory = Persistence.createEntityManagerFactory("ScrumHibernate");
+		this.entityManager = factory.createEntityManager();
+		List<UserPermission> permission = entityManager.createQuery("Select p from UserPermission p where PermissionID = '" + userLogged.getPermissionID() + "'").getResultList();
+		UserPermission up = permission.get(0);
 
-		return null;
+		return up.getPermissionName();
 	}
 
 	/*
@@ -119,11 +118,7 @@ public class UserSQLRemote implements IUser {
 		this.entityManager.getTransaction().begin();
 		this.entityManager.persist(user);
 		this.entityManager.getTransaction().commit();
-
-		// System.out.println(user.getUserPassword().getClass().getTypeName());
-
 		replicarUsuario(user);
-
 	}
 
 	private void replicarUsuario(User user) {
@@ -140,9 +135,9 @@ public class UserSQLRemote implements IUser {
 		try {
 			this.statement = connection.createStatement();
 			String sqlQuery3 = "INSERT INTO `users` (UserID, UserName, UserLastname, UserNickname, UserPassword, UserEmail, PermissionID)"
-					+ "VALUES('" +user.getUserID() +"', '"  + user.getUserName() + "', '" + user.getUserLastname() + "', '"
-					+ user.getUserNickname() + "', '" + user.getUserPassword() + "', '" + user.getUserEmail() + "', "
-					+ user.getPermissionID() + ");";
+					+ "VALUES('" + user.getUserID() + "', '" + user.getUserName() + "', '" + user.getUserLastname()
+					+ "', '" + user.getUserNickname() + "', '" + user.getUserPassword() + "', '" + user.getUserEmail()
+					+ "', " + user.getPermissionID() + ");";
 
 			statement.executeUpdate(sqlQuery3);
 			System.out.println("Insertao maquina");

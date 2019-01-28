@@ -72,6 +72,7 @@ public class CreateProjects implements ActionListener {
 		ArrayList<User> scrums = iuser.getAllUsers();
 		ArrayList<String> scrumString = new ArrayList<>();
 		ArrayList<String> productString = new ArrayList<>();
+		
 		for (User user : scrums) {
 			if (user.getPermissionID() == 2) {
 				scrumString.add(user.getUserID() + ". " + user.getUserName());

@@ -22,7 +22,6 @@ public class UserSQLLocal implements IUser {
 
 	@Override
 	public User getUserLogin(String userNickname, String password) {
-
 		try {
 			try {
 				Class.forName("org.sqlite.JDBC");
@@ -33,21 +32,23 @@ public class UserSQLLocal implements IUser {
 			System.out.println("Conexion embebida conectada.");
 
 			statement = connection.createStatement();
-			String query = "select * from users where UserNickname = '" + userNickname + "' and UserPassword = '" + getHashingPassword(password)
-					+ "';";
+			String query = "select * from users where UserNickname = '" + userNickname + "' and UserPassword = '"
+					+ getHashingPassword(password) + "';";
 
 			resultSet = statement.executeQuery(query);
-			while(resultSet.next()) {
-				userLogged = new User(resultSet.getInt("UserID"),resultSet.getString("UserName"),resultSet.getString("UserLastname"),resultSet.getString("UserNickname"),resultSet.getString("UserPassword"),resultSet.getString("UserEmail"),resultSet.getInt("PermissionID"),resultSet.getDate("CreatedAt"), resultSet.getDate("UpdatedAt"));
+			while (resultSet.next()) {
+				userLogged = new User(resultSet.getInt("UserID"), resultSet.getString("UserName"),
+						resultSet.getString("UserLastname"), resultSet.getString("UserNickname"),
+						resultSet.getString("UserPassword"), resultSet.getString("UserEmail"),
+						resultSet.getInt("PermissionID"), resultSet.getDate("CreatedAt"),
+						resultSet.getDate("UpdatedAt"));
 			}
 
 			statement.close();
-			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 
 		return userLogged;
 	}
@@ -64,11 +65,21 @@ public class UserSQLLocal implements IUser {
 
 	@Override
 	public String getUserLoggedPermission() {
-		for (UserPermission userPermission : userPermissions) {
-			if(userLogged.getPermissionID() == userPermission.getPermissionID()){
-				return userPermission.getPermissionName();
+		try {
+			this.connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/bd_scrum_local_aar.db");
+			statement = connection.createStatement();
+
+			String query = "select * from users_permission where PermissionID = " + userLogged.getPermissionID();
+			resultSet = statement.executeQuery(query);
+
+			while (resultSet.next()) {
+				return resultSet.getString("PermissionName");
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+
+
 		return null;
 	}
 
