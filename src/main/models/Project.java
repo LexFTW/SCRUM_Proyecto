@@ -32,7 +32,7 @@ public class Project {
 		this.projectID = projectID;
 	}
 	
-	@Column(name = "ProjectName")
+	@Column(name = "ProjectTitle")
 	public String getProjectName() {
 		return projectName;
 	}

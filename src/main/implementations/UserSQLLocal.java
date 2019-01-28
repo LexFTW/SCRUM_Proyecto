@@ -41,8 +41,6 @@ public class UserSQLLocal implements IUser {
 				userLogged = new User(resultSet.getInt("UserID"),resultSet.getString("UserName"),resultSet.getString("UserLastname"),resultSet.getString("UserNickname"),resultSet.getString("UserPassword"),resultSet.getString("UserEmail"),resultSet.getInt("PermissionID"),resultSet.getDate("CreatedAt"), resultSet.getDate("UpdatedAt"));
 			}
 
-
-
 			statement.close();
 			
 
