@@ -199,13 +199,13 @@ public class CreateUser implements ActionListener{
 			this.lbl_ErrorData.setVisible(false);
 			String nickname = this.tf_UserName.getText().split(" ")[0].toUpperCase().charAt(0) + this.tf_UserName.getText().split(" ")[1].substring(0, 1).toUpperCase() + this.tf_UserName.getText().split(" ")[1].substring(1).toLowerCase();
 			
-			int count = 0;
+			int count = 1;
 			
-			for (User user : iuser.getAllUsers()) {
-				if(user.getUserNickname().contains(nickname)) {
-					count++;
-				}
-			}
+//			for (User user : iuser.getAllUsers()) {
+//				if(user.getUserNickname().contains(nickname)) {
+//					count++;
+//				}
+//			}
 			
 			if(count != 0) {
 				nickname = nickname + count;

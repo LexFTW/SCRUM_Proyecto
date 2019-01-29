@@ -1,5 +1,10 @@
 package main.implementations;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -22,16 +27,18 @@ public class UserSQLLocal implements IUser {
 			try {
 				this.connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/bd_scrum_local_aar.db");
 				System.out.println("Conexion embebida conectada.");
-				
+
 				this.statement = this.connection.createStatement();
 				String sqlQuery = "SELECT * FROM users_permission;";
-				
+
 				this.resultSet = this.statement.executeQuery(sqlQuery);
-				
-				while(this.resultSet.next()) {
-					this.userPermissions.add(new UserPermission(this.resultSet.getInt("PermissionID"), this.resultSet.getString("PermissionName"), this.resultSet.getDate("CreatedAt"), this.resultSet.getDate("UpdatedAt")));
+
+				while (this.resultSet.next()) {
+					this.userPermissions.add(new UserPermission(this.resultSet.getInt("PermissionID"),
+							this.resultSet.getString("PermissionName"), this.resultSet.getDate("CreatedAt"),
+							this.resultSet.getDate("UpdatedAt")));
 				}
-				
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -42,7 +49,7 @@ public class UserSQLLocal implements IUser {
 
 	@Override
 	public User getUserLogin(String userNickname, String password) {
-		if(this.connection != null) {
+		if (this.connection != null) {
 			try {
 				statement = connection.createStatement();
 				String query = "select * from users where UserNickname = '" + userNickname + "' and UserPassword = '"
@@ -61,10 +68,10 @@ public class UserSQLLocal implements IUser {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}else {
+		} else {
 			System.out.println("[ERROR] - No se pudo establecer ninguna conexión.");
 		}
-		
+
 		return userLogged;
 	}
 
@@ -80,7 +87,7 @@ public class UserSQLLocal implements IUser {
 
 	@Override
 	public String getUserLoggedPermission() {
-		if(this.connection != null) {
+		if (this.connection != null) {
 			try {
 				statement = connection.createStatement();
 				String query = "select * from users_permission where PermissionID = " + userLogged.getPermissionID();
@@ -92,17 +99,42 @@ public class UserSQLLocal implements IUser {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}else {
+		} else {
 			System.out.println("[ERROR] - No se pudo establecer ninguna conexión.");
 		}
-
 
 		return null;
 	}
 
 	@Override
 	public void insertUser(User user) {
+		File fLog = new File("src/main/resources/log");
+		FileWriter fw;
+		if (fLog.exists()) {
+			if (this.connection != null) {
+				try {
+					fw = new FileWriter(fLog);
+					this.connection = DriverManager
+							.getConnection("jdbc:sqlite:src/main/resources/bd_scrum_local_aar.db");
+					statement = connection.createStatement();
 
+					String query = "insert into users (UserName, UserLastname, UserNickname, UserPassword, UserEmail, PermissionID, CreatedAt, UpdatedAt) VALUES "
+							+ "('" + user.getUserName() + "', '" + user.getUserLastname() + "', '" + user.getUserNickname() + "', '" + user.getUserPassword() + 
+							"', '" + user.getUserEmail() + "', '" + user.getPermissionID() + "', '" + user.getCreatedAt() + "', '" + user.getUpdatedAt() + "')";
+
+					fw.write(query);
+					fw.close();
+					this.statement.executeUpdate(query);
+					this.statement.close();
+					
+				} catch (SQLException | IOException e) {
+					e.printStackTrace();
+				}
+
+			}
+
+		} else {
+			System.out.println("El archivo especificado no existe");
+		}
 	}
-
 }

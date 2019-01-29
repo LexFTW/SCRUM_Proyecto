@@ -1,0 +1,1 @@
+insert into users (UserName, UserLastname, UserNickname, UserPassword, UserEmail, PermissionID, CreatedAt, UpdatedAt) VALUES ('Sora', ' Roxas', 'SRoxas1', '2a0d6fb5d88ca6f12965ebc5e250c38f1297141a', 'fsadfs@asca.com', '1', 'null', 'null')
