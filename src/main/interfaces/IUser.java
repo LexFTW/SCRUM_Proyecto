@@ -35,6 +35,8 @@ public interface IUser {
 	public User getUserLogged();
 	public String getUserLoggedPermission();
 	public void insertUser(User user);
+	public ArrayList<User> getAllProductOwner();
+	public ArrayList<User> getAllScrumMaster();
 	
 	/*
 	 * Print all users of the ArrayList<User>
@@ -102,18 +104,5 @@ public interface IUser {
 		}
 		
 		return password;
-	}
-	
-	public default ArrayList<User> getAllProductOwner(){
-		
-		
-		return productOwners;
-		
-	}
-	
-	public default ArrayList<User> getAllScrumMasters(){
-		
-		
-		return scrumMasters;
 	}
 }

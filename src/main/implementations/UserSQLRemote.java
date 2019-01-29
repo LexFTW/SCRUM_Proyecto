@@ -61,9 +61,6 @@ public class UserSQLRemote implements IUser {
 	 */
 	@Override
 	public User getUserLogin(String userNickname, String password) {
-		this.factory = Persistence.createEntityManagerFactory("ScrumHibernate");
-		this.entityManager = factory.createEntityManager();
-
 		List<User> loggedUser = entityManager.createQuery("Select u from User u where UserNickname = '" + userNickname
 				+ "' and UserPassword = '" + getHashingPassword(password) + "'").getResultList();
 
@@ -101,9 +98,6 @@ public class UserSQLRemote implements IUser {
 	 */
 	@Override
 	public String getUserLoggedPermission() {
-
-		this.factory = Persistence.createEntityManagerFactory("ScrumHibernate");
-		this.entityManager = factory.createEntityManager();
 		List<UserPermission> permission = entityManager
 				.createQuery(
 						"Select p from UserPermission p where PermissionID = '" + userLogged.getPermissionID() + "'")
@@ -154,42 +148,18 @@ public class UserSQLRemote implements IUser {
 
 	}
 
-	public  ArrayList<User> getAllProductOwner() {
-		this.factory = Persistence.createEntityManagerFactory("ScrumHibernate");
-		this.entityManager = factory.createEntityManager();
-		User usuario = new User();
-		List<UserPermission> permisoProductOwner = entityManager.createQuery("Select permiso from UserPermission permiso where PermissionName = 'Product Owner'").getResultList();
-		int up = permisoProductOwner.get(0).getPermissionID();
-		
-		List<User> usuarioProductOwner = entityManager.createQuery("Select usuario from User usuario where PermissionID = " + up).getResultList();
-		
-		
-		ArrayList<User> usuariosProductOwner = new ArrayList<User>(usuarioProductOwner);
-		
-		for (User user : usuariosProductOwner) {
-			System.out.println(user);
-		}
-		
-		return usuariosProductOwner;
+	public ArrayList<User> getAllProductOwner() {
+		UserPermission permissionIDPO = (UserPermission) this.entityManager.createQuery("SELECT permiso FROM UserPermission permiso WHERE PermissionName = 'Product Owner'").getSingleResult();
+		System.out.println("El ID encontrado para Product Owner es: " + permissionIDPO.getPermissionID());
+		ArrayList<User> usersProductOwner = new ArrayList<>(this.entityManager.createQuery("SELECT user FROM User user WHERE PermissionID =" + permissionIDPO.getPermissionID()).getResultList());
+		return usersProductOwner;
 	}
 	
-	public  ArrayList<User> getAllScrumMaster() {
-		this.factory = Persistence.createEntityManagerFactory("ScrumHibernate");
-		this.entityManager = factory.createEntityManager();
-		User usuario = new User();
-		List<UserPermission> permisoScrumMaster = entityManager.createQuery("Select permiso from UserPermission permiso where PermissionName = 'Scrum Master'").getResultList();
-		int up = permisoScrumMaster.get(0).getPermissionID();
-		
-		List<User> usuarioScrumMaster = entityManager.createQuery("Select usuario from User usuario where PermissionID = " + up).getResultList();
-		
-		
-		ArrayList<User> usuariosScrumMaster = new ArrayList<User>(usuarioScrumMaster);
-		
-		for (User user : usuariosScrumMaster) {
-			System.out.println(user);
-		}
-		
-		return usuariosScrumMaster;
+	public ArrayList<User> getAllScrumMaster() {
+		UserPermission permissionIDSM = (UserPermission) this.entityManager.createQuery("SELECT permiso FROM UserPermission permiso WHERE PermissionName = 'Scrum Master'").getSingleResult();
+		System.out.println("El ID encontrado para Scrum Master es: " + permissionIDSM.getPermissionID());
+		ArrayList<User> usersScrumMaster = new ArrayList<>(this.entityManager.createQuery("SELECT user FROM User user WHERE PermissionID =" + permissionIDSM.getPermissionID()).getResultList());
+		return usersScrumMaster;
 	}
 
 }
