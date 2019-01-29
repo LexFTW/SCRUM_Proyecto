@@ -24,7 +24,6 @@ public class Initialize {
 	        iuser = new UserSQLRemote();
 	        System.out.println("[INFO] - Conexión Online");
 		}catch(Exception e) {
-
 			iuser = new UserSQLLocal();
 			System.out.println("[INFO] - Conexión Offline");
 		}

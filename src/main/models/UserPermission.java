@@ -19,6 +19,13 @@ public class UserPermission {
 	private Date CreatedAt;
 	private Date UpdatedAt;
 	
+	public UserPermission(int PermissionID, String PermissionName, Date CreatedAt, Date UpdatedAt) {
+		this.PermissionID = PermissionID;
+		this.PermissionName = PermissionName;
+		this.CreatedAt = CreatedAt;
+		this.UpdatedAt = UpdatedAt;
+	}
+
 	@Id
 	@Column(name = "PermissionID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

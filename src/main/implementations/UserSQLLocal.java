@@ -17,39 +17,54 @@ public class UserSQLLocal implements IUser {
 	private ResultSet resultSet;
 
 	public UserSQLLocal() {
-
+		try {
+			Class.forName("org.sqlite.JDBC");
+			try {
+				this.connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/bd_scrum_local_aar.db");
+				System.out.println("Conexion embebida conectada.");
+				
+				this.statement = this.connection.createStatement();
+				String sqlQuery = "SELECT * FROM users_permission;";
+				
+				this.resultSet = this.statement.executeQuery(sqlQuery);
+				
+				while(this.resultSet.next()) {
+					this.userPermissions.add(new UserPermission(this.resultSet.getInt("PermissionID"), this.resultSet.getString("PermissionName"), this.resultSet.getDate("CreatedAt"), this.resultSet.getDate("UpdatedAt")));
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public User getUserLogin(String userNickname, String password) {
-		try {
+		if(this.connection != null) {
 			try {
-				Class.forName("org.sqlite.JDBC");
-			} catch (ClassNotFoundException e) {
+				statement = connection.createStatement();
+				String query = "select * from users where UserNickname = '" + userNickname + "' and UserPassword = '"
+						+ getHashingPassword(password) + "';";
+
+				resultSet = statement.executeQuery(query);
+				while (resultSet.next()) {
+					userLogged = new User(resultSet.getInt("UserID"), resultSet.getString("UserName"),
+							resultSet.getString("UserLastname"), resultSet.getString("UserNickname"),
+							resultSet.getString("UserPassword"), resultSet.getString("UserEmail"),
+							resultSet.getInt("PermissionID"), resultSet.getDate("CreatedAt"),
+							resultSet.getDate("UpdatedAt"));
+				}
+
+				statement.close();
+			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			this.connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/bd_scrum_local_aar.db");
-			System.out.println("Conexion embebida conectada.");
-
-			statement = connection.createStatement();
-			String query = "select * from users where UserNickname = '" + userNickname + "' and UserPassword = '"
-					+ getHashingPassword(password) + "';";
-
-			resultSet = statement.executeQuery(query);
-			while (resultSet.next()) {
-				userLogged = new User(resultSet.getInt("UserID"), resultSet.getString("UserName"),
-						resultSet.getString("UserLastname"), resultSet.getString("UserNickname"),
-						resultSet.getString("UserPassword"), resultSet.getString("UserEmail"),
-						resultSet.getInt("PermissionID"), resultSet.getDate("CreatedAt"),
-						resultSet.getDate("UpdatedAt"));
-			}
-
-			statement.close();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
+		}else {
+			System.out.println("[ERROR] - No se pudo establecer ninguna conexión.");
 		}
-
+		
 		return userLogged;
 	}
 
@@ -65,18 +80,20 @@ public class UserSQLLocal implements IUser {
 
 	@Override
 	public String getUserLoggedPermission() {
-		try {
-			this.connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/bd_scrum_local_aar.db");
-			statement = connection.createStatement();
+		if(this.connection != null) {
+			try {
+				statement = connection.createStatement();
+				String query = "select * from users_permission where PermissionID = " + userLogged.getPermissionID();
+				resultSet = statement.executeQuery(query);
 
-			String query = "select * from users_permission where PermissionID = " + userLogged.getPermissionID();
-			resultSet = statement.executeQuery(query);
-
-			while (resultSet.next()) {
-				return resultSet.getString("PermissionName");
+				while (resultSet.next()) {
+					return resultSet.getString("PermissionName");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		}else {
+			System.out.println("[ERROR] - No se pudo establecer ninguna conexión.");
 		}
 
 
