@@ -69,16 +69,17 @@ public class CreateProjects implements ActionListener {
 		this.cb_ScrumMaster = new JComboBox<>();
 		this.cb_ProductOwner = new JComboBox<>();
 
-		ArrayList<User> scrums = iuser.getAllUsers();
+		ArrayList<User> scrums = iuser.getAllScrumMasters();
+		ArrayList<User> owners = iuser.getAllProductOwner();
 		ArrayList<String> scrumString = new ArrayList<>();
 		ArrayList<String> productString = new ArrayList<>();
 		
 		for (User user : scrums) {
-			if (user.getPermissionID() == 2) {
-				scrumString.add(user.getUserID() + ". " + user.getUserName());
-			} else if (user.getPermissionID() == 3) {
-				productString.add(user.getUserID() + ". " + user.getUserName());
-			}
+			scrumString.add(user.getUserID() + ". " + user.getUserName());
+		}
+		
+		for (User user : owners) {
+			productString.add(user.getUserID() + ". " + user.getUserName());
 		}
 
 		this.cb_ScrumMaster.setModel(new DefaultComboBoxModel(scrumString.toArray()));

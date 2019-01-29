@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -27,10 +29,10 @@ public class UserSQLRemote implements IUser {
 	 * This constructor load the users from the Remote Database to ArrayList<User>
 	 */
 	public UserSQLRemote() {
-		 this.factory = Persistence.createEntityManagerFactory("ScrumHibernate");
-		 this.entityManager = factory.createEntityManager();
-		 int primaryKey = 1;
-		 
+		this.factory = Persistence.createEntityManagerFactory("ScrumHibernate");
+		this.entityManager = factory.createEntityManager();
+		int primaryKey = 1;
+
 		//
 		// while (entityManager.find(User.class, primaryKey) != null) {
 		// this.users.add(entityManager.find(User.class, primaryKey));
@@ -39,7 +41,7 @@ public class UserSQLRemote implements IUser {
 		//
 		// primaryKey = 1;
 		//
-		 
+
 		while (entityManager.find(UserPermission.class, primaryKey) != null) {
 			this.userPermissions.add(entityManager.find(UserPermission.class, primaryKey));
 			primaryKey++;
@@ -61,10 +63,10 @@ public class UserSQLRemote implements IUser {
 	public User getUserLogin(String userNickname, String password) {
 		this.factory = Persistence.createEntityManagerFactory("ScrumHibernate");
 		this.entityManager = factory.createEntityManager();
-		
+
 		List<User> loggedUser = entityManager.createQuery("Select u from User u where UserNickname = '" + userNickname
 				+ "' and UserPassword = '" + getHashingPassword(password) + "'").getResultList();
-		
+
 		return userLogged = loggedUser.get(0);
 	}
 
@@ -99,10 +101,13 @@ public class UserSQLRemote implements IUser {
 	 */
 	@Override
 	public String getUserLoggedPermission() {
-		
+
 		this.factory = Persistence.createEntityManagerFactory("ScrumHibernate");
 		this.entityManager = factory.createEntityManager();
-		List<UserPermission> permission = entityManager.createQuery("Select p from UserPermission p where PermissionID = '" + userLogged.getPermissionID() + "'").getResultList();
+		List<UserPermission> permission = entityManager
+				.createQuery(
+						"Select p from UserPermission p where PermissionID = '" + userLogged.getPermissionID() + "'")
+				.getResultList();
 		UserPermission up = permission.get(0);
 
 		return up.getPermissionName();
@@ -148,4 +153,43 @@ public class UserSQLRemote implements IUser {
 		}
 
 	}
+
+	public  ArrayList<User> getAllProductOwner() {
+		this.factory = Persistence.createEntityManagerFactory("ScrumHibernate");
+		this.entityManager = factory.createEntityManager();
+		User usuario = new User();
+		List<UserPermission> permisoProductOwner = entityManager.createQuery("Select permiso from UserPermission permiso where PermissionName = 'Product Owner'").getResultList();
+		int up = permisoProductOwner.get(0).getPermissionID();
+		
+		List<User> usuarioProductOwner = entityManager.createQuery("Select usuario from User usuario where PermissionID = " + up).getResultList();
+		
+		
+		ArrayList<User> usuariosProductOwner = new ArrayList<User>(usuarioProductOwner);
+		
+		for (User user : usuariosProductOwner) {
+			System.out.println(user);
+		}
+		
+		return usuariosProductOwner;
+	}
+	
+	public  ArrayList<User> getAllScrumMaster() {
+		this.factory = Persistence.createEntityManagerFactory("ScrumHibernate");
+		this.entityManager = factory.createEntityManager();
+		User usuario = new User();
+		List<UserPermission> permisoScrumMaster = entityManager.createQuery("Select permiso from UserPermission permiso where PermissionName = 'Scrum Master'").getResultList();
+		int up = permisoScrumMaster.get(0).getPermissionID();
+		
+		List<User> usuarioScrumMaster = entityManager.createQuery("Select usuario from User usuario where PermissionID = " + up).getResultList();
+		
+		
+		ArrayList<User> usuariosScrumMaster = new ArrayList<User>(usuarioScrumMaster);
+		
+		for (User user : usuariosScrumMaster) {
+			System.out.println(user);
+		}
+		
+		return usuariosScrumMaster;
+	}
+
 }

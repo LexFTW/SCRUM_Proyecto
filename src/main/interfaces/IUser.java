@@ -6,6 +6,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import main.models.User;
 import main.models.UserPermission;
 
@@ -16,10 +20,14 @@ public interface IUser {
     final String NUMERIC = "0123456789";
     final String SPECIAL_CHARS = "!@#$%^&*_=+-/";
     
+    
 	// Atributtes for IUser;
 	User user = new User();
 	ArrayList<User> users = new ArrayList<>();
 	ArrayList<UserPermission> userPermissions = new ArrayList<>();
+	ArrayList<User> productOwners = new ArrayList<>();
+	ArrayList<User> scrumMasters = new ArrayList<>();
+
 	
 	// Methods;
 	public User getUserLogin(String userName,String password);
@@ -94,5 +102,18 @@ public interface IUser {
 		}
 		
 		return password;
+	}
+	
+	public default ArrayList<User> getAllProductOwner(){
+		
+		
+		return productOwners;
+		
+	}
+	
+	public default ArrayList<User> getAllScrumMasters(){
+		
+		
+		return scrumMasters;
 	}
 }

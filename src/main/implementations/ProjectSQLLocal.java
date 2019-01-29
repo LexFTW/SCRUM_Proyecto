@@ -1,24 +1,20 @@
 package main.implementations;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import main.interfaces.IProject;
 import main.models.Project;
-import main.models.UserPermission;
+
 
 public class ProjectSQLLocal implements IProject {
 	private Connection connection;
 	private Statement statement;
-	private ResultSet resultSet;
 
 	public ProjectSQLLocal() {
 		try {
@@ -37,15 +33,12 @@ public class ProjectSQLLocal implements IProject {
 	@Override
 	public void insertProject(Project project) {
 		File fLog = new File("src/main/resources/log");
-		FileReader fr;
-		BufferedReader br;
 		FileWriter fw;
 		if (fLog.exists()) {
 			if (this.connection != null) {
 				try {
 					fw = new FileWriter(fLog, true);
-					this.connection = DriverManager
-							.getConnection("jdbc:sqlite:src/main/resources/bd_scrum_local_aar.db");
+					this.connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/bd_scrum_local_aar.db");
 					statement = connection.createStatement();
 
 					String query = "insert into projects (ProjectTitle, ProjectDescription, ScrumMasterID, ProductOwnerID, CreatedAt, UpdatedAt) VALUES "
