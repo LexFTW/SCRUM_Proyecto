@@ -23,6 +23,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import main.implementations.ProjectSQLLocal;
+import main.implementations.ProjectSQLRemote;
+import main.interfaces.IProject;
 import main.interfaces.IUser;
 import main.models.Project;
 import main.models.User;
@@ -30,6 +33,7 @@ import main.models.User;
 public class CreateProjects implements ActionListener {
 
 	private IUser iuser;
+	private IProject iproject;
 	private MainFrame frame;
 
 	private JLabel lbl_Title;
@@ -46,6 +50,13 @@ public class CreateProjects implements ActionListener {
 	public CreateProjects(IUser iuser, MainFrame frame) {
 		this.iuser = iuser;
 		this.frame = frame;
+
+		if(this.iuser.getTitleConnection().contains("Online")) {
+			this.iproject = new ProjectSQLRemote();
+		}else {
+			this.iproject = new ProjectSQLLocal();
+		}
+		
 		this.frame.getInternalFrame().setTitle("Crear Proyecto");
 		this.frame.getInternalFrame().setSize(480, 260);
 		this.frame.getInternalFrame().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -103,25 +114,14 @@ public class CreateProjects implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Project project;
-		EntityManagerFactory emfactory;
-		EntityManager entitymanager;
 		boolean found = false;
 		if (e.getSource() instanceof JButton) {
 			if (tf_Title.getText().length() == 0 || ta_Description.getText().length() == 0) {
 				lbl_ErrorData.setText("Hay algun campo vacio");
 			} else {
 				lbl_ErrorData.setVisible(false);
-				emfactory = Persistence.createEntityManagerFactory("ScrumHibernate");
-				entitymanager = emfactory.createEntityManager();
-				int primaryKey = 1;
-				ArrayList<Project> projects = new ArrayList<>();
 
-				while (entitymanager.find(Project.class, primaryKey) != null) {
-					projects.add(entitymanager.find(Project.class, primaryKey));
-					primaryKey++;
-				}
-
-				for (Project proyecto : projects) {
+				for (Project proyecto : iproject.getAllProjects()) {
 					System.out.println(proyecto.getProjectName());
 					if (proyecto.getProjectName().equalsIgnoreCase(tf_Title.getText())) {
 						lbl_ErrorData.setText("El titulo esta repetido");
@@ -134,46 +134,11 @@ public class CreateProjects implements ActionListener {
 					project = new Project();
 					project.setProjectName(tf_Title.getText());
 					project.setProjectDescription(ta_Description.getText());
-					project.setScrumMasterID(
-							Integer.parseInt(this.cb_ScrumMaster.getSelectedItem().toString().substring(0, 1)));
-					project.setProductOwnerID(
-							Integer.parseInt(this.cb_ProductOwner.getSelectedItem().toString().substring(0, 1)));
-					entitymanager.getTransaction().begin();
-					// INSERT
-					entitymanager.persist(project);
-					entitymanager.getTransaction().commit();
-
-					Statement statement = null;
-					try {
-						try {
-							Class.forName("org.sqlite.JDBC");
-						} catch (ClassNotFoundException e1) {
-							e1.printStackTrace();
-						}
-						Connection connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/bd_scrum_local_aar.db");
-						
-
-						System.out.println(connection.getCatalog());
-						
-						statement = connection.createStatement();
-
-						String sqlQueryProject = "INSERT INTO `projects` (ProjectID, ProjectTitle, ProjectDescription, ScrumMasterID, ProductOwnerID, CreatedAt, UpdatedAt)"
-								+ "VALUES('" + project.getProjectName() + "', '" + project.getProjectName() + "', '"
-								+ project.getProjectDescription() + "', '" + project.getScrumMasterID() + "', '"
-								+ project.getProductOwnerID() + "', '" + project.getCreatedAt() + "', "
-								+ project.getUpdatedAt() + ");";
-						
-						statement.executeUpdate(sqlQueryProject);
-						System.out.println("Insertao figura");
-						statement.close();
-						connection.close();
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
+					project.setScrumMasterID(Integer.parseInt(this.cb_ScrumMaster.getSelectedItem().toString().substring(0, 1)));
+					project.setProductOwnerID(Integer.parseInt(this.cb_ProductOwner.getSelectedItem().toString().substring(0, 1)));
+					iproject.insertProject(project);
 				}
 			}
 		}
-
 	}
-
 }

@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import main.interfaces.IUser;
 import main.models.Project;
@@ -141,5 +142,63 @@ public class UserSQLLocal implements IUser {
 		} else {
 			System.out.println("El archivo especificado no existe");
 		}
+	}
+
+	@Override
+	public ArrayList<User> getAllProductOwner() {
+		ArrayList<User> users = new ArrayList<>();
+		if(this.connection != null) {
+			try {
+				this.statement = this.connection.createStatement();
+				this.resultSet = this.statement.executeQuery("SELECT * FROM users WHERE PermissionID = (SELECT PermissionID FROM users_permission WHERE PermissionName = 'Product Owner');");
+				
+				while(this.resultSet.next()) {
+					User user = new User();
+					user.setUserID(this.resultSet.getInt("UserID"));
+					user.setUserName(this.resultSet.getString("UserName"));
+					user.setUserLastname(this.resultSet.getString("UserLastname"));
+					user.setUserNickname(this.resultSet.getString("UserNickname"));
+					user.setUserPassword(this.resultSet.getString("UserPassword"));
+					user.setUserEmail(this.resultSet.getString("UserEmail"));
+					user.setPermissionID(this.resultSet.getInt("PermissionID"));
+					user.setCreatedAt(this.resultSet.getDate("CreatedAt"));
+					user.setUpdatedAt(this.resultSet.getDate("UpdatedAt"));
+					users.add(user);
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return users;
+	}
+
+	@Override
+	public ArrayList<User> getAllScrumMaster() {
+		ArrayList<User> users = new ArrayList<>();
+		if(this.connection != null) {
+			try {
+				this.statement = this.connection.createStatement();
+				this.resultSet = this.statement.executeQuery("SELECT * FROM users WHERE PermissionID = (SELECT PermissionID FROM users_permission WHERE PermissionName = 'Scrum Master');");
+				
+				while(this.resultSet.next()) {
+					User user = new User();
+					user.setUserID(this.resultSet.getInt("UserID"));
+					user.setUserName(this.resultSet.getString("UserName"));
+					user.setUserLastname(this.resultSet.getString("UserLastname"));
+					user.setUserNickname(this.resultSet.getString("UserNickname"));
+					user.setUserPassword(this.resultSet.getString("UserPassword"));
+					user.setUserEmail(this.resultSet.getString("UserEmail"));
+					user.setPermissionID(this.resultSet.getInt("PermissionID"));
+					user.setCreatedAt(this.resultSet.getDate("CreatedAt"));
+					user.setUpdatedAt(this.resultSet.getDate("UpdatedAt"));
+					users.add(user);
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return users;
 	}
 }

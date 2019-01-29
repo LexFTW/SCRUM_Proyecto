@@ -5,8 +5,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import main.interfaces.IProject;
 import main.models.Project;
@@ -15,6 +17,7 @@ import main.models.Project;
 public class ProjectSQLLocal implements IProject {
 	private Connection connection;
 	private Statement statement;
+	private ResultSet resultSet;
 
 	public ProjectSQLLocal() {
 		try {
@@ -61,6 +64,31 @@ public class ProjectSQLLocal implements IProject {
 			System.out.println("El archivo especificado no existe");
 		}
 
+	}
+
+	@Override
+	public ArrayList<Project> getAllProjects() {
+		ArrayList<Project> projects = new ArrayList<>();
+		if(this.connection != null) {
+			try {
+				this.statement = this.connection.createStatement();
+				this.resultSet = this.statement.executeQuery("SELECT * FROM projects");
+				while(!resultSet.next()) {
+					Project project = new Project();
+					project.setProjectID(this.resultSet.getInt("ProjectID"));
+					project.setProjectName(this.resultSet.getString("ProjectTitle"));
+					project.setProjectDescription(this.resultSet.getString("ProjectDescription"));
+					project.setScrumMasterID(this.resultSet.getInt("ScrumMasterID"));
+					project.setProductOwnerID(this.resultSet.getInt("ProductOwnerID"));
+					project.setCreatedAt(this.resultSet.getDate("CreatedAt"));
+					project.setUpdatedAt(this.resultSet.getDate("UpdatedAt"));
+					projects.add(project);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return projects;
 	}
 
 }
