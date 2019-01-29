@@ -1,7 +1,9 @@
 package main.implementations;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -12,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import main.interfaces.IUser;
+import main.models.Project;
 import main.models.User;
 import main.models.UserPermission;
 
@@ -109,11 +112,13 @@ public class UserSQLLocal implements IUser {
 	@Override
 	public void insertUser(User user) {
 		File fLog = new File("src/main/resources/log");
+		FileReader fr;
+		BufferedReader br;
 		FileWriter fw;
 		if (fLog.exists()) {
 			if (this.connection != null) {
 				try {
-					fw = new FileWriter(fLog);
+					fw = new FileWriter(fLog, true);
 					this.connection = DriverManager
 							.getConnection("jdbc:sqlite:src/main/resources/bd_scrum_local_aar.db");
 					statement = connection.createStatement();
@@ -122,7 +127,7 @@ public class UserSQLLocal implements IUser {
 							+ "('" + user.getUserName() + "', '" + user.getUserLastname() + "', '" + user.getUserNickname() + "', '" + user.getUserPassword() + 
 							"', '" + user.getUserEmail() + "', '" + user.getPermissionID() + "', '" + user.getCreatedAt() + "', '" + user.getUpdatedAt() + "')";
 
-					fw.write(query);
+					fw.write(query + "\n");
 					fw.close();
 					this.statement.executeUpdate(query);
 					this.statement.close();
