@@ -1,0 +1,11 @@
+Los aspectos a mejorar en este Sprint son, el comentario del codigo, ya que programamos muy a saco sin tener en cuenta los comentarios, y al final quedan comentarios pobres comparados
+a los comentarios que podriamos hacer si lo hiciesemos en el mismo momento que desarrollamos el codigo. La comunicacion podria ser mejor para asignar las tareas adecuadas a cada miembro
+y no tener problemas. A parte de esto hemos tenido que cambiar el estilo de las vistas, ya que estaban realizadas con GroupLayout(Desde WindowBuilder) y ahora hemos importado otro
+layout(MigLayout) porque el codigo es mas entendible y no hemos tenido que tocar el WindowBuilder. Hemos tenido ciertos problemas con mantener todos la estructura del codigo, es decir,
+nosotros hacemos todo el codigo en ingles pero a veces se nos olvida y aparecen metodos en castellano, hay que estar mas atentos para evitar incoherencias de este tipo.
+
+Podemos mejorar estos aspectos hablando mas entre nosotros de estas cosas, estando mas atentos cuando trabajamos y tener un poco mas de paciencia, primero podriamos pensar como seria
+el codigo que queremos y despues ponernos a programarlo, en vez de programar de primeras y ir corrigiendo errores a medida que salen. En general son pequeños fallos que miraremos de 
+corregir pero el grupo en general esta muy contento, trabajamos bien, nos entendemos y las cosas de momento estan saliendo bien para nosotros. 
+
+
