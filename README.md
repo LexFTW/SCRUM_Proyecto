@@ -30,19 +30,19 @@
 <p>
   Además dispones de los siguientes usuarios para poder utilizar en esta versión, aquí una lista de los usuarios:
   <ul>
-    <li><b>Usuario:</b> Amengual</li>
+    <li><b>Usuario:</b> AMengual</li>
     <li><b>Contraseña:</b> Contraseña</li>
     <li><b>Tipo de Usuario:</b> Administrador</li>
     <br />
-    <li><b>Usuario:</b> Rcarballo</li>
+    <li><b>Usuario:</b> RCarballo</li>
     <li><b>Contraseña:</b> Contraseña</li>
     <li><b>Tipo de Usuario:</b> Scrum Master</li>
     <br />
-    <li><b>Usuario:</b> Asalas</li>
+    <li><b>Usuario:</b> ASalas</li>
     <li><b>Contraseña:</b> Contraseña</li>
     <li><b>Tipo de Usuario:</b> Product Owner</li>
     <br />
-    <li><b>Usuario:</b> Lzabala</li>
+    <li><b>Usuario:</b> LZabala</li>
     <li><b>Contraseña:</b> Contraseña</li>
     <li><b>Tipo de Usuario:</b> Developer</li>
   </ul>
