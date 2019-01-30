@@ -29,9 +29,9 @@ public class UserSQLLocal implements IUser {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			try {
-				this.connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/bd_scrum_local_aar.db");
-				System.out.println("Conexion embebida conectada.");
-
+				
+				getConnectionLocal();
+				
 				this.statement = this.connection.createStatement();
 				String sqlQuery = "SELECT * FROM users_permission;";
 
@@ -45,6 +45,25 @@ public class UserSQLLocal implements IUser {
 
 			} catch (SQLException e) {
 				e.printStackTrace();
+			}finally {
+				try {
+					this.connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void getConnectionLocal() {
+		try {
+			Class.forName("org.sqlite.JDBC");
+			try {
+				this.connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/bd_scrum_local_aar.db");
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -53,6 +72,7 @@ public class UserSQLLocal implements IUser {
 
 	@Override
 	public User getUserLogin(String userNickname, String password) {
+		getConnectionLocal();
 		if (this.connection != null) {
 			try {
 				statement = connection.createStatement();
@@ -71,7 +91,14 @@ public class UserSQLLocal implements IUser {
 				statement.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
+			}finally {
+				try {
+					this.connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
+			
 		} else {
 			System.out.println("[ERROR] - No se pudo establecer ninguna conexión.");
 		}
@@ -91,6 +118,7 @@ public class UserSQLLocal implements IUser {
 
 	@Override
 	public String getUserLoggedPermission() {
+		getConnectionLocal();
 		if (this.connection != null) {
 			try {
 				statement = connection.createStatement();
@@ -102,6 +130,12 @@ public class UserSQLLocal implements IUser {
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
+			}finally {
+				try {
+					this.connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 		} else {
 			System.out.println("[ERROR] - No se pudo establecer ninguna conexión.");
@@ -117,6 +151,7 @@ public class UserSQLLocal implements IUser {
 		BufferedReader br;
 		FileWriter fw;
 		if (fLog.exists()) {
+			getConnectionLocal();
 			if (this.connection != null) {
 				try {
 					fw = new FileWriter(fLog, true);
@@ -135,8 +170,13 @@ public class UserSQLLocal implements IUser {
 					
 				} catch (SQLException | IOException e) {
 					e.printStackTrace();
+				}finally {
+					try {
+						this.connection.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 				}
-
 			}
 
 		} else {
@@ -176,6 +216,7 @@ public class UserSQLLocal implements IUser {
 	@Override
 	public ArrayList<User> getAllScrumMaster() {
 		ArrayList<User> users = new ArrayList<>();
+		getConnectionLocal();
 		if(this.connection != null) {
 			try {
 				this.statement = this.connection.createStatement();

@@ -20,6 +20,10 @@ public class ProjectSQLLocal implements IProject {
 	private ResultSet resultSet;
 
 	public ProjectSQLLocal() {
+		
+	}
+
+	private void getConnectionLocal() {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			try {
@@ -32,7 +36,7 @@ public class ProjectSQLLocal implements IProject {
 			e.printStackTrace();
 		}
 	}
-
+	
 	@Override
 	public void insertProject(Project project) {
 		File fLog = new File("src/main/resources/log");
@@ -41,9 +45,8 @@ public class ProjectSQLLocal implements IProject {
 			if (this.connection != null) {
 				try {
 					fw = new FileWriter(fLog, true);
-					this.connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/bd_scrum_local_aar.db");
 					statement = connection.createStatement();
-
+					
 					String query = "insert into projects (ProjectTitle, ProjectDescription, ScrumMasterID, ProductOwnerID, CreatedAt, UpdatedAt) VALUES "
 							+ "('" + project.getProjectName() + "', '" + project.getProjectDescription() + "', '"
 							+ project.getScrumMasterID() + "', '" + project.getProductOwnerID() + "', '" + project.getCreatedAt() + "', '"
@@ -56,6 +59,12 @@ public class ProjectSQLLocal implements IProject {
 
 				} catch (SQLException | IOException e) {
 					e.printStackTrace();
+				}finally {
+					try {
+						this.connection.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 				}
 
 			}
@@ -69,6 +78,7 @@ public class ProjectSQLLocal implements IProject {
 	@Override
 	public ArrayList<Project> getAllProjects() {
 		ArrayList<Project> projects = new ArrayList<>();
+		getConnectionLocal();
 		if(this.connection != null) {
 			try {
 				this.statement = this.connection.createStatement();
@@ -86,6 +96,12 @@ public class ProjectSQLLocal implements IProject {
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
+			}finally {
+				try {
+					this.connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		return projects;

@@ -1,2 +1,8 @@
 insert into users (UserName, UserLastname, UserNickname, UserPassword, UserEmail, PermissionID, CreatedAt, UpdatedAt) VALUES ('Sora', ' EsRoxas', 'SEsroxas1', '0fc11d3b0f07eb5145718c41c213c52ff7ddf928', 'fdas@saf.com', '1', 'null', 'null')
 insert into users (UserName, UserLastname, UserNickname, UserPassword, UserEmail, PermissionID, CreatedAt, UpdatedAt) VALUES ('Alexis', ' Dios', 'ADios1', '154d8e0c6e3acb1956cf6542355bea360e055a3c', 'fdas@saf.com', '1', 'null', 'null')
+insert into users (UserName, UserLastname, UserNickname, UserPassword, UserEmail, PermissionID, CreatedAt, UpdatedAt) VALUES ('djhgfgfh', ' de', 'DDe1', 'd33d9ad735f29698cdee3b3c0ca88205d45b22e2', 'f@f.com', '1', 'null', 'null')
+insert into users (UserName, UserLastname, UserNickname, UserPassword, UserEmail, PermissionID, CreatedAt, UpdatedAt) VALUES ('AA', ' EA', 'AEa1', '9424df6ea78e3f047738abc885a9f9a7b086e43d', 'fdsafs@das.com', '1', 'null', 'null')
+insert into users (UserName, UserLastname, UserNickname, UserPassword, UserEmail, PermissionID, CreatedAt, UpdatedAt) VALUES ('AA', ' EEA', 'AEea1', '95e36633941269bf2088c12533b658697ee4cdfc', 'FDSAF@FDSA.COM', '1', 'null', 'null')
+insert into users (UserName, UserLastname, UserNickname, UserPassword, UserEmail, PermissionID, CreatedAt, UpdatedAt) VALUES ('EE', ' AA', 'EAa1', '0a96240589c7902f7a8398ed8ca8553504e3f0e4', 'a@a.com', '1', 'null', 'null')
+insert into projects (ProjectTitle, ProjectDescription, ScrumMasterID, ProductOwnerID, CreatedAt, UpdatedAt) VALUES ('Proyecto 13', 'fdsaf', '2', '3', 'null', 'null')
+insert into projects (ProjectTitle, ProjectDescription, ScrumMasterID, ProductOwnerID, CreatedAt, UpdatedAt) VALUES ('fdasfas', 'fasfsa', '2', '3', 'null', 'null')
