@@ -37,21 +37,22 @@ public interface IUser {
 	public void insertUser(User user);
 	public ArrayList<User> getAllProductOwner();
 	public ArrayList<User> getAllScrumMaster();
+	public ArrayList<User> getAllUsers();
 	
 	/*
 	 * Print all users of the ArrayList<User>
 	 */
-	public default ArrayList<User> getAllUsers() {
-		if(users.size() != 0) {
-			for (User user : users) {
-				return this.users;
-			}
-		}else {
-			System.err.println("No se han cargado los datos de los usuarios correctamente.");
-		}
-		
-		return null;
-	}
+//	public default ArrayList<User> getAllUsers() {
+//		if(users.size() != 0) {
+//			for (User user : users) {
+//				return this.users;
+//			}
+//		}else {
+//			System.err.println("No se han cargado los datos de los usuarios correctamente.");
+//		}
+//		
+//		return null;
+//	}
 	
 	public default ArrayList<UserPermission> getAllPermissions(){
 		if(userPermissions.size() != 0) {

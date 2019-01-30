@@ -242,4 +242,41 @@ public class UserSQLLocal implements IUser {
 		}
 		return users;
 	}
+
+	@Override
+	public ArrayList<User> getAllUsers() {
+		ArrayList<User> users = new ArrayList<>();
+		this.getConnectionLocal();
+		if(this.connection != null) {
+			try {
+				this.statement = this.connection.createStatement();
+				this.resultSet = this.statement.executeQuery("SELECT * FROM users");
+				while(this.resultSet.next()) {
+					User user = new User();
+					user.setUserID(this.resultSet.getInt("UserID"));
+					user.setUserName(this.resultSet.getString("UserName"));
+					user.setUserLastname(this.resultSet.getString("UserLastname"));
+					user.setUserNickname(this.resultSet.getString("UserNickname"));
+					user.setUserPassword(this.resultSet.getString("UserPassword"));
+					user.setUserEmail(this.resultSet.getString("UserEmail"));
+					user.setPermissionID(this.resultSet.getInt("PermissionID"));
+					user.setCreatedAt(this.resultSet.getDate("CreatedAt"));
+					user.setUpdatedAt(this.resultSet.getDate("UpdatedAt"));
+					users.add(user);
+				}
+				this.resultSet.close();
+				this.statement.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					this.connection.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return users;
+	}
 }

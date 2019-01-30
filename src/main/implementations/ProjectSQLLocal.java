@@ -42,6 +42,7 @@ public class ProjectSQLLocal implements IProject {
 		File fLog = new File("src/main/resources/log");
 		FileWriter fw;
 		if (fLog.exists()) {
+			getConnectionLocal();
 			if (this.connection != null) {
 				try {
 					fw = new FileWriter(fLog, true);
@@ -56,15 +57,9 @@ public class ProjectSQLLocal implements IProject {
 					fw.close();
 					this.statement.executeUpdate(query);
 					this.statement.close();
-
+					this.connection.close();
 				} catch (SQLException | IOException e) {
 					e.printStackTrace();
-				}finally {
-					try {
-						this.connection.close();
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
 				}
 
 			}

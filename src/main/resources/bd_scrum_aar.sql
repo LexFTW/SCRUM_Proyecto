@@ -1,11 +1,11 @@
-﻿-- phpMyAdmin SQL Dump
--- version 4.8.1
+-- phpMyAdmin SQL Dump
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-01-2019 a las 15:35:40
--- Versión del servidor: 10.1.33-MariaDB
--- Versión de PHP: 7.2.6
+-- Tiempo de generación: 30-01-2019 a las 16:34:21
+-- Versión del servidor: 10.1.36-MariaDB
+-- Versión de PHP: 7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -34,8 +34,8 @@ CREATE TABLE `projects` (
   `ProjectDescription` varchar(200) DEFAULT NULL,
   `ScrumMasterID` int(11) NOT NULL,
   `ProductOwnerID` int(11) NOT NULL,
-  `CreatedAt` timestamp DEFAULT CURRENT_TIMESTAMP,
-  `UpdatedAt` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `CreatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `UpdatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -70,8 +70,8 @@ CREATE TABLE `sprints` (
   `SprintID` int(11) NOT NULL,
   `SprintTime` time NOT NULL,
   `ProjectID` int(11) NOT NULL,
-  `CreatedAt` timestamp DEFAULT CURRENT_TIMESTAMP,
-  `UpdatedAt` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `CreatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `UpdatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -88,8 +88,8 @@ CREATE TABLE `users` (
   `UserPassword` varchar(50) NOT NULL,
   `UserEmail` varchar(175) DEFAULT NULL,
   `PermissionID` int(11) NOT NULL,
-  `CreatedAt` timestamp DEFAULT CURRENT_TIMESTAMP,
-  `UpdatedAt` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `CreatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `UpdatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -97,10 +97,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`UserID`, `UserName`, `UserLastname`, `UserNickname`, `UserPassword`, `UserEmail`, `PermissionID`, `CreatedAt`, `UpdatedAt`) VALUES
-(1, 'Alexis', 'Mengual Vázquez', 'Amengual', '5a6d1c612954979ea99ee33dbb2d231b00f6ac0a', 'amengual@correo.com', 1, '2019-01-22 15:07:48', '2019-01-22 15:07:48'),
-(2, 'Roger', 'Carballo', 'Rcarballo', '5a6d1c612954979ea99ee33dbb2d231b00f6ac0a', 'rcarballo@correo.com', 2, '2019-01-22 15:08:32', '2019-01-22 15:08:32'),
-(3, 'Adrián', 'Salas', 'Asalas', '5a6d1c612954979ea99ee33dbb2d231b00f6ac0a', 'asalas@correo.com', 3, '2019-01-22 15:09:02', '2019-01-22 15:09:02'),
-(4, 'Leandro', 'Zabala', 'Lzabala', '5a6d1c612954979ea99ee33dbb2d231b00f6ac0a', 'lzabala@correo.com', 4, '2019-01-22 15:09:36', '2019-01-22 15:09:36');
+(1, 'Alexis', 'Mengual Vázquez', 'AMengual', '5a6d1c612954979ea99ee33dbb2d231b00f6ac0a', 'amengual@correo.com', 1, '2019-01-22 15:07:48', '2019-01-25 17:47:55'),
+(2, 'Roger', 'Carballo', 'RCarballo', '5a6d1c612954979ea99ee33dbb2d231b00f6ac0a', 'rcarballo@correo.com', 2, '2019-01-22 15:08:32', '2019-01-25 17:48:00'),
+(3, 'Adrián', 'Salas', 'ASalas', '5a6d1c612954979ea99ee33dbb2d231b00f6ac0a', 'asalas@correo.com', 3, '2019-01-22 15:09:02', '2019-01-25 17:47:39'),
+(4, 'Leandro', 'Zabala', 'LZabala', '5a6d1c612954979ea99ee33dbb2d231b00f6ac0a', 'lzabala@correo.com', 4, '2019-01-22 15:09:36', '2019-01-25 17:48:05');
 
 -- --------------------------------------------------------
 
@@ -111,8 +111,8 @@ INSERT INTO `users` (`UserID`, `UserName`, `UserLastname`, `UserNickname`, `User
 CREATE TABLE `users_group` (
   `GroupID` int(11) NOT NULL,
   `GroupName` varchar(50) NOT NULL,
-  `CreatedAt` timestamp DEFAULT CURRENT_TIMESTAMP,
-  `UpdatedAt` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `CreatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `UpdatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -133,8 +133,8 @@ CREATE TABLE `users_group_integrants` (
   `UserID` int(11) NOT NULL,
   `GroupID` int(11) NOT NULL,
   `ProjectID` int(11) NOT NULL,
-  `CreatedAt` timestamp DEFAULT CURRENT_TIMESTAMP,
-  `UpdatedAt` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `CreatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `UpdatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -154,8 +154,8 @@ INSERT INTO `users_group_integrants` (`IntegrantID`, `UserID`, `GroupID`, `Proje
 CREATE TABLE `users_permission` (
   `PermissionID` int(11) NOT NULL,
   `PermissionName` varchar(100) NOT NULL,
-  `CreatedAt` timestamp DEFAULT CURRENT_TIMESTAMP,
-  `UpdatedAt` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `CreatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `UpdatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -247,7 +247,7 @@ ALTER TABLE `sprints`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `users_group`

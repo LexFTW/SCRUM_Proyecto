@@ -157,4 +157,9 @@ public class UserSQLRemote implements IUser {
 		return usersScrumMaster;
 	}
 
+	@Override
+	public ArrayList<User> getAllUsers() {
+		return (ArrayList<User>) entityManager.createQuery("SELECT user FROM User user").getResultList();
+	}
+
 }
