@@ -1,10 +1,14 @@
+import java.util.Random;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import main.implementations.UserSQLLocal;
 import main.implementations.UserSQLRemote;
 import main.interfaces.IUser;
 import main.views.Login;
+import main.views.Login_;
 
 public class Initialize {
 	
@@ -18,15 +22,13 @@ public class Initialize {
 			emf = Persistence.createEntityManagerFactory("ScrumHibernate");
 	        em = emf.createEntityManager();
 	        iuser = new UserSQLRemote();
-	        iuser.loadUsers();
 	        System.out.println("[INFO] - Conexión Online");
 		}catch(Exception e) {
-			// If fail the Remote Connection, I've got the Local Connection:
+			iuser = new UserSQLLocal();
 			System.out.println("[INFO] - Conexión Offline");
 		}
 		
 		// Generate object login:
 		Login login = new Login(iuser);
 	}
-
 }

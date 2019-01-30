@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users_permission")
+
 public class UserPermission {
 
 	// Attributes:
@@ -19,6 +20,17 @@ public class UserPermission {
 	private Date CreatedAt;
 	private Date UpdatedAt;
 	
+	public UserPermission() {
+		super();
+	}
+	
+	public UserPermission(int PermissionID, String PermissionName, Date CreatedAt, Date UpdatedAt) {
+		this.PermissionID = PermissionID;
+		this.PermissionName = PermissionName;
+		this.CreatedAt = CreatedAt;
+		this.UpdatedAt = UpdatedAt;
+	}
+
 	@Id
 	@Column(name = "PermissionID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

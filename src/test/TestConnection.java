@@ -31,12 +31,13 @@ public class TestConnection {
 //	        factory.close();
 	        
 	        IUser iuser = new UserSQLRemote();
-	        iuser.loadUsers();
-	        iuser.getAllUsers();
-	        iuser.getUserLogin("Amengual", "Contraseña");
-	        User user = iuser.getUserLogged();
-	        System.out.println(user.toString());
-	        System.out.println(iuser.getUserLoggedPermission());
+//	        iuser.getAllUsers();
+//	        iuser.getUserLogin("Amengual", "Contraseña");
+//	        User user = iuser.getUserLogged();
+//	        System.out.println(user.toString());
+//	        System.out.println(iuser.getUserLoggedPermission());
+	        
+	        iuser.getAllProductOwner();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
