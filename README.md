@@ -98,3 +98,6 @@
   <li>Alexis Mengual</li>
   <li>Adrián Salas</li>
 </ul>
+
+<h2>Retrospectiva</h2>
+  <i>La ruta de la retrospectiva en el proyecto es: Proyecto_SCRUM --> src --> main --> resources --> retrospectiva</i>
