@@ -60,7 +60,7 @@ public class CreateProjects implements ActionListener {
 		this.frame.getInternalFrame().getContentPane().removeAll();
 		this.frame.getInternalFrame().setTitle("Crear Proyecto");
 		this.frame.getInternalFrame().setSize(480, 260);
-		this.frame.getInternalFrame().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.frame.getInternalFrame().setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		// Center JInternalFrame with this:
 		Dimension desktopSize = this.frame.getDesktopPane().getSize();
 		Dimension jInternalFrameSize = this.frame.getInternalFrame().getSize();
