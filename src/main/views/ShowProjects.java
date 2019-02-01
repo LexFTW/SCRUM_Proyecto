@@ -8,6 +8,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import main.interfaces.IUser;
 
@@ -20,6 +24,12 @@ public class ShowProjects implements ActionListener{
 	private JLabel lbl_ProductOwner;
 	private JLabel lbl_ScrumMaster;
 	private JButton btn_ShowSpecifications;
+	private JTextField tf_Title;
+	private JTextField tf_ProductOnwer;
+	private JTextField tf_ScrumMaster;
+	private JTextArea ta_Description;
+	private JTable table;
+	private DefaultTableModel dtm;
 	
 	public ShowProjects(IUser iuser, MainFrame frame) {
 		this.iuser = iuser;
@@ -31,18 +41,39 @@ public class ShowProjects implements ActionListener{
 		Dimension jInternalFrameSize = this.frame.getInternalFrame().getSize();
 		this.frame.getInternalFrame().setLocation((desktopSize.width - jInternalFrameSize.width)/2,
 				(desktopSize.height- jInternalFrameSize.height)/2 - 40);
-		this.frame.getInternalFrame().setTitle("Crear Usuario");
+		this.frame.getInternalFrame().setTitle("Mostrar Proyectos");
 		this.frame.getInternalFrame().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		this.table = new JTable();
+		
+		String[] cabecera = {"Proyectos"};
+		
+		this.dtm = new DefaultTableModel(cabecera, 0);
+		this.table.setModel(dtm);
+		
+		this.sp = new JScrollPane();
+		this.sp.setViewportView(this.table);
 		
 		this.lbl_Title = new JLabel("Titulo del Proyecto");
 		this.lbl_ProductOwner = new JLabel("Product Owner");
 		this.lbl_ScrumMaster = new JLabel("Scrum Master");
-		this.btn_ShowSpecifications = new JButton("Mostrar Especificaciones;");
+		
+		this.tf_Title = new JTextField();
+		this.tf_ProductOnwer = new JTextField();
+		this.tf_ScrumMaster = new JTextField();
+		
+		this.btn_ShowSpecifications = new JButton("Mostrar Especificaciones");
 		
 		this.btn_ShowSpecifications.addActionListener(this);
 		
-		this.frame.getInternalFrame().add(this.lbl_Title, "wrap");
-		this.frame.getInternalFrame().add(this.btn_ShowSpecifications, "wrap");
+		this.frame.getInternalFrame().add(this.sp, "span 1 5");
+		this.frame.getInternalFrame().add(this.lbl_Title);
+		this.frame.getInternalFrame().add(this.tf_Title, "wrap, pushx, growx");
+		this.frame.getInternalFrame().add(this.lbl_ProductOwner);
+		this.frame.getInternalFrame().add(this.tf_ProductOnwer, "wrap, pushx, growx");
+		this.frame.getInternalFrame().add(this.lbl_ScrumMaster);
+		this.frame.getInternalFrame().add(this.tf_ScrumMaster, "wrap, pushx, growx");
+		this.frame.getInternalFrame().add(this.btn_ShowSpecifications, "wrap, span 2, align right");
 	}
 
 	@Override
