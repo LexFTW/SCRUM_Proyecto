@@ -175,4 +175,36 @@ public class ProjectSQLLocal implements IProject {
 		return userName;
 	}
 
+	@Override
+	public ArrayList<Project> getAllProjects(int id) {
+		ArrayList<Project> projects = new ArrayList<>();
+		this.getConnectionLocal();
+		if(this.connection != null) {
+			try {
+				this.statement = this.connection.createStatement();
+				this.resultSet = this.statement.executeQuery("SELECT * FROM projects WHERE ProductOwnerID =" + id);
+				while(resultSet.next()) {
+					Project project = new Project();
+					project.setProjectID(this.resultSet.getInt("ProjectID"));
+					project.setProjectName(this.resultSet.getString("ProjectTitle"));
+					project.setProjectDescription(this.resultSet.getString("ProjectDescription"));
+					project.setScrumMasterID(this.resultSet.getInt("ScrumMasterID"));
+					project.setProductOwnerID(this.resultSet.getInt("ProductOwnerID"));
+					project.setCreatedAt(this.resultSet.getDate("CreatedAt"));
+					project.setUpdatedAt(this.resultSet.getDate("UpdatedAt"));
+					projects.add(project);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					this.connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return projects;
+	}
+
 }

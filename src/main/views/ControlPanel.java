@@ -31,7 +31,8 @@ public class ControlPanel implements ActionListener{
 			this.frame.getJMenuBar().remove(this.frame.getMenu_users());
 			this.frame.getMenu_projects().remove(this.frame.getMenu_projects_create());
 		}else if(iuser.getUserLogged().getPermissionID() == 4) {
-			
+			this.frame.getJMenuBar().remove(this.frame.getMenu_users());
+			this.frame.getMenu_projects().remove(this.frame.getMenu_projects_create());
 		}
 
 		this.frame.getJMenuBar().setVisible(true);

@@ -122,12 +122,17 @@ public class ShowProjects implements ActionListener{
 	}
 	
 	private void addRowsProjects() {
-		iproject.getAllProjects();
-		for (Project project : iproject.getAllProjects()) {
-			Object[] data = {project.getProjectName()};
-			this.dtm.addRow(data);
+		if(iuser.getUserLogged().getPermissionID() == 2) {
+			for (Project project : iproject.getAllProjects()) {
+				Object[] data = {project.getProjectName()};
+				this.dtm.addRow(data);
+			}
+		}else if(iuser.getUserLogged().getPermissionID() == 3 || iuser.getUserLogged().getPermissionID() == 4) {
+			for (Project project : iproject.getAllProjects(iuser.getUserLogged().getUserID())) {
+				Object[] data = {project.getProjectName()};
+				this.dtm.addRow(data);
+			}
 		}
-		
 	}
 
 }

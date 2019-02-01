@@ -19,11 +19,12 @@ public class ShowSpecifications implements ActionListener{
 	private MainFrame frame;
 	
 	private JButton btn_Save;
-//	private JButton btn_
+	private JButton btn_Add;
+	private JButton btn_Remove;
 	
-	public ShowSpecifications(IUser iuser, Project project, MainFrame frame) {
+	public ShowSpecifications(IUser iuser, IProject iproject, MainFrame frame) {
 		this.iuser = iuser;
-		this.project = project;
+		this.iproject = iproject;
 		this.frame = frame;
 		this.frame.getInternalFrame().getContentPane().removeAll();
 		this.frame.getInternalFrame().setVisible(true);
@@ -35,6 +36,13 @@ public class ShowSpecifications implements ActionListener{
 				(desktopSize.height- jInternalFrameSize.height)/2 - 40);
 		this.frame.getInternalFrame().setTitle("Especificaciones");
 		this.frame.getInternalFrame().setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		
+		this.btn_Save = new JButton("Guardar");
+		this.btn_Add = new JButton("Añadir");
+		this.btn_Remove = new JButton("Eliminar");
+		
+		
+		this.frame.getInternalFrame().add(new SpecificationPane("Texto de prueba"), "wrap");
 		
 	}
 	

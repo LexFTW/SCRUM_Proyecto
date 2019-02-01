@@ -73,4 +73,28 @@ public class ProjectSQLRemote implements IProject{
 	public ArrayList<Project> getAllProjects() {
 		return (ArrayList<Project>) entityManager.createQuery("SELECT project FROM Project project").getResultList();
 	}
+
+	@Override
+	public ArrayList<Project> getAllProjects(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Project getProject(String projectTitle) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getProductOwner(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getScrumMaster(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
