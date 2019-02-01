@@ -50,6 +50,7 @@ public class CreateUser implements ActionListener{
 	public CreateUser(IUser iuser, MainFrame frame) {
 		this.iuser = iuser;
 		this.frame = frame;
+		this.frame.getInternalFrame().getContentPane().removeAll();
 		this.frame.getInternalFrame().setVisible(true);
 		this.frame.getInternalFrame().setSize(480, 260);
 		// Center JInternalFrame with this:
@@ -58,7 +59,7 @@ public class CreateUser implements ActionListener{
 		this.frame.getInternalFrame().setLocation((desktopSize.width - jInternalFrameSize.width)/2,
 				    (desktopSize.height- jInternalFrameSize.height)/2 - 40);
 		this.frame.getInternalFrame().setTitle("Crear Usuario");
-		this.frame.getInternalFrame().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.frame.getInternalFrame().setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		
 		this.lbl_UserName = new JLabel("Nombre Completo");
 		this.lbl_UserNickname = new JLabel("Nombre de Usuario");

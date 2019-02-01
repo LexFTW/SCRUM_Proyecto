@@ -57,6 +57,7 @@ public class CreateProjects implements ActionListener {
 			this.iproject = new ProjectSQLLocal();
 		}
 		
+		this.frame.getInternalFrame().getContentPane().removeAll();
 		this.frame.getInternalFrame().setTitle("Crear Proyecto");
 		this.frame.getInternalFrame().setSize(480, 260);
 		this.frame.getInternalFrame().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
