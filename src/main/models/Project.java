@@ -1,5 +1,6 @@
 package main.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -11,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "projects")
-public class Project {
+public class Project implements Serializable{
 
 	private int projectID;
 	private String projectName;
