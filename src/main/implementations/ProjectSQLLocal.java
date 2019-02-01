@@ -28,7 +28,6 @@ public class ProjectSQLLocal implements IProject {
 			Class.forName("org.sqlite.JDBC");
 			try {
 				this.connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/bd_scrum_local_aar.db");
-				System.out.println("Conexion embebida conectada.");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -78,7 +77,7 @@ public class ProjectSQLLocal implements IProject {
 			try {
 				this.statement = this.connection.createStatement();
 				this.resultSet = this.statement.executeQuery("SELECT * FROM projects");
-				while(!resultSet.next()) {
+				while(resultSet.next()) {
 					Project project = new Project();
 					project.setProjectID(this.resultSet.getInt("ProjectID"));
 					project.setProjectName(this.resultSet.getString("ProjectTitle"));
@@ -100,6 +99,80 @@ public class ProjectSQLLocal implements IProject {
 			}
 		}
 		return projects;
+	}
+
+	@Override
+	public Project getProject(String projectTitle) {
+		Project project = new Project();
+		this.getConnectionLocal();
+		if(this.connection != null) {
+			try {
+				this.statement = this.connection.createStatement();
+				this.resultSet = this.statement.executeQuery("SELECT * FROM projects WHERE ProjectTitle ='" + projectTitle + "'");
+				while(this.resultSet.next()) {
+					project.setProjectID(this.resultSet.getInt("ProjectID"));
+					project.setProjectName(this.resultSet.getString("ProjectTitle"));
+					project.setProjectDescription(this.resultSet.getString("ProjectDescription"));
+					project.setProductOwnerID(this.resultSet.getInt("ProductOwnerID"));
+					project.setScrumMasterID(this.resultSet.getInt("ScrumMasterID"));
+					project.setCreatedAt(this.resultSet.getDate("CreatedAt"));
+					project.setUpdatedAt(this.resultSet.getDate("UpdatedAt"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					this.connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return project;
+	}
+
+	@Override
+	public String getProductOwner(int id) {
+		String userName = "";
+		this.getConnectionLocal();
+		if(this.connection != null) {
+			try {
+				this.statement = this.connection.createStatement();
+				this.resultSet = this.statement.executeQuery("SELECT UserName FROM users WHERE UserID =" + id + "");
+				userName = this.resultSet.getString("UserName");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					this.connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return userName;
+	}
+
+	@Override
+	public String getScrumMaster(int id) {
+		String userName = "";
+		this.getConnectionLocal();
+		if(this.connection != null) {
+			try {
+				this.statement = this.connection.createStatement();
+				this.resultSet = this.statement.executeQuery("SELECT UserName FROM users WHERE UserID =" + id + "");
+				userName = this.resultSet.getString("UserName");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					this.connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return userName;
 	}
 
 }

@@ -7,17 +7,25 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import main.implementations.ProjectSQLLocal;
+import main.implementations.ProjectSQLRemote;
+import main.interfaces.IProject;
 import main.interfaces.IUser;
+import main.models.Project;
 
 public class ShowProjects implements ActionListener{
 	
 	private IUser iuser;
+	private IProject iproject;
 	private MainFrame frame;
 	private JScrollPane sp;
 	private JLabel lbl_Title;
@@ -30,10 +38,18 @@ public class ShowProjects implements ActionListener{
 	private JTextArea ta_Description;
 	private JTable table;
 	private DefaultTableModel dtm;
+	private Project project;
 	
 	public ShowProjects(IUser iuser, MainFrame frame) {
 		this.iuser = iuser;
 		this.frame = frame;
+
+		if(this.iuser.getTitleConnection().contains("Online")) {
+			this.iproject = new ProjectSQLRemote();
+		}else {
+			this.iproject = new ProjectSQLLocal();
+		}
+		
 		this.frame.getInternalFrame().getContentPane().removeAll();
 		this.frame.getInternalFrame().setVisible(true);
 		this.frame.getInternalFrame().setSize(480, 260);
@@ -55,6 +71,8 @@ public class ShowProjects implements ActionListener{
 		this.sp = new JScrollPane();
 		this.sp.setViewportView(this.table);
 		
+		this.addRowsProjects();
+		
 		this.lbl_Title = new JLabel("Titulo del Proyecto");
 		this.lbl_ProductOwner = new JLabel("Product Owner");
 		this.lbl_ScrumMaster = new JLabel("Scrum Master");
@@ -64,8 +82,19 @@ public class ShowProjects implements ActionListener{
 		this.tf_ScrumMaster = new JTextField();
 		
 		this.btn_ShowSpecifications = new JButton("Mostrar Especificaciones");
-		
 		this.btn_ShowSpecifications.addActionListener(this);
+		this.table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if(table.getSelectedRow() > -1) {
+					project = iproject.getProject(table.getValueAt(table.getSelectedRow(), 0).toString());
+					tf_Title.setText(project.getProjectName());
+					tf_ProductOnwer.setText(iproject.getProductOwner(project.getProductOwnerID()));
+					tf_ScrumMaster.setText(iproject.getScrumMaster(project.getScrumMasterID()));
+				}
+			}
+		});
 		
 		this.frame.getInternalFrame().add(this.sp, "span 1 5");
 		this.frame.getInternalFrame().add(this.lbl_Title);
@@ -82,9 +111,23 @@ public class ShowProjects implements ActionListener{
 		if(e.getSource() instanceof JButton) {
 			JButton btn = (JButton) e.getSource();
 			if(btn == btn_ShowSpecifications) {
-				
+				if(this.tf_Title.getText().length() != 0 ||
+						this.tf_ScrumMaster.getText().length() != 0 ||
+						this.tf_ProductOnwer.getText().length() != 0) {
+					
+					new ShowSpecifications(iuser, project, frame);
+				}
 			}
 		}
+	}
+	
+	private void addRowsProjects() {
+		iproject.getAllProjects();
+		for (Project project : iproject.getAllProjects()) {
+			Object[] data = {project.getProjectName()};
+			this.dtm.addRow(data);
+		}
+		
 	}
 
 }
