@@ -1,4 +1,0 @@
-insert into users (UserName, UserLastname, UserNickname, UserPassword, UserEmail, PermissionID, CreatedAt, UpdatedAt) VALUES ('Alexis', ' Mengual', 'AMengual1', 'c1687279d01d05c71d3545b1f89113536ebf6a2c', 'fksdal@cs.com', '1', 'null', 'null')
-insert into users (UserName, UserLastname, UserNickname, UserPassword, UserEmail, PermissionID, CreatedAt, UpdatedAt) VALUES ('David', ' Uson', 'DUson', '5a6d1c612954979ea99ee33dbb2d231b00f6ac0a', 'ussy@gmail.com', '2', 'null', 'null')
-insert into projects (ProjectTitle, ProjectDescription, ScrumMasterID, ProductOwnerID, CreatedAt, UpdatedAt) VALUES ('Sprint 2', 'Hola chicos!', '2', '3', 'null', 'null')
-insert into projects (ProjectTitle, ProjectDescription, ScrumMasterID, ProductOwnerID, CreatedAt, UpdatedAt) VALUES ('Sprint 2', 'Hola chicos!', '2', '3', 'null', 'null')

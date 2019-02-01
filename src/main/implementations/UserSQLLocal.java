@@ -1,21 +1,18 @@
 package main.implementations;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintStream;
+import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 import main.interfaces.IUser;
-import main.models.Project;
 import main.models.User;
 import main.models.UserPermission;
 
@@ -146,9 +143,7 @@ public class UserSQLLocal implements IUser {
 
 	@Override
 	public void insertUser(User user) {
-		File fLog = new File("src/main/resources/log");
-		FileReader fr;
-		BufferedReader br;
+		File fLog = new File("src/main/resources/log.obj");
 		FileWriter fw;
 		if (fLog.exists()) {
 			getConnectionLocal();
@@ -167,6 +162,8 @@ public class UserSQLLocal implements IUser {
 					fw.close();
 					this.statement.executeUpdate(query);
 					this.statement.close();
+					
+					serializarUser(user);
 					
 				} catch (SQLException | IOException e) {
 					e.printStackTrace();
@@ -272,11 +269,24 @@ public class UserSQLLocal implements IUser {
 				try {
 					this.connection.close();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		}
 		return users;
 	}
+	
+	public  void serializarUser(User user) {
+		try {
+			ObjectOutputStream userWriter = new ObjectOutputStream(new FileOutputStream("src/main/resources/log.obj",true));
+			user.setInserted(true);
+			userWriter.writeObject(user);
+			userWriter.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 }
