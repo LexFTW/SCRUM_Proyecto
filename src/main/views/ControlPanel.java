@@ -38,6 +38,7 @@ public class ControlPanel implements ActionListener{
 		this.frame.getMenu_users_create().addActionListener(this);
 		this.frame.getMenu_projects_create().addActionListener(this);
 		this.frame.getBtn_LogOut().addActionListener(this);
+		this.frame.getMenu_projects_show().addActionListener(this);
 	}
 
 	@Override
@@ -48,7 +49,10 @@ public class ControlPanel implements ActionListener{
 				new CreateUser(iuser, frame);
 			}else if(mi == this.frame.getMenu_projects_create()) {
 				new CreateProjects(iuser, frame);
+			}else if(mi == this.frame.getMenu_projects_show()) {
+				new ShowProjects(iuser, frame);
 			}
+			
 		}else if(e.getSource() instanceof JButton) {
 			JButton btn = (JButton) e.getSource();
 			if(btn == this.frame.getBtn_LogOut()) {
