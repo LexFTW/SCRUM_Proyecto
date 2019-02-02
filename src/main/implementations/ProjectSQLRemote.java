@@ -20,6 +20,7 @@ public class ProjectSQLRemote implements IProject{
 	private EntityManager entityManager;
 	private Connection connection;
 	private Statement statement;
+	private Project project;
 	
 	
 	public ProjectSQLRemote() {
@@ -82,7 +83,8 @@ public class ProjectSQLRemote implements IProject{
 
 	@Override
 	public Project getProject(String projectTitle) {
-		return (Project) entityManager.createQuery("SELECT project FROM Project project WHERE ProjectTitle = '" + projectTitle + "'").getSingleResult();
+		this.project = (Project) entityManager.createQuery("SELECT project FROM Project project WHERE ProjectTitle = '" + projectTitle + "'").getSingleResult(); 
+		return this.project;
 	}
 
 	@Override
@@ -99,6 +101,6 @@ public class ProjectSQLRemote implements IProject{
 
 	@Override
 	public Project getProjectSelected() {
-		return null;
+		return this.project;
 	}
 }

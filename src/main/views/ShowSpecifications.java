@@ -42,7 +42,7 @@ public class ShowSpecifications implements ActionListener{
 		this.btn_Remove = new JButton("Eliminar");
 		
 		
-		this.frame.getInternalFrame().add(new SpecificationPane("Texto de prueba"), "wrap");
+		this.frame.getInternalFrame().add(new SpecificationPane("Texto de prueba"), "wrap, pushx, growx");
 		
 	}
 	
