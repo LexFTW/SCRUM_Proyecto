@@ -115,7 +115,7 @@ public class ShowProjects implements ActionListener{
 						this.tf_ScrumMaster.getText().length() != 0 ||
 						this.tf_ProductOnwer.getText().length() != 0) {
 					
-					new ShowSpecifications(iuser, project, frame);
+					new ShowSpecifications(iuser, iproject, frame);
 				}
 			}
 		}

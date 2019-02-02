@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import main.interfaces.IProject;
 import main.models.Project;
 
@@ -64,7 +66,7 @@ public class ProjectSQLLocal implements IProject {
 			}
 
 		} else {
-			System.out.println("El archivo especificado no existe");
+			JOptionPane.showMessageDialog(null, "No se ha encontrado el archivo log para registrar la información, pongase en contacto con el Administrador", "No se ha encontrado el archivo",  JOptionPane.ERROR_MESSAGE);
 		}
 
 	}
@@ -205,6 +207,11 @@ public class ProjectSQLLocal implements IProject {
 			}
 		}
 		return projects;
+	}
+
+	@Override
+	public Project getProjectSelected() {
+		return null;
 	}
 
 }

@@ -12,6 +12,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
 import main.interfaces.IUser;
 import main.models.User;
 import main.models.UserPermission;
@@ -143,41 +146,30 @@ public class UserSQLLocal implements IUser {
 
 	@Override
 	public void insertUser(User user) {
-		File fLog = new File("src/main/resources/log.obj");
-		FileWriter fw;
-		if (fLog.exists()) {
-			getConnectionLocal();
-			if (this.connection != null) {
+		this.getConnectionLocal();
+		if(this.connection != null) {
+			try {
+				this.connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/bd_scrum_local_aar.db");
+				statement = connection.createStatement();
+
+				String query = "insert into users (UserName, UserLastname, UserNickname, UserPassword, UserEmail, PermissionID, CreatedAt, UpdatedAt) VALUES "
+						+ "('" + user.getUserName() + "', '" + user.getUserLastname() + "', '" + user.getUserNickname() + "', '" + user.getUserPassword() + 
+						"', '" + user.getUserEmail() + "', '" + user.getPermissionID() + "', '" + user.getCreatedAt() + "', '" + user.getUpdatedAt() + "')";
+
+				this.statement.executeUpdate(query);
+				this.statement.close();
+				
+				serializeUser(user);
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
 				try {
-					fw = new FileWriter(fLog, true);
-					this.connection = DriverManager
-							.getConnection("jdbc:sqlite:src/main/resources/bd_scrum_local_aar.db");
-					statement = connection.createStatement();
-
-					String query = "insert into users (UserName, UserLastname, UserNickname, UserPassword, UserEmail, PermissionID, CreatedAt, UpdatedAt) VALUES "
-							+ "('" + user.getUserName() + "', '" + user.getUserLastname() + "', '" + user.getUserNickname() + "', '" + user.getUserPassword() + 
-							"', '" + user.getUserEmail() + "', '" + user.getPermissionID() + "', '" + user.getCreatedAt() + "', '" + user.getUpdatedAt() + "')";
-
-					fw.write(query + "\n");
-					fw.close();
-					this.statement.executeUpdate(query);
-					this.statement.close();
-					
-					serializarUser(user);
-					
-				} catch (SQLException | IOException e) {
+					this.connection.close();
+				} catch (SQLException e) {
 					e.printStackTrace();
-				}finally {
-					try {
-						this.connection.close();
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
 				}
 			}
-
-		} else {
-			System.out.println("El archivo especificado no existe");
 		}
 	}
 
@@ -276,16 +268,16 @@ public class UserSQLLocal implements IUser {
 		return users;
 	}
 	
-	public  void serializarUser(User user) {
+	public void serializeUser(User user) {
 		try {
-			ObjectOutputStream userWriter = new ObjectOutputStream(new FileOutputStream("src/main/resources/log.obj",true));
+			ObjectOutputStream userWriter = new ObjectOutputStream(new FileOutputStream("src/main/resources/log.obj", true));
 			user.setInserted(true);
 			userWriter.writeObject(user);
 			userWriter.close();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "No se ha encontrado el archivo log para registrar la información, pongase en contacto con el Administrador", "No se ha encontrado el archivo",  JOptionPane.ERROR_MESSAGE);
 		} catch (IOException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error de E/S al archivo log, pongase en contacon con el Administrador", "Error de E/S",  JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

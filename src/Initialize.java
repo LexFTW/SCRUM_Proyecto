@@ -29,22 +29,23 @@ public class Initialize {
 			em = emf.createEntityManager();
 			iuser = new UserSQLRemote();
 			fLog = new File("src/main/resources/log.obj");
-			if (fLog.exists()) {
-				if (fLog.length() > 0) {
-					fis = new FileInputStream(fLog);
-					ois = new ObjectInputStream(fis);
-					user = (User) ois.readObject();
-					while (true) {
-						System.out.println(user.toString());
-					}
-				}
-
-				ois.close();
-			}
+			// # Falta saber a que instancia cada objeto que se lee
+			// # Falta condición para el while
+			// # Falta crear los métodos privados en la implementación de UserSQLRemote.
+//			if (fLog.exists()) {
+//				if (fLog.length() > 0) {
+//					fis = new FileInputStream(fLog);
+//					ois = new ObjectInputStream(fis);
+//					user = (User) ois.readObject();
+//					while (true) {
+//						System.out.println(user.toString());
+//					}
+//				}
+//
+//				ois.close();
+//			}
 			System.out.println("[INFO] - Conexión Online");
-		} catch (
-
-		Exception e) {
+		} catch (Exception e) {
 			iuser = new UserSQLLocal();
 			System.out.println("[INFO] - Conexión Offline");
 		}
