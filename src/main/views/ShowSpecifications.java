@@ -3,9 +3,13 @@ package main.views;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 
 import main.interfaces.IProject;
 import main.interfaces.IUser;
@@ -17,7 +21,8 @@ public class ShowSpecifications implements ActionListener{
 	private IProject iproject;
 	private Project project;
 	private MainFrame frame;
-	
+	private JScrollPane sp_SpecificationPane;
+	private JList<SpecificationPane> specifications;
 	private JButton btn_Save;
 	private JButton btn_Add;
 	private JButton btn_Remove;
@@ -42,8 +47,16 @@ public class ShowSpecifications implements ActionListener{
 		this.btn_Remove = new JButton("Eliminar");
 		
 		
-		this.frame.getInternalFrame().add(new SpecificationPane("Texto de prueba"), "wrap, pushx, growx");
+		this.specifications = new JList<>();
+		this.specifications.add(new SpecificationPane("Texto de prueba"));
+		this.specifications.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		this.sp_SpecificationPane = new JScrollPane();
+		this.sp_SpecificationPane.setViewportView(this.specifications);
 		
+		this.frame.getInternalFrame().add(this.btn_Add, "split 3, align center");
+		this.frame.getInternalFrame().add(this.btn_Save);
+		this.frame.getInternalFrame().add(this.btn_Remove, "wrap");
+		this.frame.getInternalFrame().add(this.sp_SpecificationPane, "wrap, pushx, growx, span 3");
 	}
 	
 	@Override
