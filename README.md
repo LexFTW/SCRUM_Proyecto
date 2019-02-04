@@ -92,12 +92,15 @@
   <li>Generar archivo log. (2h)</li>
 </ol>
 
-#20 - Generar la vista para visualizar datos de un proyecto - (3 h) Alexis.
-#21/22 - El botón de Mostrar las especificaciones del proyecto seleccionado (5 h) Alexis, Roger.
-#24 - Comprobar si hay acciones OFFLINE y replicarla a la remota - (5 h) Adrian.
-#28/30 - Botón de añadir especificación - (2 h) Adrian.
-#25 - Crear procedure store para hacer un user - (1 h) Alexis
-#A2 - Errores del Sprint 2.
+<h2>Sprint 3</h2>
+<ol>
+  <li>Generar la vista para visualizar datos de un proyecto - (3 h)</li>
+  <li>El botón de Mostrar las especificaciones del proyecto seleccionado (5 h)</li>
+  <li>Comprobar si hay acciones OFFLINE y replicarla a la remota - (5 h)</li>
+  <li>Botón de añadir especificación - (2 h)</li>
+  <li>Crear procedure store para hacer un user</li>
+  <li>Errores del Sprint 2.</li>
+</ol>
 
 <h2>Participantes</h2>
 <ul>
