@@ -269,16 +269,29 @@ public class UserSQLLocal implements IUser {
 	}
 	
 	public void serializeUser(User user) {
-		try {
-			ObjectOutputStream userWriter = new ObjectOutputStream(new FileOutputStream("src/main/resources/log.obj", true));
-			user.setInserted(true);
-			userWriter.writeObject(user);
-			userWriter.close();
-		} catch (FileNotFoundException e) {
-			JOptionPane.showMessageDialog(null, "No se ha encontrado el archivo log para registrar la información, pongase en contacto con el Administrador", "No se ha encontrado el archivo",  JOptionPane.ERROR_MESSAGE);
-		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Error de E/S al archivo log, pongase en contacon con el Administrador", "Error de E/S",  JOptionPane.ERROR_MESSAGE);
+		File f = new File("src/main/resources/log.obj");
+		if(f.length() > 0) {
+			try {
+				MyObjectOutputStream oos = new MyObjectOutputStream(new FileOutputStream(f, true));
+				user.setInserted(true);
+				oos.writeUnshared(user);
+				oos.close();
+			} catch (FileNotFoundException e) {
+				JOptionPane.showMessageDialog(null, "No se ha encontrado el archivo log para registrar la información, pongase en contacto con el Administrador", "No se ha encontrado el archivo",  JOptionPane.ERROR_MESSAGE);
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(null, "Error de E/S al archivo log, pongase en contacon con el Administrador", "Error de E/S",  JOptionPane.ERROR_MESSAGE);
+			}
+		}else {
+			try {
+				ObjectOutputStream userWriter = new ObjectOutputStream(new FileOutputStream(f, true));
+				user.setInserted(true);
+				userWriter.writeObject(user);
+				userWriter.close();
+			} catch (FileNotFoundException e) {
+				JOptionPane.showMessageDialog(null, "No se ha encontrado el archivo log para registrar la información, pongase en contacto con el Administrador", "No se ha encontrado el archivo",  JOptionPane.ERROR_MESSAGE);
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(null, "Error de E/S al archivo log, pongase en contacon con el Administrador", "Error de E/S",  JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
-
 }

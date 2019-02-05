@@ -1,8 +1,11 @@
 package main.implementations;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -40,7 +43,7 @@ public class ProjectSQLLocal implements IProject {
 	
 	@Override
 	public void insertProject(Project project) {
-		File fLog = new File("src/main/resources/log");
+		File fLog = new File("src/main/resources/log.obj");
 		FileWriter fw;
 		if (fLog.exists()) {
 			getConnectionLocal();
@@ -54,9 +57,10 @@ public class ProjectSQLLocal implements IProject {
 							+ project.getScrumMasterID() + "', '" + project.getProductOwnerID() + "', '" + project.getCreatedAt() + "', '"
 							+ project.getUpdatedAt() + "')";
 
-					fw.write(query + "\n");
-					fw.close();
 					this.statement.executeUpdate(query);
+					
+					this.replicateProject(project);
+					
 					this.statement.close();
 					this.connection.close();
 				} catch (SQLException | IOException e) {
@@ -235,6 +239,33 @@ public class ProjectSQLLocal implements IProject {
 			}
 		}
 		return countSpecifications;
+	}
+	
+	public void replicateProject(Project project) {
+		File f = new File("src/main/resources/log.obj");
+		if(f.length() > 0) {
+			try {
+				MyObjectOutputStream oos = new MyObjectOutputStream(new FileOutputStream(f, true));
+				project.setInserted(true);
+				oos.writeUnshared(project);
+				oos.close();
+			} catch (FileNotFoundException e) {
+				JOptionPane.showMessageDialog(null, "No se ha encontrado el archivo log para registrar la información, pongase en contacto con el Administrador", "No se ha encontrado el archivo",  JOptionPane.ERROR_MESSAGE);
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(null, "Error de E/S al archivo log, pongase en contacon con el Administrador", "Error de E/S",  JOptionPane.ERROR_MESSAGE);
+			}
+		}else {
+			try {
+				ObjectOutputStream userWriter = new ObjectOutputStream(new FileOutputStream(f, true));
+				project.setInserted(true);
+				userWriter.writeObject(project);
+				userWriter.close();
+			} catch (FileNotFoundException e) {
+				JOptionPane.showMessageDialog(null, "No se ha encontrado el archivo log para registrar la información, pongase en contacto con el Administrador", "No se ha encontrado el archivo",  JOptionPane.ERROR_MESSAGE);
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(null, "Error de E/S al archivo log, pongase en contacon con el Administrador", "Error de E/S",  JOptionPane.ERROR_MESSAGE);
+			}
+		}
 	}
 
 }
