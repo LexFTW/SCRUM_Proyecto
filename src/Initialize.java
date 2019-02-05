@@ -6,9 +6,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.hibernate.hql.internal.ast.tree.IsNotNullLogicOperatorNode;
+
+import main.implementations.ProjectSQLRemote;
 import main.implementations.UserSQLLocal;
 import main.implementations.UserSQLRemote;
+import main.interfaces.IProject;
 import main.interfaces.IUser;
+import main.models.Project;
 import main.models.User;
 import main.views.Login;
 
@@ -21,6 +26,8 @@ public class Initialize {
 	private static User user;
 	private static FileInputStream fis;
 	private static ObjectInputStream ois;
+	private static Object object;
+	private static IProject iproject;
 
 	public static void main(String[] args) {
 		try {
@@ -28,22 +35,36 @@ public class Initialize {
 			emf = Persistence.createEntityManagerFactory("ScrumHibernate");
 			em = emf.createEntityManager();
 			iuser = new UserSQLRemote();
+			iproject = new ProjectSQLRemote();
 			fLog = new File("src/main/resources/log.obj");
 			// # Falta saber a que instancia cada objeto que se lee
 			// # Falta condición para el while
 			// # Falta crear los métodos privados en la implementación de UserSQLRemote.
-//			if (fLog.exists()) {
-//				if (fLog.length() > 0) {
-//					fis = new FileInputStream(fLog);
-//					ois = new ObjectInputStream(fis);
-//					user = (User) ois.readObject();
-//					while (true) {
-//						System.out.println(user.toString());
-//					}
-//				}
-//
-//				ois.close();
-//			}
+
+			try {
+				if (fLog.exists()) {
+					if (fLog.length() > 0) {
+						fis = new FileInputStream(fLog);
+						ois = new ObjectInputStream(fis);
+						object = ois.readObject();
+						while (object != null) {
+							if (object instanceof User) {
+								iuser.insertUser((User) object);
+								object = ois.readObject();
+							} else if (object instanceof Project) {
+								object = ois.readObject();
+								iproject.insertProject((Project) object);
+							}
+						}
+					}
+					ois.close();
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+
+			
+			fLog.delete();
 			System.out.println("[INFO] - Conexión Online");
 		} catch (Exception e) {
 			iuser = new UserSQLLocal();
