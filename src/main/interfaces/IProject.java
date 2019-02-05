@@ -3,12 +3,13 @@ package main.interfaces;
 import java.util.ArrayList;
 
 import main.models.Project;
+import main.models.Specification;
 
 public interface IProject {
 
 	public Project project = new Project();
 
-	public void insertProject(Project project,boolean replic);
+	public void insertProject(Project project, boolean replic);
 
 	public ArrayList<Project> getAllProjects();
 
@@ -24,5 +25,8 @@ public interface IProject {
 
 	public Project getProjectSelected();
 
-	
+	public ArrayList<Specification> getAllSpecifications(int projectID);
+
+	public void insertSpecification(Specification specification, boolean replic);
+
 }

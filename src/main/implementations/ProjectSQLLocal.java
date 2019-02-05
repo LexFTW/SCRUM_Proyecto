@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 
 import main.interfaces.IProject;
 import main.models.Project;
+import main.models.Specification;
 
 public class ProjectSQLLocal implements IProject {
 	private Connection connection;
@@ -276,8 +277,20 @@ public class ProjectSQLLocal implements IProject {
 
 	@Override
 	public ArrayList<Project> getAllProjectsDevelopers(int userID) {
-		// TODO Auto-generated method stub
+
 		return null;
+	}
+
+	@Override
+	public ArrayList<Specification> getAllSpecifications(int projectID) {
+
+		return null;
+	}
+
+	@Override
+	public void insertSpecification(Specification specification, boolean replic) {
+
+		
 	}
 
 }

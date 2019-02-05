@@ -12,6 +12,7 @@ import javax.persistence.Persistence;
 
 import main.interfaces.IProject;
 import main.models.Project;
+import main.models.Specification;
 import main.models.User;
 import main.models.UserGroupIntegrant;
 import main.models.UserPermission;
@@ -125,5 +126,18 @@ public class ProjectSQLRemote implements IProject {
 		}
 
 		return projectsDev;
+	}
+
+	@Override
+	public ArrayList<Specification> getAllSpecifications(int projectID) {
+		// TODO Auto-generated method stub
+		return (ArrayList<Specification>) entityManager
+				.createQuery("SELECT spec FROM Specification spec where ProjectID = " + projectID).getResultList();
+	}
+
+	@Override
+	public void insertSpecification(Specification specification, boolean replic) {
+		// TODO Auto-generated method stub
+		
 	}
 }
