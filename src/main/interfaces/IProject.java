@@ -11,6 +11,7 @@ public interface IProject {
 	public void insertProject(Project project);
 	public ArrayList<Project> getAllProjects();
 	public ArrayList<Project> getAllProjects(int id);
+	public ArrayList<Project> getAllProjectsDevelopers(int userID);
 	public Project getProject(String projectTitle);
 	public String getProductOwner(int id);
 	public String getScrumMaster(int id);

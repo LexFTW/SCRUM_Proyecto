@@ -127,8 +127,13 @@ public class ShowProjects implements ActionListener{
 				Object[] data = {project.getProjectName()};
 				this.dtm.addRow(data);
 			}
-		}else if(iuser.getUserLogged().getPermissionID() == 3 || iuser.getUserLogged().getPermissionID() == 4) {
+		}else if(iuser.getUserLogged().getPermissionID() == 3) {
 			for (Project project : iproject.getAllProjects(iuser.getUserLogged().getUserID())) {
+				Object[] data = {project.getProjectName()};
+				this.dtm.addRow(data);
+			}
+		}else if(iuser.getUserLogged().getPermissionID() == 4) {
+			for(Project project : iproject.getAllProjectsDevelopers(iuser.getUserLogged().getUserID())) {
 				Object[] data = {project.getProjectName()};
 				this.dtm.addRow(data);
 			}

@@ -13,6 +13,8 @@ import javax.persistence.Persistence;
 import main.interfaces.IProject;
 import main.models.Project;
 import main.models.User;
+import main.models.UserGroupIntegrant;
+import main.models.UserPermission;
 
 public class ProjectSQLRemote implements IProject{
 
@@ -107,5 +109,16 @@ public class ProjectSQLRemote implements IProject{
 	@Override
 	public int getCountSpecifications() {
 		return 0;
+	}
+
+	@Override
+	public ArrayList<Project> getAllProjectsDevelopers(int userID) {
+		ArrayList<UserGroupIntegrant> integrants = (ArrayList<UserGroupIntegrant>) entityManager.createQuery("SELECT integrant FROM UserGroupIntegrant integrant WHERE UserID = " + userID).getResultList();
+		ArrayList<Project> projectsDev = new ArrayList<>();
+		for (UserGroupIntegrant integrant : integrants) {
+			projectsDev.add((Project) entityManager.createQuery("SELECT p FROM Project p WHERE ProjectID = " + integrant.getProjectID()).getSingleResult());
+		}
+		
+		return projectsDev;
 	}
 }
