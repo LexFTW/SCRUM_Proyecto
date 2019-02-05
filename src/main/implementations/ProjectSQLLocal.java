@@ -43,7 +43,6 @@ public class ProjectSQLLocal implements IProject {
 	
 	@Override
 	public void insertProject(Project project) {
-		
 		this.getConnectionLocal();
 		if(this.connection != null) {
 			try {
