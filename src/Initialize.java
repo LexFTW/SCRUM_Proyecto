@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.channels.FileChannel;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -42,10 +43,6 @@ public class Initialize {
 			iuser = new UserSQLRemote();
 			iproject = new ProjectSQLRemote();
 			fLog = new File("src/main/resources/log");
-			// # Falta saber a que instancia cada objeto que se lee
-			// # Falta condición para el while
-			// # Falta crear los métodos privados en la implementación de UserSQLRemote.
-
 			try {
 				if (fLog.exists()) {
 					if (fLog.length() > 0) {
@@ -54,9 +51,23 @@ public class Initialize {
 						object = ois.readObject();
 						while (object != null) {
 							if (object instanceof User) {
-								iuser.insertUser((User) object);
+								User u = (User) object;
+								if(u.isInserted()) {
+									iuser.insertUser(u);
+								}else if(u.isDeleted()) {
+									
+								}else if(u.isUpdated()) {
+									
+								}
 							}else if (object instanceof Project) {
-								iproject.insertProject((Project) object);
+								Project p = (Project) object;
+								if(p.isInserted()) {
+									iproject.insertProject((Project) object);
+								}else if(p.isDeleted()) {
+									
+								}else if(p.isUpdated()) {
+									
+								}
 							}
 							object = ois.readObject();
 						}
@@ -64,10 +75,10 @@ public class Initialize {
 					ois.close();
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				try(FileChannel fC = new FileOutputStream(fLog, true).getChannel()){
+					fC.truncate(0);
+				}
 			}
-
-			fLog.delete();
 			System.out.println("[INFO] - Conexión Online");
 		} catch (Exception e) {
 			iuser = new UserSQLLocal();

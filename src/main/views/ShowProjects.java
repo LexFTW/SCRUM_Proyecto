@@ -96,12 +96,12 @@ public class ShowProjects implements ActionListener{
 			}
 		});
 		
-		this.frame.getInternalFrame().add(this.sp, "span 1 5");
-		this.frame.getInternalFrame().add(this.lbl_Title);
+		this.frame.getInternalFrame().add(this.sp, "span 1 7");
+		this.frame.getInternalFrame().add(this.lbl_Title, "wrap");
 		this.frame.getInternalFrame().add(this.tf_Title, "wrap, pushx, growx");
-		this.frame.getInternalFrame().add(this.lbl_ProductOwner);
+		this.frame.getInternalFrame().add(this.lbl_ProductOwner, "wrap");
 		this.frame.getInternalFrame().add(this.tf_ProductOnwer, "wrap, pushx, growx");
-		this.frame.getInternalFrame().add(this.lbl_ScrumMaster);
+		this.frame.getInternalFrame().add(this.lbl_ScrumMaster, "wrap");
 		this.frame.getInternalFrame().add(this.tf_ScrumMaster, "wrap, pushx, growx");
 		this.frame.getInternalFrame().add(this.btn_ShowSpecifications, "wrap, span 2, align right");
 	}
