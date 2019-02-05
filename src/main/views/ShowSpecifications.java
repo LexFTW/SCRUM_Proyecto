@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
@@ -15,6 +16,7 @@ import main.interfaces.IProject;
 import main.interfaces.IUser;
 import main.models.Project;
 import main.models.Specification;
+import net.miginfocom.swing.MigLayout;
 
 public class ShowSpecifications implements ActionListener{
 
@@ -22,6 +24,7 @@ public class ShowSpecifications implements ActionListener{
 	private IProject iproject;
 	private Project project;
 	private MainFrame frame;
+	private JPanel panelScrollable;
 	private JScrollPane sp_SpecificationPane;
 	private JList<SpecificationPane> specifications;
 	private JButton btn_Save;
@@ -55,18 +58,19 @@ public class ShowSpecifications implements ActionListener{
 		this.specifications.setSize(1, 1);
 		this.specifications.setVisible(true);
 
-//		this.sp_SpecificationPane = new JScrollPane(/*this.specifications*/);
-//		this.sp_SpecificationPane.setPreferredSize(new Dimension(700, 400));
-//		this.sp_SpecificationPane.setVisible(true);
+		this.panelScrollable = new JPanel(new MigLayout());
+		for (int i = 0; i < 2; i++) { // Cambiar el 2 por un método que de un int contando todas las especificaciones que hay.
+			this.panelScrollable.add(new SpecificationPane("D"), "wrap, split 3, pushx, growx");
+		}
+		
+		this.sp_SpecificationPane = new JScrollPane(this.panelScrollable);
+		this.sp_SpecificationPane.setVisible(true);
 		
 		this.frame.getInternalFrame().setAutoscrolls(true);
 		this.frame.getInternalFrame().add(this.btn_Add, "split 3, align center");
 		this.frame.getInternalFrame().add(this.btn_Save);
 		this.frame.getInternalFrame().add(this.btn_Remove, "wrap");
-		
-		for (int i = 0; i < 2; i++) {
-			this.frame.getInternalFrame().add(new SpecificationPane("D"), "wrap, split 3, pushx, growx");
-		}
+		this.frame.getInternalFrame().add(this.sp_SpecificationPane, "wrap, pushx, growx");
 	}
 	
 	@Override

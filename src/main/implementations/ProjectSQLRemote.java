@@ -106,7 +106,6 @@ public class ProjectSQLRemote implements IProject{
 
 	@Override
 	public int getCountSpecifications() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 }

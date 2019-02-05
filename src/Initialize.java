@@ -41,7 +41,7 @@ public class Initialize {
 			em = emf.createEntityManager();
 			iuser = new UserSQLRemote();
 			iproject = new ProjectSQLRemote();
-			fLog = new File("src/main/resources/log.obj");
+			fLog = new File("src/main/resources/log");
 			// # Falta saber a que instancia cada objeto que se lee
 			// # Falta condición para el while
 			// # Falta crear los métodos privados en la implementación de UserSQLRemote.

@@ -43,36 +43,33 @@ public class ProjectSQLLocal implements IProject {
 	
 	@Override
 	public void insertProject(Project project) {
-		File fLog = new File("src/main/resources/log.obj");
-		FileWriter fw;
-		if (fLog.exists()) {
-			getConnectionLocal();
-			if (this.connection != null) {
-				try {
-					fw = new FileWriter(fLog, true);
-					statement = connection.createStatement();
-					
-					String query = "insert into projects (ProjectTitle, ProjectDescription, ScrumMasterID, ProductOwnerID, CreatedAt, UpdatedAt) VALUES "
-							+ "('" + project.getProjectName() + "', '" + project.getProjectDescription() + "', '"
-							+ project.getScrumMasterID() + "', '" + project.getProductOwnerID() + "', '" + project.getCreatedAt() + "', '"
-							+ project.getUpdatedAt() + "')";
+		
+		this.getConnectionLocal();
+		if(this.connection != null) {
+			try {
+				statement = connection.createStatement();
+				
+				String query = "insert into projects (ProjectTitle, ProjectDescription, ScrumMasterID, ProductOwnerID, CreatedAt, UpdatedAt) VALUES "
+						+ "('" + project.getProjectName() + "', '" + project.getProjectDescription() + "', '"
+						+ project.getScrumMasterID() + "', '" + project.getProductOwnerID() + "', '" + project.getCreatedAt() + "', '"
+						+ project.getUpdatedAt() + "')";
 
-					this.statement.executeUpdate(query);
-					
-					this.replicateProject(project);
-					
-					this.statement.close();
+				this.statement.executeUpdate(query);
+				this.statement.close();
+				this.connection.close();
+				this.serializeProject(project);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				try {
 					this.connection.close();
-				} catch (SQLException | IOException e) {
+				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-
 			}
-
-		} else {
-			JOptionPane.showMessageDialog(null, "No se ha encontrado el archivo log para registrar la información, pongase en contacto con el Administrador", "No se ha encontrado el archivo",  JOptionPane.ERROR_MESSAGE);
+		}else {
+			JOptionPane.showMessageDialog(null, "Error al conectarse a la Base de Datos, vuelva a intentarlo", "No se ha podido conectar a la Base de Datos",  JOptionPane.ERROR_MESSAGE);
 		}
-
 	}
 
 	@Override
@@ -241,8 +238,8 @@ public class ProjectSQLLocal implements IProject {
 		return countSpecifications;
 	}
 	
-	public void replicateProject(Project project) {
-		File f = new File("src/main/resources/log.obj");
+	public void serializeProject(Project project) {
+		File f = new File("src/main/resources/log");
 		if(f.length() > 0) {
 			try {
 				MyObjectOutputStream oos = new MyObjectOutputStream(new FileOutputStream(f, true));

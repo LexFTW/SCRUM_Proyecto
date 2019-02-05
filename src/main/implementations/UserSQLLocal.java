@@ -269,7 +269,7 @@ public class UserSQLLocal implements IUser {
 	}
 	
 	public void serializeUser(User user) {
-		File f = new File("src/main/resources/log.obj");
+		File f = new File("src/main/resources/log");
 		if(f.length() > 0) {
 			try {
 				MyObjectOutputStream oos = new MyObjectOutputStream(new FileOutputStream(f, true));
