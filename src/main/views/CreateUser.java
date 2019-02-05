@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -142,6 +143,9 @@ public class CreateUser implements ActionListener{
 	}
 
 	private void createUser() {
+		JOptionPane.showMessageDialog(null, "Nombre de Usuario: " + this.tf_UserNickname.getText() +
+				"\nContraseña: " + String.valueOf(this.pf_UserPassword.getPassword()), null, JOptionPane.PLAIN_MESSAGE);
+		
 		User user = new User();
 		user.setUserName(this.tf_UserName.getText().split(" ")[0]);
 		String lastname = "";
@@ -156,6 +160,12 @@ public class CreateUser implements ActionListener{
 		user.setUserEmail(this.tf_UserEmail.getText());
 		user.setPermissionID(Integer.parseInt(this.comboBox.getSelectedItem().toString().substring(0,1)));
 		iuser.insertUser(user);
+		
+		this.tf_UserEmail.setText("");
+		this.tf_UserName.setText("");
+		this.tf_UserNickname.setText("");
+		this.pf_UserPassword.setText("");
+		this.pf_UserPasswordValidate.setText("");
 	}
 
 	private boolean validateEmail() {

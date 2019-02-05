@@ -47,8 +47,12 @@ public class UserSQLRemote implements IUser {
 	 */
 	@Override
 	public User getUserLogin(String userNickname, String password) {
-		this.userLogged = (User) entityManager.createQuery("SELECT user FROM User user WHERE UserNickname = '" + userNickname + "' AND UserPassword = '" + this.getHashingPassword(password) + "'").getSingleResult(); 
-		return userLogged;
+		try {
+			this.userLogged = (User) entityManager.createQuery("SELECT user FROM User user WHERE UserNickname = '" + userNickname + "' AND UserPassword = '" + this.getHashingPassword(password) + "'").getSingleResult();
+			return userLogged;
+		}catch(Exception e) {
+			return null;
+		}
 	}
 
 	/*
@@ -118,13 +122,12 @@ public class UserSQLRemote implements IUser {
 		if(this.connection != null) {
 			try {
 				this.statement = connection.createStatement();
-				String sqlQuery3 = "INSERT INTO `users` (UserID, UserName, UserLastname, UserNickname, UserPassword, UserEmail, PermissionID)"
-						+ "VALUES('" + user.getUserID() + "', '" + user.getUserName() + "', '" + user.getUserLastname()
+				String sqlQuery3 = "INSERT INTO `users` (UserName, UserLastname, UserNickname, UserPassword, UserEmail, PermissionID)"
+						+ "VALUES('" + user.getUserName() + "', '" + user.getUserLastname()
 						+ "', '" + user.getUserNickname() + "', '" + user.getUserPassword() + "', '" + user.getUserEmail()
 						+ "', " + user.getPermissionID() + ");";
 
 				statement.executeUpdate(sqlQuery3);
-				System.out.println("Insertao maquina");
 				statement.close();
 
 			} catch (SQLException e) {
