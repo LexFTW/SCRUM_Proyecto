@@ -103,4 +103,10 @@ public class ProjectSQLRemote implements IProject{
 	public Project getProjectSelected() {
 		return this.project;
 	}
+
+	@Override
+	public int getCountSpecifications() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

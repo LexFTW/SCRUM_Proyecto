@@ -9,6 +9,7 @@ import javax.persistence.Persistence;
 import main.implementations.UserSQLLocal;
 import main.implementations.UserSQLRemote;
 import main.interfaces.IUser;
+import main.models.Project;
 import main.models.User;
 import main.views.Login;
 
@@ -32,20 +33,37 @@ public class Initialize {
 			// # Falta saber a que instancia cada objeto que se lee
 			// # Falta condición para el while
 			// # Falta crear los métodos privados en la implementación de UserSQLRemote.
-//			if (fLog.exists()) {
-//				if (fLog.length() > 0) {
-//					fis = new FileInputStream(fLog);
-//					ois = new ObjectInputStream(fis);
-//					user = (User) ois.readObject();
-//					while (true) {
-//						System.out.println(user.toString());
+
+			if (fLog.exists()) {
+				if (fLog.length() > 0) {
+					fis = new FileInputStream(fLog);
+					ois = new ObjectInputStream(fis);
+					ois = new ObjectInputStream(fis);
+					User u = (User) ois.readObject();
+					System.out.println(u.toString());
+					
+//					while (!salir) {
+//						if ((ois.readObject() instanceof User)) {
+//							System.out.println("Usuario");
+//							User usuario = (User) ois.readObject();
+//						}else if ((ois.readObject() instanceof Project)) {
+//							System.out.println("Proyecto");
+//							Project proyecto = (Project) ois.readObject();
+//						}
+//						
+//						if(ois.readObject() == null) {
+//							salir = true;
+//						}
+//						
+//						fis.close();
+//						ois.close();
 //					}
-//				}
-//
-//				ois.close();
-//			}
+				}
+			}
+			
 			System.out.println("[INFO] - Conexión Online");
 		} catch (Exception e) {
+			System.out.println(e.toString());
 			iuser = new UserSQLLocal();
 			System.out.println("[INFO] - Conexión Offline");
 		}
