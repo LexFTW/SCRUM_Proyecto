@@ -145,7 +145,7 @@ public class UserSQLLocal implements IUser {
 	}
 
 	@Override
-	public void insertUser(User user) {
+	public void insertUser(User user,boolean replic) {
 		this.getConnectionLocal();
 		if(this.connection != null) {
 			try {

@@ -52,21 +52,21 @@ public class Initialize {
 						while (object != null) {
 							if (object instanceof User) {
 								User u = (User) object;
-								if(u.isInserted()) {
-									iuser.insertUser(u);
-								}else if(u.isDeleted()) {
-									
-								}else if(u.isUpdated()) {
-									
+								if (u.isInserted()) {
+									iuser.insertUser(u, false);
+								} else if (u.isDeleted()) {
+
+								} else if (u.isUpdated()) {
+
 								}
-							}else if (object instanceof Project) {
+							} else if (object instanceof Project) {
 								Project p = (Project) object;
-								if(p.isInserted()) {
-									iproject.insertProject((Project) object);
-								}else if(p.isDeleted()) {
-									
-								}else if(p.isUpdated()) {
-									
+								if (p.isInserted()) {
+									iproject.insertProject((Project) object, false);
+								} else if (p.isDeleted()) {
+
+								} else if (p.isUpdated()) {
+
 								}
 							}
 							object = ois.readObject();
@@ -75,7 +75,7 @@ public class Initialize {
 					ois.close();
 				}
 			} catch (Exception e) {
-				try(FileChannel fC = new FileOutputStream(fLog, true).getChannel()){
+				try (FileChannel fC = new FileOutputStream(fLog, true).getChannel()) {
 					fC.truncate(0);
 				}
 			}

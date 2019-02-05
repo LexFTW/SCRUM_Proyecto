@@ -136,7 +136,7 @@ public class CreateProjects implements ActionListener {
 					project.setProjectDescription(ta_Description.getText());
 					project.setScrumMasterID(Integer.parseInt(this.cb_ScrumMaster.getSelectedItem().toString().substring(0, 1)));
 					project.setProductOwnerID(Integer.parseInt(this.cb_ProductOwner.getSelectedItem().toString().substring(0, 1)));
-					iproject.insertProject(project);
+					iproject.insertProject(project,true);
 					this.tf_Title.setText("");
 					this.ta_Description.setText("");
 					this.lbl_ErrorData.setVisible(false);
