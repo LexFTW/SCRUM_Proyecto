@@ -47,10 +47,8 @@ public class UserSQLRemote implements IUser {
 	 */
 	@Override
 	public User getUserLogin(String userNickname, String password) {
-		List<User> loggedUser = entityManager.createQuery("Select u from User u where UserNickname = '" + userNickname
-				+ "' and UserPassword = '" + getHashingPassword(password) + "'").getResultList();
-
-		return userLogged = loggedUser.get(0);
+		this.userLogged = (User) entityManager.createQuery("SELECT user FROM User user WHERE UserNickname = '" + userNickname + "' AND UserPassword = '" + this.getHashingPassword(password) + "'").getSingleResult(); 
+		return userLogged;
 	}
 
 	/*

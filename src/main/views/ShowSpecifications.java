@@ -3,13 +3,18 @@ package main.views;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 
 import main.interfaces.IProject;
 import main.interfaces.IUser;
 import main.models.Project;
+import main.models.Specification;
 
 public class ShowSpecifications implements ActionListener{
 
@@ -17,7 +22,8 @@ public class ShowSpecifications implements ActionListener{
 	private IProject iproject;
 	private Project project;
 	private MainFrame frame;
-	
+	private JScrollPane sp_SpecificationPane;
+	private JList<SpecificationPane> specifications;
 	private JButton btn_Save;
 	private JButton btn_Add;
 	private JButton btn_Remove;
@@ -41,14 +47,36 @@ public class ShowSpecifications implements ActionListener{
 		this.btn_Add = new JButton("Añadir");
 		this.btn_Remove = new JButton("Eliminar");
 		
+		this.btn_Add.addActionListener(this);
 		
-		this.frame.getInternalFrame().add(new SpecificationPane("Texto de prueba"), "wrap");
+		this.specifications = new JList<>();
+		this.specifications.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		this.specifications.setLayoutOrientation(JList.VERTICAL);
+		this.specifications.setSize(1, 1);
+		this.specifications.setVisible(true);
+
+//		this.sp_SpecificationPane = new JScrollPane(/*this.specifications*/);
+//		this.sp_SpecificationPane.setPreferredSize(new Dimension(700, 400));
+//		this.sp_SpecificationPane.setVisible(true);
 		
+		this.frame.getInternalFrame().setAutoscrolls(true);
+		this.frame.getInternalFrame().add(this.btn_Add, "split 3, align center");
+		this.frame.getInternalFrame().add(this.btn_Save);
+		this.frame.getInternalFrame().add(this.btn_Remove, "wrap");
+		
+		for (int i = 0; i < 2; i++) {
+			this.frame.getInternalFrame().add(new SpecificationPane("D"), "wrap, split 3, pushx, growx");
+		}
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+		if(e.getSource() instanceof JButton) {
+			JButton btn = (JButton) e.getSource();
+			if(btn == btn_Add) {
+				// # Añadir especificación
+			}
+		}
 	}
 
 }

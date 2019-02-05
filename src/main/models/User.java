@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -137,6 +138,7 @@ public class User implements Serializable{
 		UpdatedAt = updatedAt;
 	}
 	
+	@Transient
 	public boolean isUpdated() {
 		return updated;
 	}
@@ -145,6 +147,7 @@ public class User implements Serializable{
 		this.updated = updated;
 	}
 
+	@Transient
 	public boolean isInserted() {
 		return inserted;
 	}
@@ -153,6 +156,7 @@ public class User implements Serializable{
 		this.inserted = inserted;
 	}
 
+	@Transient
 	public boolean isDeleted() {
 		return deleted;
 	}

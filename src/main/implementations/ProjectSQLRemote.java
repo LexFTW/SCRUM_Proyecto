@@ -12,6 +12,7 @@ import javax.persistence.Persistence;
 
 import main.interfaces.IProject;
 import main.models.Project;
+import main.models.User;
 
 public class ProjectSQLRemote implements IProject{
 
@@ -19,6 +20,7 @@ public class ProjectSQLRemote implements IProject{
 	private EntityManager entityManager;
 	private Connection connection;
 	private Statement statement;
+	private Project project;
 	
 	
 	public ProjectSQLRemote() {
@@ -76,25 +78,35 @@ public class ProjectSQLRemote implements IProject{
 
 	@Override
 	public ArrayList<Project> getAllProjects(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return (ArrayList<Project>) entityManager.createQuery("SELECT project FROM Project project WHERE ProductOwnerID = " + id + "OR ScrumMasterID = " + id).getResultList();
 	}
 
 	@Override
 	public Project getProject(String projectTitle) {
-		// TODO Auto-generated method stub
-		return null;
+		this.project = (Project) entityManager.createQuery("SELECT project FROM Project project WHERE ProjectTitle = '" + projectTitle + "'").getSingleResult(); 
+		return this.project;
 	}
 
 	@Override
 	public String getProductOwner(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		User user = (User) entityManager.createQuery("SELECT user FROM User user WHERE UserID = " + id).getSingleResult();
+		return user.getUserName();
 	}
 
 	@Override
 	public String getScrumMaster(int id) {
+		User user = (User) entityManager.createQuery("SELECT user FROM User user WHERE UserID = " + id).getSingleResult();
+		return user.getUserName();
+	}
+
+	@Override
+	public Project getProjectSelected() {
+		return this.project;
+	}
+
+	@Override
+	public int getCountSpecifications() {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 }

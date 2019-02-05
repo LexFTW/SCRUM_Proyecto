@@ -80,24 +80,27 @@
 
 <h2>Sprint 2</h2>
 <ol>
-  <li>Generar contraseña automaticamente de 6 caracteres. (1h)</li>
-  <li>Generar Login automaticamente mediante nombre y primer apellido. (2h)</li>
-  <li>Validar contraseña, en caso de error, mostrar un JLabel con un texto rojo. (1h)</li>
-  <li>Validar formato del correo electronico. (1h)</li>
-  <li>(13,15,16) Ventana para generar un proyecto. (3h)</li>
-  <li>Replicar inserts en la BD embebida. (4h)</li>
-  <li>Botón para cerrar sesión. (1h)</li>
-  <li>Que la aplicación funcione a través de la BD embebida. (2h)</li>
-  <li>Hacer JMenuBar y gestionar los permisos de acceso. (1h)</li>
-  <li>Generar archivo log. (2h)</li>
+  <li><s>Generar contraseña automaticamente de 6 caracteres. (1h)</s></li>
+  <li><s>Generar Login automaticamente mediante nombre y primer apellido. (2h)</s></li>
+  <li><s>Validar contraseña, en caso de error, mostrar un JLabel con un texto rojo. (1h)</s></li>
+  <li><s>Validar formato del correo electronico. (1h)</s></li>
+  <li><s>(13,15,16) Ventana para generar un proyecto. (3h)</s></li>
+  <li><s>Replicar inserts en la BD embebida. (4h)</s></li>
+  <li><s>Botón para cerrar sesión. (1h)</s></li>
+  <li><s>Que la aplicación funcione a través de la BD embebida. (2h)</s></li>
+  <li><s>Hacer JMenuBar y gestionar los permisos de acceso. (1h)</s></li>
+  <li><s>Generar archivo log. (2h)</s></li>
 </ol>
 
-#20 - Generar la vista para visualizar datos de un proyecto - (3 h) Alexis.
-#21/22 - El botón de Mostrar las especificaciones del proyecto seleccionado (5 h) Alexis, Roger.
-#24 - Comprobar si hay acciones OFFLINE y replicarla a la remota - (5 h) Adrian.
-#28/30 - Botón de añadir especificación - (2 h) Adrian.
-#25 - Crear procedure store para hacer un user - (1 h) Alexis
-#A2 - Errores del Sprint 2.
+<h2>Sprint 3</h2>
+<ol>
+  <li>Generar la vista para visualizar datos de un proyecto - (3 h)</li>
+  <li>El botón de Mostrar las especificaciones del proyecto seleccionado (5 h)</li>
+  <li>Comprobar si hay acciones OFFLINE y replicarla a la remota - (5 h)</li>
+  <li>Botón de añadir especificación - (2 h)</li>
+  <li>Crear procedure store para hacer un user</li>
+  <li>Errores del Sprint 2.</li>
+</ol>
 
 <h2>Participantes</h2>
 <ul>

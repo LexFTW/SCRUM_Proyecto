@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import main.interfaces.IProject;
 import main.models.Project;
 
@@ -64,7 +66,7 @@ public class ProjectSQLLocal implements IProject {
 			}
 
 		} else {
-			System.out.println("El archivo especificado no existe");
+			JOptionPane.showMessageDialog(null, "No se ha encontrado el archivo log para registrar la información, pongase en contacto con el Administrador", "No se ha encontrado el archivo",  JOptionPane.ERROR_MESSAGE);
 		}
 
 	}
@@ -103,7 +105,6 @@ public class ProjectSQLLocal implements IProject {
 
 	@Override
 	public Project getProject(String projectTitle) {
-		Project project = new Project();
 		this.getConnectionLocal();
 		if(this.connection != null) {
 			try {
@@ -205,6 +206,35 @@ public class ProjectSQLLocal implements IProject {
 			}
 		}
 		return projects;
+	}
+
+	@Override
+	public Project getProjectSelected() {
+		return this.project;
+	}
+
+	@Override
+	public int getCountSpecifications() {
+		this.getConnectionLocal();
+		int countSpecifications = 0; 
+		if(this.connection != null) {
+			try {
+				this.statement = this.connection.createStatement();
+				this.resultSet = this.statement.executeQuery("SELECT * FROM specifications WHERE ProjectID =" + this.project.getProjectID());
+				while(this.resultSet.next()) {
+					countSpecifications++;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					this.connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return countSpecifications;
 	}
 
 }

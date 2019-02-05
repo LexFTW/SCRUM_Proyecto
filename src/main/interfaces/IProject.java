@@ -15,4 +15,5 @@ public interface IProject {
 	public String getProductOwner(int id);
 	public String getScrumMaster(int id);
 	public Project getProjectSelected();
+	public int getCountSpecifications();
 }
