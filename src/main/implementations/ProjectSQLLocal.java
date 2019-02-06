@@ -288,12 +288,49 @@ public class ProjectSQLLocal implements IProject {
 
 	@Override
 	public ArrayList<Specification> getAllSpecifications(int projectID) {
+<<<<<<< HEAD
+		ArrayList<Specification> specifications = new ArrayList<>();
+		this.getConnectionLocal();
+		if (this.connection != null) {
+			try {
+				this.statement = this.connection.createStatement();
+				this.resultSet = this.statement
+						.executeQuery("SELECT * FROM specifications WHERE ProjectID =" + projectID);
+				while (resultSet.next()) {
+					Specification spec = new Specification();
+					spec.setSpecificationID(resultSet.getInt("SpecificationID"));
+					spec.setSpecificationTitle(resultSet.getString("SpecificationTitle"));
+					spec.setSpecificationDescription(resultSet.getString("SpecificationDescription"));
+					spec.setSpecificationStatus(resultSet.getInt("SpecificationStatus"));
+					spec.setSpecificationTime(resultSet.getInt("SpecificationTime"));
+					spec.setSprintID(resultSet.getInt("SprintID"));
+					spec.setProjectID(resultSet.getInt("ProjectID"));
+					specifications.add(spec);
+
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					this.connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return specifications;
+=======
 		return null;
+>>>>>>> c546ec61f0977e982a3e8394c02e7d7a4275406c
 	}
 
 	@Override
 	public void insertSpecification(Specification specification, boolean replic) {
+<<<<<<< HEAD
+
+=======
 		
+>>>>>>> c546ec61f0977e982a3e8394c02e7d7a4275406c
 	}
 
 }
