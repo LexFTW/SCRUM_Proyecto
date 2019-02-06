@@ -35,8 +35,9 @@ public class ProjectSQLRemote implements IProject {
 		entityManager.getTransaction().begin();
 		entityManager.persist(project);
 		entityManager.getTransaction().commit();
-		if (replic)
+		if (replic) {
 			replicateProject(project);
+		}
 	}
 
 	private void getConnectionLocal() {
@@ -140,6 +141,7 @@ public class ProjectSQLRemote implements IProject {
 		entityManager.getTransaction().begin();
 		entityManager.persist(specification);
 		entityManager.getTransaction().commit();
+<<<<<<< HEAD
 		if (replic)
 			replicateSpec(specification);
 	}
@@ -164,5 +166,11 @@ public class ProjectSQLRemote implements IProject {
 			}
 		}
 
+=======
+		
+//		if (replic) {
+//			replicateSpecification(specification);
+//		}
+>>>>>>> 78609c4dd9dc38fd6e30f3cd928923fa37246d5b
 	}
 }

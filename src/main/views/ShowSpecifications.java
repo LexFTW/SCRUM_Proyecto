@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 
 import main.interfaces.IProject;
@@ -78,9 +79,52 @@ public class ShowSpecifications implements ActionListener{
 		if(e.getSource() instanceof JButton) {
 			JButton btn = (JButton) e.getSource();
 			if(btn == btn_Add) {
-				// # Añadir especificación
+				new AddEspecification(iuser, iproject);
 			}
 		}
 	}
 
+}
+
+class AddEspecification extends JFrame implements ActionListener{
+	
+	private MainFrame frame;
+	private IUser iuser;
+	private IProject iproject;
+	private JPanel panel;
+	private JTextArea ta_Description;
+	private JButton btn_Save;
+	
+	public AddEspecification(IUser iuser, IProject iproject) {
+		this.iuser = iuser;
+		this.iproject = iproject;
+
+		this.panel = new JPanel(new MigLayout());
+		this.ta_Description = new JTextArea();
+		this.btn_Save = new JButton("Añadir Especificación");
+		this.btn_Save.addActionListener(this);
+		this.panel.add(this.ta_Description, "wrap, pushx, pushy, growx, growy");
+		this.panel.add(this.btn_Save, "wrap, align right");
+		this.add(this.panel);
+		this.setTitle("Añadir Especificación");
+		this.setSize(500, 200);
+		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setVisible(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(this.ta_Description.getText().length() != 0) {
+			Specification specification = new Specification();
+			specification.setSpecificationStatus(0);
+			specification.setSpecificationDescription(this.ta_Description.getText());
+			specification.setSpecificationTime(null);
+			specification.setSpecificationTitle(null);
+			this.iproject.insertSpecification(specification, true);
+			
+			this.dispose();
+		}
+	}
+	
 }

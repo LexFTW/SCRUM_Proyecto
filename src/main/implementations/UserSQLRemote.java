@@ -119,7 +119,7 @@ public class UserSQLRemote implements IUser {
 			replicateUser(user);
 	}
 
-	private void getConnectionLocal() {
+	public void getConnectionLocal() {
 		try {
 			try {
 				Class.forName("org.sqlite.JDBC");

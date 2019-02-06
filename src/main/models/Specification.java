@@ -16,7 +16,10 @@ public class Specification {
 	private String specificationDescription;
 	private int specificationStatus;
 	private int specificationTime;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 78609c4dd9dc38fd6e30f3cd928923fa37246d5b
 	private int sprintID;
 	private int projectID;
 
@@ -57,6 +60,7 @@ public class Specification {
 	public void setSpecificationStatus(int specificationStatus) {
 		this.specificationStatus = specificationStatus;
 	}
+<<<<<<< HEAD
 
 	@Column(name = "SpecificationTime")
 	public int getSpecificationTime() {
@@ -68,6 +72,18 @@ public class Specification {
 	}
 
 	@Column(name = "SprintID")
+=======
+	
+	@Column(name ="SpecificationTime")
+	public int getSpecificationTime() {
+		return specificationTime;
+	}
+	public void setSpecificationTime(int specificationTime) {
+		this.specificationTime = specificationTime;
+	}
+	
+	@Column(name ="SprintID")
+>>>>>>> 78609c4dd9dc38fd6e30f3cd928923fa37246d5b
 	public int getSprintID() {
 		return sprintID;
 	}
