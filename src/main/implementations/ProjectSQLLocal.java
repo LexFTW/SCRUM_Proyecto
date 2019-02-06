@@ -259,8 +259,6 @@ public class ProjectSQLLocal implements IProject {
 				this.statement = this.connection.createStatement();
 				this.resultSet = this.statement.executeQuery("SELECT * FROM projects WHERE ProjectID = (SELECT ProjectID FROM users_group_integrants WHERE UserID = " + userID + ")");
 				
-				// # Arreglar consulta
-				
 				while(this.resultSet.next()) {
 					Project p = new Project();
 					p.setProjectID(this.resultSet.getInt("ProjectID"));
