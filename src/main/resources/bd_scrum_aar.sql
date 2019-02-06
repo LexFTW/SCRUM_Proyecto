@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-01-2019 a las 16:34:21
+-- Tiempo de generación: 06-02-2019 a las 15:16:48
 -- Versión del servidor: 10.1.36-MariaDB
--- Versión de PHP: 7.2.10
+-- Versión de PHP: 7.2.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -38,13 +38,6 @@ CREATE TABLE `projects` (
   `UpdatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Volcado de datos para la tabla `projects`
---
-
-INSERT INTO `projects` (`ProjectID`, `ProjectTitle`, `ProjectDescription`, `ScrumMasterID`, `ProductOwnerID`, `CreatedAt`, `UpdatedAt`) VALUES
-(1, 'Proyecto 1', 'Este proyecto es una prueba', 2, 3, '2019-01-22 15:30:36', '2019-01-22 15:30:36');
-
 -- --------------------------------------------------------
 
 --
@@ -53,11 +46,12 @@ INSERT INTO `projects` (`ProjectID`, `ProjectTitle`, `ProjectDescription`, `Scru
 
 CREATE TABLE `specifications` (
   `SpecificationID` int(11) NOT NULL,
-  `SpecificationTitle` varchar(50) NOT NULL,
+  `SpecificationTitle` varchar(50) DEFAULT NULL,
   `SpecificationDescription` varchar(150) DEFAULT NULL,
   `SpecificationStatus` tinyint(1) NOT NULL DEFAULT '0',
-  `SpecificationTime` time NOT NULL,
-  `SprintID` int(11) NOT NULL
+  `SpecificationTime` int(11) NOT NULL,
+  `SprintID` int(11) NOT NULL,
+  `ProjectID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -97,10 +91,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`UserID`, `UserName`, `UserLastname`, `UserNickname`, `UserPassword`, `UserEmail`, `PermissionID`, `CreatedAt`, `UpdatedAt`) VALUES
-(1, 'Alexis', 'Mengual Vázquez', 'AMengual', '5a6d1c612954979ea99ee33dbb2d231b00f6ac0a', 'amengual@correo.com', 1, '2019-01-22 15:07:48', '2019-01-25 17:47:55'),
-(2, 'Roger', 'Carballo', 'RCarballo', '5a6d1c612954979ea99ee33dbb2d231b00f6ac0a', 'rcarballo@correo.com', 2, '2019-01-22 15:08:32', '2019-01-25 17:48:00'),
-(3, 'Adrián', 'Salas', 'ASalas', '5a6d1c612954979ea99ee33dbb2d231b00f6ac0a', 'asalas@correo.com', 3, '2019-01-22 15:09:02', '2019-01-25 17:47:39'),
-(4, 'Leandro', 'Zabala', 'LZabala', '5a6d1c612954979ea99ee33dbb2d231b00f6ac0a', 'lzabala@correo.com', 4, '2019-01-22 15:09:36', '2019-01-25 17:48:05');
+(1, 'Alexis', 'Mengual Vázquez', 'Amengual', '5a6d1c612954979ea99ee33dbb2d231b00f6ac0a', 'amengual@correo.com', 1, '2019-01-22 15:07:48', '2019-01-22 15:07:48'),
+(2, 'Roger', 'Carballo', 'Rcarballo', '5a6d1c612954979ea99ee33dbb2d231b00f6ac0a', 'rcarballo@correo.com', 2, '2019-01-22 15:08:32', '2019-01-22 15:08:32'),
+(3, 'Adrián', 'Salas', 'Asalas', '5a6d1c612954979ea99ee33dbb2d231b00f6ac0a', 'asalas@correo.com', 3, '2019-01-22 15:09:02', '2019-01-22 15:09:02'),
+(4, 'Leandro', 'Zabala', 'Lzabala', '5a6d1c612954979ea99ee33dbb2d231b00f6ac0a', 'lzabala@correo.com', 4, '2019-01-22 15:09:36', '2019-01-22 15:09:36');
 
 -- --------------------------------------------------------
 
@@ -136,14 +130,6 @@ CREATE TABLE `users_group_integrants` (
   `CreatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `UpdatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `users_group_integrants`
---
-
-INSERT INTO `users_group_integrants` (`IntegrantID`, `UserID`, `GroupID`, `ProjectID`, `CreatedAt`, `UpdatedAt`) VALUES
-(1, 4, 1, 1, '2019-01-22 15:33:17', '2019-01-22 15:33:17'),
-(2, 3, 1, 1, '2019-01-22 15:33:32', '2019-01-22 15:33:32');
 
 -- --------------------------------------------------------
 
@@ -184,7 +170,8 @@ ALTER TABLE `projects`
 -- Indices de la tabla `specifications`
 --
 ALTER TABLE `specifications`
-  ADD PRIMARY KEY (`SpecificationID`);
+  ADD PRIMARY KEY (`SpecificationID`),
+  ADD KEY `ProjectID` (`ProjectID`);
 
 --
 -- Indices de la tabla `sprints`
@@ -229,13 +216,13 @@ ALTER TABLE `users_permission`
 -- AUTO_INCREMENT de la tabla `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `ProjectID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ProjectID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `specifications`
 --
 ALTER TABLE `specifications`
-  MODIFY `SpecificationID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `SpecificationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `sprints`
@@ -247,7 +234,7 @@ ALTER TABLE `sprints`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT de la tabla `users_group`
@@ -277,6 +264,12 @@ ALTER TABLE `users_permission`
 ALTER TABLE `projects`
   ADD CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`ScrumMasterID`) REFERENCES `users` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `projects_ibfk_2` FOREIGN KEY (`ProductOwnerID`) REFERENCES `users` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `specifications`
+--
+ALTER TABLE `specifications`
+  ADD CONSTRAINT `specifications_ibfk_1` FOREIGN KEY (`ProjectID`) REFERENCES `projects` (`ProjectID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `sprints`
