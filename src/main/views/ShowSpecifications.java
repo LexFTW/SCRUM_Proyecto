@@ -62,19 +62,23 @@ public class ShowSpecifications implements ActionListener{
 		this.panelScrollable = new JPanel(new MigLayout());
 		ArrayList<Specification> specifications = iproject.getAllSpecifications(iproject.getProjectSelected().getProjectID());
 		for (Specification specification : specifications) {
-			this.panelScrollable.add(new SpecificationPane(specification.getSpecificationDescription()), "wrap, split 3, pushx, growx");
+			SpecificationPane pane = new SpecificationPane(specification.getSpecificationDescription());
+			if(iuser.getUserLogged().getPermissionID() == 4) {
+				pane.getS_Hours().setEnabled(false);
+			}
+			
+			this.panelScrollable.add(pane, "wrap, split 3, pushx, growx");
 		}
 		
 		this.sp_SpecificationPane = new JScrollPane(this.panelScrollable);
 		this.sp_SpecificationPane.setVisible(true);
 		
-		if(iuser.getUserLogged().getPermissionID() == 4) {
-			
-		}else {
+		if(iuser.getUserLogged().getPermissionID() != 4) {
 			this.frame.getInternalFrame().add(this.btn_Add, "split 3, align center");
 			this.frame.getInternalFrame().add(this.btn_Save);
 			this.frame.getInternalFrame().add(this.btn_Remove, "wrap");
 		}
+		
 		this.frame.getInternalFrame().add(this.sp_SpecificationPane, "wrap, pushx, growx");
 	}
 	
