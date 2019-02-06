@@ -137,7 +137,32 @@ public class ProjectSQLRemote implements IProject {
 
 	@Override
 	public void insertSpecification(Specification specification, boolean replic) {
-		// TODO Auto-generated method stub
-		
+		entityManager.getTransaction().begin();
+		entityManager.persist(specification);
+		entityManager.getTransaction().commit();
+		if (replic)
+			replicateSpec(specification);
+	}
+
+	private void replicateSpec(Specification specification) {
+
+		this.getConnectionLocal();
+		if (this.connection != null) {
+			try {
+				statement = connection.createStatement();
+
+				String sqlQueryProject = "INSERT INTO `specifications` (SpecificationTitle, SpecificationDescription, SpecificationStatus, SpecificationTime, SprintID, ProjectID)"
+						+ "VALUES('" + specification.getSpecificationTitle() + "', '"
+						+ specification.getSpecificationDescription() + "', '" + specification.getSpecificationStatus()
+						+ "', '" + specification.getSpecificationTime() + "', '" + specification.getSprintID() + "', "
+						+ specification.getProjectID() + ");";
+				statement.executeUpdate(sqlQueryProject);
+				statement.close();
+				connection.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+
 	}
 }

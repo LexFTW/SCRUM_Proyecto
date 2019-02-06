@@ -1,13 +1,12 @@
 package main.models;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 @Entity
 @Table(name = "specifications")
 public class Specification {
@@ -16,67 +15,73 @@ public class Specification {
 	private String specificationTitle;
 	private String specificationDescription;
 	private int specificationStatus;
-	private Date specificationTime;
-	private int specificationUser;
+	private int specificationTime;
+
 	private int sprintID;
-	
+	private int projectID;
+
 	@Id
-	@Column(name ="SpecificationID")
+	@Column(name = "SpecificationID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int getSpecificationID() {
 		return specificationID;
 	}
+
 	public void setSpecificationID(int specificationID) {
 		this.specificationID = specificationID;
 	}
-	
-	@Column(name ="SpecificationTitle")
+
+	@Column(name = "SpecificationTitle")
 	public String getSpecificationTitle() {
 		return specificationTitle;
 	}
+
 	public void setSpecificationTitle(String specificationTitle) {
 		this.specificationTitle = specificationTitle;
 	}
-	
-	@Column(name ="SpecificationDescription")
+
+	@Column(name = "SpecificationDescription")
 	public String getSpecificationDescription() {
 		return specificationDescription;
 	}
+
 	public void setSpecificationDescription(String specificationDescription) {
 		this.specificationDescription = specificationDescription;
 	}
-	
-	@Column(name ="SpecificationStatus")
+
+	@Column(name = "SpecificationStatus")
 	public int getSpecificationStatus() {
 		return specificationStatus;
 	}
+
 	public void setSpecificationStatus(int specificationStatus) {
 		this.specificationStatus = specificationStatus;
 	}
-	
-	@Column(name ="SpecificationTime")
-	public Date getSpecificationTime() {
+
+	@Column(name = "SpecificationTime")
+	public int getSpecificationTime() {
 		return specificationTime;
 	}
-	public void setSpecificationTime(Date specificationTime) {
+
+	public void setSpecificationTime(int specificationTime) {
 		this.specificationTime = specificationTime;
 	}
-	
-	@Column(name ="SpecificationUser")
-	public int getSpecificationUser() {
-		return specificationUser;
-	}
-	public void setSpecificationUser(int specificationUser) {
-		this.specificationUser = specificationUser;
-	}
-	
-	@Column(name ="SprintID")
+
+	@Column(name = "SprintID")
 	public int getSprintID() {
 		return sprintID;
 	}
+
 	public void setSprintID(int sprintID) {
 		this.sprintID = sprintID;
 	}
-	
-	
+
+	@Column(name = "ProjectID")
+	public int getProjectID() {
+		return projectID;
+	}
+
+	public void setProjectID(int projectID) {
+		this.projectID = projectID;
+	}
 }
