@@ -149,10 +149,8 @@ public class ProjectSQLRemote implements IProject {
 			try {
 				statement = connection.createStatement();
 
-				String sqlQueryProject = "INSERT INTO `specifications` (SpecificationTitle, SpecificationDescription, SpecificationStatus, SpecificationTime, SprintID, ProjectID)"
-						+ "VALUES('" + specification.getSpecificationTitle() + "', '"
-						+ specification.getSpecificationDescription() + "', '" + specification.getSpecificationStatus()
-						+ "', '" + specification.getSpecificationTime() + "', '" + specification.getSprintID() + "', "
+				String sqlQueryProject = "INSERT INTO `specifications` (SpecificationDescription, SpecificationTime, ProjectID)"
+						+ "VALUES('" + specification.getSpecificationDescription() + "', " + specification.getSpecificationTime() + ", " 
 						+ specification.getProjectID() + ");";
 				statement.executeUpdate(sqlQueryProject);
 				statement.close();
