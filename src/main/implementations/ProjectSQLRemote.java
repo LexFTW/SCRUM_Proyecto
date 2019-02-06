@@ -125,7 +125,6 @@ public class ProjectSQLRemote implements IProject {
 					.createQuery("SELECT p FROM Project p WHERE ProjectID = " + integrant.getProjectID())
 					.getSingleResult());
 		}
-
 		return projectsDev;
 	}
 
@@ -141,7 +140,6 @@ public class ProjectSQLRemote implements IProject {
 		entityManager.getTransaction().begin();
 		entityManager.persist(specification);
 		entityManager.getTransaction().commit();
-<<<<<<< HEAD
 		if (replic)
 			replicateSpec(specification);
 	}
@@ -165,12 +163,10 @@ public class ProjectSQLRemote implements IProject {
 				e1.printStackTrace();
 			}
 		}
-
-=======
 		
 //		if (replic) {
 //			replicateSpecification(specification);
 //		}
->>>>>>> 78609c4dd9dc38fd6e30f3cd928923fa37246d5b
+
 	}
 }
