@@ -35,8 +35,9 @@ public class ProjectSQLRemote implements IProject {
 		entityManager.getTransaction().begin();
 		entityManager.persist(project);
 		entityManager.getTransaction().commit();
-		if (replic)
+		if (replic) {
 			replicateProject(project);
+		}
 	}
 
 	private void getConnectionLocal() {
@@ -137,7 +138,12 @@ public class ProjectSQLRemote implements IProject {
 
 	@Override
 	public void insertSpecification(Specification specification, boolean replic) {
-		// TODO Auto-generated method stub
+		entityManager.getTransaction().begin();
+		entityManager.persist(specification);
+		entityManager.getTransaction().commit();
 		
+//		if (replic) {
+//			replicateSpecification(specification);
+//		}
 	}
 }

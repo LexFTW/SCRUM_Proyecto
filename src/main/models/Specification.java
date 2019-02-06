@@ -16,8 +16,7 @@ public class Specification {
 	private String specificationTitle;
 	private String specificationDescription;
 	private int specificationStatus;
-	private Date specificationTime;
-	private int specificationUser;
+	private int specificationTime;
 	private int sprintID;
 	
 	@Id
@@ -55,19 +54,11 @@ public class Specification {
 	}
 	
 	@Column(name ="SpecificationTime")
-	public Date getSpecificationTime() {
+	public int getSpecificationTime() {
 		return specificationTime;
 	}
-	public void setSpecificationTime(Date specificationTime) {
+	public void setSpecificationTime(int specificationTime) {
 		this.specificationTime = specificationTime;
-	}
-	
-	@Column(name ="SpecificationUser")
-	public int getSpecificationUser() {
-		return specificationUser;
-	}
-	public void setSpecificationUser(int specificationUser) {
-		this.specificationUser = specificationUser;
 	}
 	
 	@Column(name ="SprintID")
