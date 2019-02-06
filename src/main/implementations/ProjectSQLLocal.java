@@ -215,31 +215,6 @@ public class ProjectSQLLocal implements IProject {
 		return this.project;
 	}
 
-	// @Override
-	// public int getCountSpecifications() {
-	// this.getConnectionLocal();
-	// int countSpecifications = 0;
-	// if(this.connection != null) {
-	// try {
-	// this.statement = this.connection.createStatement();
-	// this.resultSet = this.statement.executeQuery("SELECT * FROM specifications
-	// WHERE ProjectID =" + this.project.getProjectID());
-	// while(this.resultSet.next()) {
-	// countSpecifications++;
-	// }
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// }finally {
-	// try {
-	// this.connection.close();
-	// } catch (SQLException e) {
-	// e.printStackTrace();
-	// }
-	// }
-	// }
-	// return countSpecifications;
-	// }
-
 	public void serializeProject(Project project) {
 		File f = new File("src/main/resources/log");
 		if (f.length() > 0) {
@@ -277,19 +252,47 @@ public class ProjectSQLLocal implements IProject {
 
 	@Override
 	public ArrayList<Project> getAllProjectsDevelopers(int userID) {
-
-		return null;
+		ArrayList<Project> developers = new ArrayList<>();
+		this.getConnectionLocal();
+		if(this.connection != null) {
+			try {
+				this.statement = this.connection.createStatement();
+				this.resultSet = this.statement.executeQuery("SELECT * FROM projects WHERE ProjectID = (SELECT * FROM users_group_integrants WHERE UserID = " + userID + ")");
+				
+				// # Arreglar consulta
+				
+				while(this.resultSet.next()) {
+					Project p = new Project();
+					p.setProjectID(this.resultSet.getInt("ProjectID"));
+					p.setProjectName(this.resultSet.getString("ProjectTitle"));
+					p.setProjectDescription(this.resultSet.getString("ProjectDescription"));
+					p.setScrumMasterID(this.resultSet.getInt("ScrumMasterID"));
+					p.setProductOwnerID(this.resultSet.getInt("ProductOwnerID"));
+					p.setCreatedAt(this.resultSet.getDate("CreatedAt"));
+					p.setUpdatedAt(this.resultSet.getDate("UpdatedAt"));
+					developers.add(p);
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					this.connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return developers;
 	}
 
 	@Override
 	public ArrayList<Specification> getAllSpecifications(int projectID) {
-
 		return null;
 	}
 
 	@Override
 	public void insertSpecification(Specification specification, boolean replic) {
-
 		
 	}
 

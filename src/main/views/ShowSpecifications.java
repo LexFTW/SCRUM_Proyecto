@@ -119,8 +119,8 @@ class AddEspecification extends JFrame implements ActionListener{
 			Specification specification = new Specification();
 			specification.setSpecificationStatus(0);
 			specification.setSpecificationDescription(this.ta_Description.getText());
-			specification.setSpecificationTime(null);
-			specification.setSpecificationTitle(null);
+			specification.setSpecificationTime(5);
+			specification.setSpecificationTitle("titulo");
 			this.iproject.insertSpecification(specification, true);
 			
 			this.dispose();
