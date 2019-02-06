@@ -26,7 +26,8 @@ public class UserSQLRemote implements IUser {
 	private Statement statement;
 
 	/*
-	 * This constructor load the user_permissions from the Remote Database to ArrayList<UserPermission> and another variables.
+	 * This constructor load the user_permissions from the Remote Database to
+	 * ArrayList<UserPermission> and another variables.
 	 */
 	public UserSQLRemote() {
 		this.factory = Persistence.createEntityManagerFactory("ScrumHibernate");
@@ -41,21 +42,31 @@ public class UserSQLRemote implements IUser {
 
 	/*
 	 * Search within the ArrayList for the user specified in the login screen.
+	 * 
 	 * @param The Username and the password introduced in the login screen.
-	 * @return If the username and the password is correct, return the object User with the information about the user logged.
+	 * 
+	 * @return If the username and the password is correct, return the object User
+	 * with the information about the user logged.
+	 * 
 	 * @see main.interfaces.IUser#getUserLogin(java.lang.String, java.lang.String)
 	 */
 	@Override
 	public User getUserLogin(String userNickname, String password) {
-		List<User> loggedUser = entityManager.createQuery("Select u from User u where UserNickname = '" + userNickname
-				+ "' and UserPassword = '" + getHashingPassword(password) + "'").getResultList();
-
-		return userLogged = loggedUser.get(0);
+		try {
+			this.userLogged = (User) entityManager.createQuery("SELECT user FROM User user WHERE UserNickname = '"
+					+ userNickname + "' AND UserPassword = '" + this.getHashingPassword(password) + "'")
+					.getSingleResult();
+			return userLogged;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	/*
 	 * Return status of connection.
+	 * 
 	 * @return A String about the state of the connection.
+	 * 
 	 * @see main.interfaces.IUser#getTitleConnection()
 	 */
 	@Override
@@ -65,7 +76,9 @@ public class UserSQLRemote implements IUser {
 
 	/*
 	 * Return the Object with the information about the user logged.
+	 * 
 	 * @return the object about the user logged.
+	 * 
 	 * @see main.interfaces.IUser#getUserLogged()
 	 */
 	@Override
@@ -75,6 +88,7 @@ public class UserSQLRemote implements IUser {
 
 	/*
 	 * Return the name about the permission assigned to the user
+	 * 
 	 * @return the String with the information about the permission assigned.
 	 */
 	@Override
@@ -90,19 +104,22 @@ public class UserSQLRemote implements IUser {
 
 	/*
 	 * This method inserts a new User.
+	 * 
 	 * @param The new User.
+	 * 
 	 * @see main.interfaces.IUser#insertUser(main.models.User)
 	 */
 	@Override
-	public void insertUser(User user) {
+	public void insertUser(User user, boolean replic) {
 		this.users.add(user);
 		this.entityManager.getTransaction().begin();
 		this.entityManager.persist(user);
 		this.entityManager.getTransaction().commit();
-		replicateUser(user);
+		if (replic)
+			replicateUser(user);
 	}
-	
-	private void getConnectionLocal() {
+
+	public void getConnectionLocal() {
 		try {
 			try {
 				Class.forName("org.sqlite.JDBC");
@@ -117,16 +134,15 @@ public class UserSQLRemote implements IUser {
 
 	private void replicateUser(User user) {
 		this.getConnectionLocal();
-		if(this.connection != null) {
+		if (this.connection != null) {
 			try {
 				this.statement = connection.createStatement();
-				String sqlQuery3 = "INSERT INTO `users` (UserID, UserName, UserLastname, UserNickname, UserPassword, UserEmail, PermissionID)"
-						+ "VALUES('" + user.getUserID() + "', '" + user.getUserName() + "', '" + user.getUserLastname()
-						+ "', '" + user.getUserNickname() + "', '" + user.getUserPassword() + "', '" + user.getUserEmail()
+				String sqlQuery3 = "INSERT INTO `users` (UserName, UserLastname, UserNickname, UserPassword, UserEmail, PermissionID)"
+						+ "VALUES('" + user.getUserName() + "', '" + user.getUserLastname() + "', '"
+						+ user.getUserNickname() + "', '" + user.getUserPassword() + "', '" + user.getUserEmail()
 						+ "', " + user.getPermissionID() + ");";
 
 				statement.executeUpdate(sqlQuery3);
-				System.out.println("Insertao maquina");
 				statement.close();
 
 			} catch (SQLException e) {
@@ -137,23 +153,33 @@ public class UserSQLRemote implements IUser {
 
 	/*
 	 * This method returns all users who are Product Owner.
+	 * 
 	 * @see main.interfaces.IUser#getAllProductOwner()
 	 */
 	@Override
 	public ArrayList<User> getAllProductOwner() {
-		UserPermission permissionIDPO = (UserPermission) this.entityManager.createQuery("SELECT permiso FROM UserPermission permiso WHERE PermissionName = 'Product Owner'").getSingleResult();
-		ArrayList<User> usersProductOwner = new ArrayList<>(this.entityManager.createQuery("SELECT user FROM User user WHERE PermissionID =" + permissionIDPO.getPermissionID()).getResultList());
+		UserPermission permissionIDPO = (UserPermission) this.entityManager
+				.createQuery("SELECT permiso FROM UserPermission permiso WHERE PermissionName = 'Product Owner'")
+				.getSingleResult();
+		ArrayList<User> usersProductOwner = new ArrayList<>(this.entityManager
+				.createQuery("SELECT user FROM User user WHERE PermissionID =" + permissionIDPO.getPermissionID())
+				.getResultList());
 		return usersProductOwner;
 	}
-	
+
 	/*
 	 * This method returns all users who are Scrum Master.
+	 * 
 	 * @see main.interfaces.IUser#getAllScrumMaster()
 	 */
 	@Override
 	public ArrayList<User> getAllScrumMaster() {
-		UserPermission permissionIDSM = (UserPermission) this.entityManager.createQuery("SELECT permiso FROM UserPermission permiso WHERE PermissionName = 'Scrum Master'").getSingleResult();
-		ArrayList<User> usersScrumMaster = new ArrayList<>(this.entityManager.createQuery("SELECT user FROM User user WHERE PermissionID =" + permissionIDSM.getPermissionID()).getResultList());
+		UserPermission permissionIDSM = (UserPermission) this.entityManager
+				.createQuery("SELECT permiso FROM UserPermission permiso WHERE PermissionName = 'Scrum Master'")
+				.getSingleResult();
+		ArrayList<User> usersScrumMaster = new ArrayList<>(this.entityManager
+				.createQuery("SELECT user FROM User user WHERE PermissionID =" + permissionIDSM.getPermissionID())
+				.getResultList());
 		return usersScrumMaster;
 	}
 

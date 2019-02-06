@@ -1,5 +1,6 @@
 package main.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -8,10 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "projects")
-public class Project {
+public class Project implements Serializable{
 
 	private int projectID;
 	private String projectName;
@@ -20,7 +22,29 @@ public class Project {
 	private int productOwnerID;
 	private Date createdAt;
 	private Date updatedAt;
+	private boolean updated;
+	private boolean inserted;
+	private boolean deleted;
 	
+	public Project(int projectID, String projectName, String projectDescription, int scrumMasterID, int productOwnerID,
+			Date createdAt, Date updatedAt, boolean updated, boolean inserted, boolean deleted) {
+		super();
+		this.projectID = projectID;
+		this.projectName = projectName;
+		this.projectDescription = projectDescription;
+		this.scrumMasterID = scrumMasterID;
+		this.productOwnerID = productOwnerID;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.updated = updated;
+		this.inserted = inserted;
+		this.deleted = deleted;
+	}
+	
+	public Project() {
+		super();
+	}
+
 	@Id
 	@Column(name = "ProjectID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -81,7 +105,47 @@ public class Project {
 	public Date getUpdatedAt() {
 		return updatedAt;
 	}
+	
+	@Transient
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	@Transient
+	public boolean isUpdated() {
+		return updated;
+	}
+
+	@Transient
+	public boolean isInserted() {
+		return inserted;
+	}
+
+	@Transient
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	@Transient
+	public void setUpdated(boolean updated) {
+		this.updated = updated;
+	}
+
+	@Transient
+	public void setInserted(boolean inserted) {
+		this.inserted = inserted;
+	}
+
+	@Transient
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	@Override
+	public String toString() {
+		return "Project [projectID=" + projectID + ", projectName=" + projectName + ", projectDescription="
+				+ projectDescription + ", scrumMasterID=" + scrumMasterID + ", productOwnerID=" + productOwnerID
+				+ ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", updated=" + updated + ", inserted="
+				+ inserted + ", deleted=" + deleted + "]";
 	}
 }

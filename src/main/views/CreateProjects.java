@@ -57,9 +57,10 @@ public class CreateProjects implements ActionListener {
 			this.iproject = new ProjectSQLLocal();
 		}
 		
+		this.frame.getInternalFrame().getContentPane().removeAll();
 		this.frame.getInternalFrame().setTitle("Crear Proyecto");
 		this.frame.getInternalFrame().setSize(480, 260);
-		this.frame.getInternalFrame().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.frame.getInternalFrame().setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		// Center JInternalFrame with this:
 		Dimension desktopSize = this.frame.getDesktopPane().getSize();
 		Dimension jInternalFrameSize = this.frame.getInternalFrame().getSize();
@@ -117,14 +118,13 @@ public class CreateProjects implements ActionListener {
 		boolean found = false;
 		if (e.getSource() instanceof JButton) {
 			if (tf_Title.getText().length() == 0 || ta_Description.getText().length() == 0) {
-				lbl_ErrorData.setText("Hay algun campo vacio");
+				lbl_ErrorData.setText("Faltan campos por rellenar, revise que la información sea correcta.");
 			} else {
 				lbl_ErrorData.setVisible(false);
 
 				for (Project proyecto : iproject.getAllProjects()) {
-					System.out.println(proyecto.getProjectName());
 					if (proyecto.getProjectName().equalsIgnoreCase(tf_Title.getText())) {
-						lbl_ErrorData.setText("El titulo esta repetido");
+						lbl_ErrorData.setText("No se pudo crear el proyecto porque el titulo está repetido.");
 						lbl_ErrorData.setVisible(true);
 						found = true;
 					}
@@ -136,7 +136,10 @@ public class CreateProjects implements ActionListener {
 					project.setProjectDescription(ta_Description.getText());
 					project.setScrumMasterID(Integer.parseInt(this.cb_ScrumMaster.getSelectedItem().toString().substring(0, 1)));
 					project.setProductOwnerID(Integer.parseInt(this.cb_ProductOwner.getSelectedItem().toString().substring(0, 1)));
-					iproject.insertProject(project);
+					iproject.insertProject(project,true);
+					this.tf_Title.setText("");
+					this.ta_Description.setText("");
+					this.lbl_ErrorData.setVisible(false);
 				}
 			}
 		}

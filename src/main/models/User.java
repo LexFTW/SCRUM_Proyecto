@@ -1,10 +1,12 @@
 package main.models;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Serializable{
 
 	private int UserID;
 	private String UserName;
@@ -25,6 +27,9 @@ public class User {
 	private int PermissionID;
 	private Date CreatedAt;
 	private Date UpdatedAt;
+	private boolean updated;
+	private boolean inserted;
+	private boolean deleted;
 
 	public User() {
 		super();
@@ -42,6 +47,9 @@ public class User {
 		PermissionID = permissionID;
 		CreatedAt = createdAt;
 		UpdatedAt = updatedAt;
+		updated = false;
+		inserted = false;
+		deleted = false;
 	}
 
 
@@ -128,6 +136,33 @@ public class User {
 
 	public void setUpdatedAt(Date updatedAt) {
 		UpdatedAt = updatedAt;
+	}
+	
+	@Transient
+	public boolean isUpdated() {
+		return updated;
+	}
+
+	public void setUpdated(boolean updated) {
+		this.updated = updated;
+	}
+
+	@Transient
+	public boolean isInserted() {
+		return inserted;
+	}
+
+	public void setInserted(boolean inserted) {
+		this.inserted = inserted;
+	}
+
+	@Transient
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	@Override
