@@ -257,7 +257,7 @@ public class ProjectSQLLocal implements IProject {
 		if(this.connection != null) {
 			try {
 				this.statement = this.connection.createStatement();
-				this.resultSet = this.statement.executeQuery("SELECT * FROM projects WHERE ProjectID = (SELECT * FROM users_group_integrants WHERE UserID = " + userID + ")");
+				this.resultSet = this.statement.executeQuery("SELECT * FROM projects WHERE ProjectID = (SELECT ProjectID FROM users_group_integrants WHERE UserID = " + userID + ")");
 				
 				// # Arreglar consulta
 				
@@ -288,7 +288,6 @@ public class ProjectSQLLocal implements IProject {
 
 	@Override
 	public ArrayList<Specification> getAllSpecifications(int projectID) {
-<<<<<<< HEAD
 		ArrayList<Specification> specifications = new ArrayList<>();
 		this.getConnectionLocal();
 		if (this.connection != null) {
@@ -319,18 +318,69 @@ public class ProjectSQLLocal implements IProject {
 			}
 		}
 		return specifications;
-=======
-		return null;
->>>>>>> c546ec61f0977e982a3e8394c02e7d7a4275406c
 	}
 
 	@Override
 	public void insertSpecification(Specification specification, boolean replic) {
-<<<<<<< HEAD
+		this.getConnectionLocal();
+		if (this.connection != null) {
+			try {
+				statement = connection.createStatement();
 
-=======
-		
->>>>>>> c546ec61f0977e982a3e8394c02e7d7a4275406c
+				String query = "INSERT INTO specifications (SpecificationDescription, SpecificationTime, ProjectID) VALUES ('"
+				+ specification.getSpecificationDescription() + "', " + specification.getSpecificationTime() + ", " + specification.getProjectID() + ");";
+				
+				this.statement.executeUpdate(query);
+				this.statement.close();
+				this.connection.close();
+				this.serializeSpecification(specification);
+				JOptionPane.showMessageDialog(null, "¡Se ha insertado la especificación en la Base de Datos correctamente!", "Especificación creada", JOptionPane.INFORMATION_MESSAGE);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					this.connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Error al conectarse a la Base de Datos, vuelva a intentarlo",
+					"No se ha podido conectar a la Base de Datos", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	private void serializeSpecification(Specification specification) {
+		File f = new File("src/main/resources/log");
+		if (f.length() > 0) {
+			try {
+				MyObjectOutputStream oos = new MyObjectOutputStream(new FileOutputStream(f, true));
+				oos.writeUnshared(specification);
+				oos.close();
+			} catch (FileNotFoundException e) {
+				JOptionPane.showMessageDialog(null,
+						"No se ha encontrado el archivo log para registrar la información, pongase en contacto con el Administrador",
+						"No se ha encontrado el archivo", JOptionPane.ERROR_MESSAGE);
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(null,
+						"Error de E/S al archivo log, pongase en contacon con el Administrador", "Error de E/S",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		} else {
+			try {
+				ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f, true));
+				oos.writeObject(specification);
+				oos.close();
+			} catch (FileNotFoundException e) {
+				JOptionPane.showMessageDialog(null,
+						"No se ha encontrado el archivo log para registrar la información, pongase en contacto con el Administrador",
+						"No se ha encontrado el archivo", JOptionPane.ERROR_MESSAGE);
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(null,
+						"Error de E/S al archivo log, pongase en contacon con el Administrador", "Error de E/S",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}
 	}
 
 }

@@ -20,6 +20,7 @@ import main.implementations.UserSQLRemote;
 import main.interfaces.IProject;
 import main.interfaces.IUser;
 import main.models.Project;
+import main.models.Specification;
 import main.models.User;
 import main.views.Login;
 
@@ -68,6 +69,8 @@ public class Initialize {
 								} else if (p.isUpdated()) {
 
 								}
+							} else if(object instanceof Specification) {
+								iproject.insertSpecification((Specification) object, false);
 							}
 							object = ois.readObject();
 						}

@@ -68,10 +68,13 @@ public class ShowSpecifications implements ActionListener{
 		this.sp_SpecificationPane = new JScrollPane(this.panelScrollable);
 		this.sp_SpecificationPane.setVisible(true);
 		
-		this.frame.getInternalFrame().setAutoscrolls(true);
-		this.frame.getInternalFrame().add(this.btn_Add, "split 3, align center");
-		this.frame.getInternalFrame().add(this.btn_Save);
-		this.frame.getInternalFrame().add(this.btn_Remove, "wrap");
+		if(iuser.getUserLogged().getPermissionID() == 4) {
+			
+		}else {
+			this.frame.getInternalFrame().add(this.btn_Add, "split 3, align center");
+			this.frame.getInternalFrame().add(this.btn_Save);
+			this.frame.getInternalFrame().add(this.btn_Remove, "wrap");
+		}
 		this.frame.getInternalFrame().add(this.sp_SpecificationPane, "wrap, pushx, growx");
 	}
 	
@@ -80,7 +83,7 @@ public class ShowSpecifications implements ActionListener{
 		if(e.getSource() instanceof JButton) {
 			JButton btn = (JButton) e.getSource();
 			if(btn == btn_Add) {
-				new AddEspecification(iuser, iproject);
+				new AddEspecification(iuser, iproject, frame);
 			}
 		}
 	}
@@ -96,9 +99,10 @@ class AddEspecification extends JFrame implements ActionListener{
 	private JTextArea ta_Description;
 	private JButton btn_Save;
 	
-	public AddEspecification(IUser iuser, IProject iproject) {
+	public AddEspecification(IUser iuser, IProject iproject, MainFrame frame) {
 		this.iuser = iuser;
 		this.iproject = iproject;
+		this.frame = frame;
 
 		this.panel = new JPanel(new MigLayout());
 		this.ta_Description = new JTextArea();
@@ -118,13 +122,13 @@ class AddEspecification extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(this.ta_Description.getText().length() != 0) {
 			Specification specification = new Specification();
-			specification.setSpecificationStatus(0);
 			specification.setSpecificationDescription(this.ta_Description.getText());
 			specification.setSpecificationTime(5);
-			specification.setSpecificationTitle("titulo");
+			specification.setProjectID(iproject.getProjectSelected().getProjectID());
 			this.iproject.insertSpecification(specification, true);
-			
 			this.dispose();
+			this.frame.getInternalFrame().setVisible(false);
+			new ShowSpecifications(iuser, iproject, frame);
 		}
 	}
 	

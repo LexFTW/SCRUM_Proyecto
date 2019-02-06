@@ -1,5 +1,7 @@
 package main.models;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,19 +11,33 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "specifications")
-public class Specification {
+public class Specification implements Serializable{
 
 	private int specificationID;
 	private String specificationTitle;
 	private String specificationDescription;
 	private int specificationStatus;
 	private int specificationTime;
-<<<<<<< HEAD
-
-=======
->>>>>>> 78609c4dd9dc38fd6e30f3cd928923fa37246d5b
 	private int sprintID;
 	private int projectID;
+
+	
+	
+	public Specification() {
+		super();
+	}
+
+	public Specification(int specificationID, String specificationTitle, String specificationDescription,
+			int specificationStatus, int specificationTime, int sprintID, int projectID) {
+		super();
+		this.specificationID = specificationID;
+		this.specificationTitle = specificationTitle;
+		this.specificationDescription = specificationDescription;
+		this.specificationStatus = specificationStatus;
+		this.specificationTime = specificationTime;
+		this.sprintID = sprintID;
+		this.projectID = projectID;
+	}
 
 	@Id
 	@Column(name = "SpecificationID")
@@ -60,19 +76,6 @@ public class Specification {
 	public void setSpecificationStatus(int specificationStatus) {
 		this.specificationStatus = specificationStatus;
 	}
-<<<<<<< HEAD
-
-	@Column(name = "SpecificationTime")
-	public int getSpecificationTime() {
-		return specificationTime;
-	}
-
-	public void setSpecificationTime(int specificationTime) {
-		this.specificationTime = specificationTime;
-	}
-
-	@Column(name = "SprintID")
-=======
 	
 	@Column(name ="SpecificationTime")
 	public int getSpecificationTime() {
@@ -83,7 +86,6 @@ public class Specification {
 	}
 	
 	@Column(name ="SprintID")
->>>>>>> 78609c4dd9dc38fd6e30f3cd928923fa37246d5b
 	public int getSprintID() {
 		return sprintID;
 	}
@@ -99,5 +101,13 @@ public class Specification {
 
 	public void setProjectID(int projectID) {
 		this.projectID = projectID;
+	}
+
+	@Override
+	public String toString() {
+		return "Specification [specificationID=" + specificationID + ", specificationTitle=" + specificationTitle
+				+ ", specificationDescription=" + specificationDescription + ", specificationStatus="
+				+ specificationStatus + ", specificationTime=" + specificationTime + ", sprintID=" + sprintID
+				+ ", projectID=" + projectID + "]";
 	}
 }
