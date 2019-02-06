@@ -1,3 +1,13 @@
+SPRINT 1:
+Los aspectos a mejorar en este Sprint son, hemos decidido cargar en un ArrayList todos los datos de la base de datos para poder tener metodos que faciliten el trato de los datos
+de la base de datos. Esta solución es buena para este proyecto pero tiene muy mala escalabilidad, porque si la base de datos es muy grande el programa petaría siempre.
+Tendríamos que manejar esos datos sin este ArrayList aunque sea mas díficil para tener mas escalabilidad y evitar errores futuros cuando la aplicación crezca.
+
+Podriamos mejorar estos aspectos hablando mas con los ProductOwner(Profesores) para tener más claras las especificaciones, comentarles nuestras posibles soluciones y que nos
+aconsejen, nos pueden recomendar alternativas o avisarnos de que nuestro planteamiento tiene fallos y es mejor implementar otro tipo de soluciones para este proyecto.
+
+SPRINT 2:
+
 Los aspectos a mejorar en este Sprint son, el comentario del codigo, ya que programamos muy a saco sin tener en cuenta los comentarios, y al final quedan comentarios pobres comparados
 a los comentarios que podriamos hacer si lo hiciesemos en el mismo momento que desarrollamos el codigo. La comunicacion podria ser mejor para asignar las tareas adecuadas a cada miembro
 y no tener problemas. A parte de esto hemos tenido que cambiar el estilo de las vistas, ya que estaban realizadas con GroupLayout(Desde WindowBuilder) y ahora hemos importado otro
@@ -9,3 +19,12 @@ el codigo que queremos y despues ponernos a programarlo, en vez de programar de 
 corregir pero el grupo en general esta muy contento, trabajamos bien, nos entendemos y las cosas de momento estan saliendo bien para nosotros. 
 
 
+SPRINT 3:
+Los aspectos a mejorar en este Sprint son, hemos tenido problemas al replicar la base de datos en bebida a la remota, de las 5H que teniamos para la tarea, hemos dedicado bastantes mas
+a intentar solucionarlo(todos los miembros del grupo). Al final hemos podido solucionar el error e implementar el fichero de log pero nos hemos dejado alguna tarea pendiente como
+el StoreProcedure. Hemos serializado los objetos para relplicar la base de datos, para los miembros de este grupo era una mejor opción porque se entendía mejor y nos gustaba esta manera
+de solucionar la tarea, el error era bastante extraño así que tuvimos que investigar mucho por Internet.
+
+Podemos mejorar estos aspectos investigando por Internet mas eficientemente, ya que cuando reparabamos un error aparecia otro, cambiabamos cosas constantemente para tratar de averiguar
+el fallo y se nos fue de las manos con el tiempo. La comunicacion podría mejorarse para tratar de minimizar la perdida de tiempo y ser mas eficientes trabajando como un equipo.
+Estamos contentos con el resultado final pero también sabemos que podríamos hacer mejor las cosas y obtener un mejor resultado final.
