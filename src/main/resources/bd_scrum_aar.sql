@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-02-2019 a las 15:16:48
+-- Tiempo de generación: 06-02-2019 a las 16:23:10
 -- Versión del servidor: 10.1.36-MariaDB
--- Versión de PHP: 7.2.11
+-- Versión de PHP: 7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -38,6 +38,14 @@ CREATE TABLE `projects` (
   `UpdatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `projects`
+--
+
+INSERT INTO `projects` (`ProjectID`, `ProjectTitle`, `ProjectDescription`, `ScrumMasterID`, `ProductOwnerID`, `CreatedAt`, `UpdatedAt`) VALUES
+(1, 'Proyecto SCRUM', 'Descripción del Proyecto', 2, 3, '2019-02-06 15:20:56', '2019-02-06 15:20:56'),
+(2, 'Proyecto Car Configuration', 'Proyecto car configuration', 2, 3, '2019-02-06 15:20:57', '2019-02-06 15:20:57');
+
 -- --------------------------------------------------------
 
 --
@@ -53,6 +61,13 @@ CREATE TABLE `specifications` (
   `SprintID` int(11) NOT NULL,
   `ProjectID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `specifications`
+--
+
+INSERT INTO `specifications` (`SpecificationID`, `SpecificationTitle`, `SpecificationDescription`, `SpecificationStatus`, `SpecificationTime`, `SprintID`, `ProjectID`) VALUES
+(1, NULL, 'Especificación 1: Implementar DAO', 0, 5, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -94,7 +109,8 @@ INSERT INTO `users` (`UserID`, `UserName`, `UserLastname`, `UserNickname`, `User
 (1, 'Alexis', 'Mengual Vázquez', 'Amengual', '5a6d1c612954979ea99ee33dbb2d231b00f6ac0a', 'amengual@correo.com', 1, '2019-01-22 15:07:48', '2019-01-22 15:07:48'),
 (2, 'Roger', 'Carballo', 'Rcarballo', '5a6d1c612954979ea99ee33dbb2d231b00f6ac0a', 'rcarballo@correo.com', 2, '2019-01-22 15:08:32', '2019-01-22 15:08:32'),
 (3, 'Adrián', 'Salas', 'Asalas', '5a6d1c612954979ea99ee33dbb2d231b00f6ac0a', 'asalas@correo.com', 3, '2019-01-22 15:09:02', '2019-01-22 15:09:02'),
-(4, 'Leandro', 'Zabala', 'Lzabala', '5a6d1c612954979ea99ee33dbb2d231b00f6ac0a', 'lzabala@correo.com', 4, '2019-01-22 15:09:36', '2019-01-22 15:09:36');
+(4, 'Leandro', 'Zabala', 'Lzabala', '5a6d1c612954979ea99ee33dbb2d231b00f6ac0a', 'lzabala@correo.com', 4, '2019-01-22 15:09:36', '2019-01-22 15:09:36'),
+(5, 'Carlos', ' Undiano', 'CUndiano', '5a6d1c612954979ea99ee33dbb2d231b00f6ac0a', 'carlosundiano@gmail.com', 4, '2019-02-06 15:20:57', '2019-02-06 15:20:57');
 
 -- --------------------------------------------------------
 
@@ -130,6 +146,13 @@ CREATE TABLE `users_group_integrants` (
   `CreatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `UpdatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `users_group_integrants`
+--
+
+INSERT INTO `users_group_integrants` (`IntegrantID`, `UserID`, `GroupID`, `ProjectID`, `CreatedAt`, `UpdatedAt`) VALUES
+(1, 4, 1, 1, '2019-02-06 15:22:27', '2019-02-06 15:22:27');
 
 -- --------------------------------------------------------
 
@@ -216,13 +239,13 @@ ALTER TABLE `users_permission`
 -- AUTO_INCREMENT de la tabla `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `ProjectID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ProjectID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `specifications`
 --
 ALTER TABLE `specifications`
-  MODIFY `SpecificationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `SpecificationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `sprints`
@@ -234,7 +257,7 @@ ALTER TABLE `sprints`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `users_group`
@@ -246,7 +269,7 @@ ALTER TABLE `users_group`
 -- AUTO_INCREMENT de la tabla `users_group_integrants`
 --
 ALTER TABLE `users_group_integrants`
-  MODIFY `IntegrantID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `IntegrantID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `users_permission`
