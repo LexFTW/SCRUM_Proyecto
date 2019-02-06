@@ -63,7 +63,7 @@ public class ShowSpecifications implements ActionListener{
 		ArrayList<Specification> specifications = iproject.getAllSpecifications(iproject.getProjectSelected().getProjectID());
 		for (Specification specification : specifications) {
 			SpecificationPane pane = new SpecificationPane(specification.getSpecificationDescription());
-			if(iuser.getUserLogged().getPermissionID() == 4) {
+			if(iuser.getUserLogged().getPermissionID() == 4 || iuser.getUserLogged().getPermissionID() == 3) {
 				pane.getS_Hours().setEnabled(false);
 			}
 			
