@@ -53,23 +53,23 @@ public class Initialize {
 						while (object != null) {
 							if (object instanceof User) {
 								User u = (User) object;
-								if (u.isInserted()) {
-									iuser.insertUser(u, false);
-								} else if (u.isDeleted()) {
+								// if (u.isInserted()) {
+								iuser.insertUser(u, false);
+								// } else if (u.isDeleted()) {
 
-								} else if (u.isUpdated()) {
-
-								}
+								// } else if (u.isUpdated()) {
+								//
+								// }
 							} else if (object instanceof Project) {
 								Project p = (Project) object;
-								if (p.isInserted()) {
-									iproject.insertProject((Project) object, false);
-								} else if (p.isDeleted()) {
+								// if (p.isInserted()) {
+								iproject.insertProject((Project) object, false);
+								// } else if (p.isDeleted()) {
 
-								} else if (p.isUpdated()) {
+								// } else if (p.isUpdated()) {
 
-								}
-							} else if(object instanceof Specification) {
+								// }
+							} else if (object instanceof Specification) {
 								iproject.insertSpecification((Specification) object, false);
 							}
 							object = ois.readObject();
