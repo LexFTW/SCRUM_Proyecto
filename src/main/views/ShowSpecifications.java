@@ -60,8 +60,9 @@ public class ShowSpecifications implements ActionListener{
 		this.specifications.setVisible(true);
 
 		this.panelScrollable = new JPanel(new MigLayout());
-		for (int i = 0; i < 2; i++) { // Cambiar el 2 por un método que de un int contando todas las especificaciones que hay.
-			this.panelScrollable.add(new SpecificationPane("D"), "wrap, split 3, pushx, growx");
+		ArrayList<Specification> specifications = iproject.getAllSpecifications(iproject.getProjectSelected().getProjectID());
+		for (Specification specification : specifications) {
+			this.panelScrollable.add(new SpecificationPane(specification.getSpecificationDescription()), "wrap, split 3, pushx, growx");
 		}
 		
 		this.sp_SpecificationPane = new JScrollPane(this.panelScrollable);

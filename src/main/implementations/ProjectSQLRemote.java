@@ -129,11 +129,10 @@ public class ProjectSQLRemote implements IProject {
 		return projectsDev;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Specification> getAllSpecifications(int projectID) {
-		// TODO Auto-generated method stub
-		return (ArrayList<Specification>) entityManager
-				.createQuery("SELECT spec FROM Specification spec where ProjectID = " + projectID).getResultList();
+		return (ArrayList<Specification>) entityManager.createQuery("SELECT spec FROM Specification spec where ProjectID = " + projectID).getResultList();
 	}
 
 	@Override
@@ -141,13 +140,11 @@ public class ProjectSQLRemote implements IProject {
 		entityManager.getTransaction().begin();
 		entityManager.persist(specification);
 		entityManager.getTransaction().commit();
-<<<<<<< HEAD
 		if (replic)
 			replicateSpec(specification);
 	}
 
 	private void replicateSpec(Specification specification) {
-
 		this.getConnectionLocal();
 		if (this.connection != null) {
 			try {
@@ -166,11 +163,5 @@ public class ProjectSQLRemote implements IProject {
 			}
 		}
 
-=======
-		
-//		if (replic) {
-//			replicateSpecification(specification);
-//		}
->>>>>>> 78609c4dd9dc38fd6e30f3cd928923fa37246d5b
 	}
 }
